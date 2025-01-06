@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+	<!-- 왠지는 모르겠는데 개ㅈ같은 replace는 안먹음 -->
+<!-- 	<div th:replace="~{common/top.html :: top"}></div> -->
+	<div th:insert="common/top.html"></div>
 		<section class="hero-banner">
             <div class="banner-content">
                 <h1>하모에서 하비모임!!~</h1>

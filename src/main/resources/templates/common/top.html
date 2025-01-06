@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="top">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -22,6 +22,10 @@ a {
 
 a:hover{
 	font-weight: bold;
+}
+
+h1{
+	cursor: pointer;
 }
 
 /* Header styles */
@@ -108,7 +112,7 @@ header {
 <body>
 	<header>
 		<div class="header-top">
-            <h1>HAMO</h1>
+            <h1 onclick="location.href='/home'">HAMO</h1>
             <div class="search-bar">
                 <input type="text" placeholder="검색어를 입력하세요">
                 <button type="submit">검색</button>
@@ -126,7 +130,7 @@ header {
             	</ul>
         	</nav>
         	<nav class="top-nav">
-				<a class="top-button" href="#" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top-button" href="/member/login" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             	<a class="top-button" href="#" >회원가입</a>
 			</nav>
 		</div>
