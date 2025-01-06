@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAMO - 로그인</title>
+    <link rel="stylesheet" href="/css/login/login.css">
+</head>
+<body>
+    <div th:insert="common/top.html"></div>
+<!-- 	<div th:replace="~{common/top.html :: top"}></div> -->
+    <main>
+	    <div class="login-card">
+	        <h1 class="login-title">로그인</h1>
+	        <form class="login-form">
+	            <input 
+	                type="text" 
+	                class="input-field" 
+	                placeholder="아이디" 
+	                required
+	            >
+	            <input 
+	                type="password" 
+	                class="input-field" 
+	                placeholder="비밀번호" 
+	                required
+	            >
+	            <button type="submit" class="login-button">로그인</button>
+	            <div class="links">
+                	<a href="#">회원가입</a>
+                	<a href="#">아이디/비밀번호 찾기</a>
+           		</div>
+	        </form>
+	    </div>
+    </main>
+</body>
+</html>
