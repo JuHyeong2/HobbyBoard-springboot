@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Board Details</title>
+<!-- <link rel="stylesheet" href="/css/board/boardDetails.css"> -->
+
 <style>
 
 .main-container {
@@ -167,10 +169,60 @@ img {
 	
 }
 
+
+
+        .notice-item {
+            display: flex;
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .notice-item:hover {
+    	background-color: lightgrey;
+		}
+
+        .notice-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 12px;
+            min-width: 60px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .badge-blue {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-red {
+            background-color: #fa5050;
+            color: white;
+        }
+
+        .notice-content {
+            flex: 1;
+        }
+
+        .notice-title {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .notice-date {
+            color: #999;
+            font-size: 12px;
+            text-align: right;
+            min-width: 100px;
+        }
+
 </style>
 </head>
 <body>
-	<jsp:include page="../common/top.jsp"/>
+	<div th:insert="common/top.html"></div>
 	
     <main class="main-container">
         <div class="breadcrumb">
@@ -233,34 +285,68 @@ img {
                 <span></span>
             </div>
         </section>
-
-
-        <section class="seller-items">
-            <h2>코딩 관련 모임</h2>
-            <div class="items-grid">
-                <!-- 판매 물품 그리드 아이템들 -->
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
+        
+        <div class="notice-list">
+            <div class="notice-item">
+                <span class="notice-badge badge-red">참가불가</span>
+                <div class="notice-content">
+                    <p href="#" class="notice-title">압구정 로데오에서 진짜 로데오 모임</p>
                 </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
+                <div class="notice-date">2024.01.03</div>
             </div>
-        </section>
+
+            <div class="notice-item">
+                <span class="notice-badge badge-blue">참가가능</span>
+                <div class="notice-content">
+                    <a href="#" class="notice-title">우리는야 코딩고수 신우 밑으로 다 모여</a>
+                </div>
+                <div class="notice-date">2024.01.01</div>
+            </div>
+
+            <div class="notice-item">
+                <span class="notice-badge badge-blue">참가가능</span>
+                <div class="notice-content">
+                    <p href="#" class="notice-title">조용한 차분 ISTJ을 위한 개발모임</p>
+                </div>
+                <div class="notice-date">2023.12.31</div>
+            </div>
+            
+             <div class="notice-item">
+                <span class="notice-badge badge-blue">참가가능</span>
+                <div class="notice-content">
+                    <p href="#" class="notice-title">개발하는 개발들 ^모^</p>
+                </div>
+                <div class="notice-date">2023.12.31</div>
+            </div>
+        </div>
+
+
+<!--         <section class="seller-items"> -->
+<!--             <h2>코딩 관련 모임</h2> -->
+<!--             <div class="items-grid"> -->
+<!--                 판매 물품 그리드 아이템들 -->
+<!--                 <div class="board-card"> -->
+<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
+<!--                     <h3>게시글 제목</h3> -->
+<!--                     <p>25.01.01</p> -->
+<!--                 </div> -->
+<!--                 <div class="board-card"> -->
+<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
+<!--                     <h3>게시글 제목</h3> -->
+<!--                     <p>25.01.01</p> -->
+<!--                 </div> -->
+<!--                 <div class="board-card"> -->
+<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
+<!--                     <h3>게시글 제목</h3> -->
+<!--                     <p>25.01.01</p> -->
+<!--                 </div> -->
+<!--                 <div class="board-card"> -->
+<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
+<!--                     <h3>게시글 제목</h3> -->
+<!--                     <p>25.01.01</p> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </section> -->
 
         <!-- <section class="related-items">
             <h2>인기 게시글</h2>
@@ -290,6 +376,6 @@ img {
         </section> -->
     </main>
 	
-	<jsp:include page="../common/footer.jsp"/>
+	<div th:insert="common/footer.html"></div>
 </body>
 </html>

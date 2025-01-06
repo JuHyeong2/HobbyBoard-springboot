@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <link rel="stylesheet" href="/css/board/boardInser.css"> -->
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/*     background-color: #f5f6f7; */
+    color: #333;
+}
+
+.blog-header {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.header-banner {
+    height: 200px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23ffffff" fill-opacity="0.2" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E');
+    background-size: cover;
+    background-position: center;
+}
+
+.editor-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.post-editor {
+    flex: 1;
+    background: white;
+/*     border-radius: 8px; */
+/*     box-shadow: 0 1px 3px rgba(0,0,0,0.1); */
+    padding: 20px;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.attachment-count {
+    color: #666;
+    font-size: 14px;
+}
+
+.submit-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.title-section {
+    margin-bottom: 20px;
+}
+
+.category-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.participant-input {
+	width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.location-select {
+	width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.title-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.editor-toolbar {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 5px;
+    padding-right: 15px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+.toolbar-button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.toolbar-button:hover {
+    background-color: #f5f6f7;
+}
+
+.content-area {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    min-height: 400px;
+}
+
+.content-area textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    padding: 15px;
+    border: none;
+    resize: vertical;
+}
+
+.sidebar {
+    width: 250px;
+    background: white;
+/*     border-radius: 8px; */
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.sidebar-section {
+    margin-bottom: 20px;
+}
+
+.sidebar-section h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sidebar-section ul {
+    list-style: none;
+}
+
+.sidebar-section ul li {
+    padding: 8px 0;
+    color: #666;
+    cursor: pointer;
+}
+
+.sidebar-section ul li:hover {
+    color: #03c75a;
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+}
+
+</style>
+</head>
+<body>
+	<div th:insert="common/top.html"></div>
+	    <main class="editor-container">
+        <div class="post-editor">
+            <div class="editor-header">
+                <h2>모임 만들기</h2>
+                <div class="editor-actions">
+                    <span class="attachment-count">첨부파일 0</span>
+                    <button class="submit-button">등록</button>
+                </div>
+            </div>
+
+            <div class="title-section">
+                <span>카테고리</span><select class="category-select">
+                    <option>카테고리</option>
+                </select>
+                <select class="location-select">
+                	<option>지역을 입력하세요</option>
+                </select>
+                <input type="number" class="participant-input" placeholder="참가인원은 입력하세요">
+                <input type="text" class="title-input" placeholder="제목을 입력하세요">
+            </div>
+
+            <div class="editor-toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-button"><span class="icon">📷</span></button>
+                    <button class="toolbar-button"><span class="icon">📁</span></button>
+                    <button class="toolbar-button"><span class="icon">🔗</span></button>
+                    <button class="toolbar-button"><span class="icon">📺</span></button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="toolbar-button">굵게</button>
+                    <button class="toolbar-button">기울임</button>
+                    <button class="toolbar-button">밑줄</button>
+                    <button class="toolbar-button">취소선</button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="toolbar-button">왼쪽</button>
+                    <button class="toolbar-button">가운데</button>
+                    <button class="toolbar-button">오른쪽</button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <textarea placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>공개 설정</h3>
+                <ul>
+                    <li>전체공개</li>
+                    <li>깐부공개</li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>추가 설정</h3>
+                <ul>
+                    <li>댓글 허용</li>
+                    <li>스크랩 허용</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+</body>
+</html>
