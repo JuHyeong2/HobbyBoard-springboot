@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 확인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            line-height: 1.5;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            letter-spacing: -0.3px;
+        }
+
+        /* Header Styles */
+        #top {
+            background-color: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            height: 64px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo a {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0066ff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            padding-top: 64px;
+            min-height: calc(100vh - 64px);
+            background: #f8f9fa;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            border-right: 1px solid #e9ecef;
+            position: fixed;
+            left: 0;
+            top: 64px;
+            height: calc(98vh - 64px);
+            padding: 2rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 0.25rem 0;
+        }
+
+        .sidebar nav ul li a {
+            display: block;
+            padding: 0.875rem 1.5rem;
+            color: #495057;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #f8f9fa;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            margin-left: 240px;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .content {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 2.5rem;
+        }
+
+        /* Password Form Styles */
+        .password-form h1 {
+            font-size: 28px;
+            color: #212529;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .password-form .info-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .password-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #495057;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .password-form input[type="password"] {
+            width: 100%;
+            height: 48px;
+            padding: 0 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #495057;
+            background-color: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .password-form input[type="password"]:focus {
+            outline: none;
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
+        }
+
+        .password-form button {
+            width: 100%;
+            height: 48px;
+            margin-top: 1.5rem;
+            background-color: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .password-form button:hover {
+            background-color: #0052cc;
+            transform: translateY(-1px);
+        }
+
+        .password-form button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content-wrapper {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            .content {
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="top">
+        <div class="logo">
+        <a href="/home">HAMO</a>
+<!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
+        </div>
+    </header>
+    <div class="main-container">
+    <div th:insert ="sidebar.html"></div>
+<!--         <jsp:include page="sideBar.jsp" /> -->
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="content">
+                    <form id="passwordForm" action="checkPassword" method="post" class="password-form">
+                        <h1>비밀번호 확인</h1>
+                        <div class="info-item">
+                            <label for="password">비밀번호를 입력해주세요</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit">확인</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var password = document.getElementById('password').value;
+            
+            //var isCorrect = Math.random() < 0.5; 
+            var isCorrect = password === "0000";
+            if (isCorrect) {
+                alert('비밀번호가 확인되었습니다.');
+                window.location.href = "${pageContext.request.contextPath}/editMyPage";
+            } else {
+                alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+                document.getElementById('password').value = ''; 
+                document.getElementById('password').focus();
+            }
+        });
+    </script>
+    <div th:insert = "common/footer.html"></div>
+<!--     <jsp:include page="../common/footer.jsp"/> -->
+</body>
+</html>
