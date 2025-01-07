@@ -2,6 +2,7 @@ package com.example.hamo.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,5 +20,27 @@ public class MemberController {
 	public String home() {
 		
 		return "index";
+	}
+	
+	@GetMapping("/member/myPage")
+	public String myPage() {
+		return "user-inform/myPage";
+	}
+	
+	@GetMapping("/member/checkPwd")
+	public String checkPwd(){
+	   return "user-inform/checkPwd";
+	}
+	@GetMapping("/member/myactivite")
+	public String myActivite() {
+		return "user-inform/myactivite";
+	}
+	@GetMapping("/member/mypost")
+	public String myPost() {
+		return "user-inform/mypost";
+	}
+	@GetMapping("/member/editMyPage")
+	public String editMyPage() {
+		return "user-inform/editMyPage";
 	}
 }

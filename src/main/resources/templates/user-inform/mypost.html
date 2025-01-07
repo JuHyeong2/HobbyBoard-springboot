@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 쓴 게시글</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            line-height: 1.5;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            letter-spacing: -0.3px;
+        }
+
+        /* Header Styles */
+        #top {
+            background-color: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            height: 64px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo a {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0066ff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            padding-top: 64px;
+            min-height: calc(100vh - 64px);
+            background: #f8f9fa;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            border-right: 1px solid #e9ecef;
+            position: fixed;
+            left: 0;
+            top: 64px;
+            height: calc(191vh - 64px);
+            padding: 2rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 0.25rem 0;
+        }
+
+        .sidebar nav ul li a {
+            display: block;
+            padding: 0.875rem 1.5rem;
+            color: #495057;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #f8f9fa;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 28px;
+            color: #212529;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .post-count {
+            font-size: 15px;
+            color: #868e96;
+            font-weight: 500;
+        }
+
+        /* Post Styles */
+        .post {
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-color: #dee2e6;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .post-status {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            background-color: #e7f5ff;
+            color: #1971c2;
+        }
+
+        .post-description {
+            font-size: 15px;
+            color: #495057;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f3f5;
+        }
+
+        .post-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .post-category {
+            background-color: #e7f5ff;
+            color: #1971c2;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .post-location,
+        .post-date {
+            color: #868e96;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Participants Section */
+        .participants {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .participant {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .participant-info {
+            margin-bottom: 1.25rem;
+        }
+
+        .participant-info p {
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+        }
+
+        .participant-info strong {
+            color: #212529;
+            width: 100px;
+            font-weight: 600;
+        }
+
+        .participant-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .accept-btn,
+        .reject-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .accept-btn {
+            background-color: #0066ff;
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background-color: #0052cc;
+            transform: translateY(-1px);
+        }
+
+        .reject-btn {
+            background-color: white;
+            color: #495057;
+            border-color: #dee2e6;
+        }
+
+        .reject-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+            transform: translateY(-1px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            color: #adb5bd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            color: #868e96;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content-wrapper {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .post {
+                padding: 1.25rem;
+            }
+            
+            .post-header {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            
+            .participant-info p {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            .participant-info strong {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="top">
+        <div class="logo">
+        <a href="/home">HAMO</a>
+<!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
+        </div>
+    </header>
+    <div class="main-container">
+    <div th:insert ="sidebar.html"></div>
+<!--         <jsp:include page="sideBar.jsp" /> -->
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="content">
+                    <h1>
+                        MY POST
+                        <span class="post-count">총 3건</span>
+                    </h1>
+                    
+                    <div class="post" onclick="toggleParticipants(this)">
+                        <div class="post-header">
+                            <div>
+                                <div class="post-title">주말 등산 모임</div>
+                                <div class="post-description">북한산에서 함께 등산하실 분들을 모집합니다. 초보자도 환영합니다. 서로 도와가며 즐겁게 등산해요!</div>
+                            </div>
+                            <span class="post-status">모집중</span>
+                        </div>
+                        <div class="post-meta">
+                            <div class="post-info">
+                                <span class="post-category">운동</span>
+                                <span class="post-location">은평구</span>
+                            </div>
+                            <span class="post-date">2023.06.10</span>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">
+                                <div class="participant-info">
+                                    <p><strong>이름</strong> 김철수</p>
+                                    <p><strong>자기소개</strong> 등산을 좋아하는 30대 직장인입니다.</p>
+                                    <p><strong>성별</strong> 남성</p>
+                                    <p><strong>생년월일</strong> 1988.05.15</p>
+                                </div>
+                                <div class="participant-actions">
+                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
+                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
+                                </div>
+                            </div>
+                            <div class="participant">
+                                <div class="participant-info">
+                                    <p><strong>이름</strong> 이영희</p>
+                                    <p><strong>자기소개</strong> 등산 초보입니다. 잘 부탁드려요!</p>
+                                    <p><strong>성별</strong> 여성</p>
+                                    <p><strong>생년월일</strong> 1995.11.22</p>
+                                </div>
+                                <div class="participant-actions">
+                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
+                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post" onclick="toggleParticipants(this)">
+                        <div class="post-header">
+                            <div>
+                                <div class="post-title">독서 토론 모임</div>
+                                <div class="post-description">매주 토요일 오후에 다양한 책을 읽고 토론하는 모임입니다. 함께 책을 읽고 의견을 나누며 성장해요.</div>
+                            </div>
+                            <span class="post-status">모집중</span>
+                        </div>
+                        <div class="post-meta">
+                            <div class="post-info">
+                                <span class="post-category">문화</span>
+                                <span class="post-location">강남구</span>
+                            </div>
+                            <span class="post-date">2023.06.17</span>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">
+                                <div class="participant-info">
+                                    <p><strong>이름</strong> 박지민</p>
+                                    <p><strong>자기소개</strong> 문학을 사랑하는 대학생입니다.</p>
+                                    <p><strong>성별</strong> 여성</p>
+                                    <p><strong>생년월일</strong> 2000.03.01</p>
+                                </div>
+                                <div class="participant-actions">
+                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
+                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post" onclick="toggleParticipants(this)">
+                        <div class="post-header">
+                            <div>
+                                <div class="post-title">주말 자전거 라이딩</div>
+                                <div class="post-description">한강 자전거 도로를 따라 함께 라이딩 하실 분들을 찾습니다. 여유롭게 달리며 즐거운 시간 보내요.</div>
+                            </div>
+                            <span class="post-status">모집중</span>
+                        </div>
+                        <div class="post-meta">
+                            <div class="post-info">
+                                <span class="post-category">운동</span>
+                                <span class="post-location">영등포구</span>
+                            </div>
+                            <span class="post-date">2023.06.24</span>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">
+                                <div class="participant-info">
+                                    <p><strong>이름</strong> 정민수</p>
+                                    <p><strong>자기소개</strong> 주말마다 자전거 타는 것을 즐기는 회사원입니다.</p>
+                                    <p><strong>성별</strong> 남성</p>
+                                    <p><strong>생년월일</strong> 1992.09.10</p>
+                                </div>
+                                <div class="participant-actions">
+                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
+                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleParticipants(post) {
+            const participants = post.querySelector('.participants');
+            const currentDisplay = participants.style.display;
+            const allParticipants = document.querySelectorAll('.participants');
+           
+            allParticipants.forEach(p => {
+                p.style.display = 'none';
+            });
+            
+            participants.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        }
+
+        function handleParticipant(event, button, action) {
+            event.stopPropagation();
+            const participant = button.closest('.participant');
+            const name = participant.querySelector('p:first-child').textContent.split(' ')[1];
+            
+            if (action === 'accept') {
+                alert(`${name}님의 참가 신청을 수락했습니다.`);
+            } else {
+                alert(`${name}님의 참가 신청을 거절했습니다.`);
+            }
+            
+            participant.style.opacity = '0';
+            participant.style.transform = 'translateY(-10px)';
+            participant.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                participant.remove();
+                
+                const participants = participant.closest('.participants');
+                if (!participants.querySelector('.participant')) {
+                    participants.style.display = 'none';
+                }
+            }, 300);
+        }
+    </script>
+<!--     <jsp:include page="../common/footer.jsp"/> -->
+<div th:insert = "common/footer.html"></div>
+</body>
+</html>

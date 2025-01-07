@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 참여한 활동</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            line-height: 1.5;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            letter-spacing: -0.3px;
+        }
+
+        /* Header Styles */
+        #top {
+            background-color: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            height: 64px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo a {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0066ff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            padding-top: 64px;
+            min-height: calc(100vh - 64px);
+            background: #f8f9fa;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            border-right: 1px solid #e9ecef;
+            position: fixed;
+            left: 0;
+            top: 64px;
+            height: calc(182vh - 64px);
+            padding: 2rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 0.25rem 0;
+        }
+
+        .sidebar nav ul li a {
+            display: block;
+            padding: 0.875rem 1.5rem;
+            color: #495057;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #f8f9fa;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 28px;
+            color: #212529;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .activity-count {
+            font-size: 15px;
+            color: #868e96;
+            font-weight: 500;
+        }
+
+        /* Activity Cards */
+        .activity {
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-color: #dee2e6;
+        }
+
+        .activity-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .activity-description {
+            font-size: 15px;
+            color: #495057;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f3f5;
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .activity-category {
+            background-color: #e7f5ff;
+            color: #1971c2;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .activity-date {
+            color: #868e96;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .activity-status {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .activity-status.completed {
+            background-color: #ebfbee;
+            color: #2b8a3e;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            color: #adb5bd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            color: #868e96;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content-wrapper {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .activity {
+                padding: 1.25rem;
+            }
+            
+            .activity-title {
+                font-size: 16px;
+            }
+            
+            .activity-description {
+                font-size: 14px;
+            }
+            
+            .activity-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="top">
+        <div class="logo">
+        <a href="/home">HAMO</a>
+<!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
+        </div>
+    </header>
+    <div class="main-container">
+    <div th:insert ="sidebar.html"></div>
+<!--         <jsp:include page="sideBar.jsp" /> -->
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="content">
+                    <h1>
+                        MY ACTIVITE
+                        <span class="activity-count">총 5건</span>
+                    </h1>
+                    
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">지역 공원 청소 봉사</div>
+                        <div class="activity-description">우리 동네 공원의 환경을 개선하기 위해 쓰레기를 줍고 꽃을 심었습니다. 주민들과 함께하는 환경 정화 활동을 통해 지역 사회의 아름다움을 되찾았습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">환경</span>
+                                <span class="activity-date">2023.05.15</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">노인복지관 식사 봉사</div>
+                        <div class="activity-description">지역 노인복지관에서 어르신들께 점심 식사를 대접하고 말벗이 되어드렸습니다. 따뜻한 마음과 정성으로 준비한 식사를 통해 어르신들께 기쁨을 전달했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">복지</span>
+                                <span class="activity-date">2023.06.02</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">동물 보호소 봉사</div>
+                        <div class="activity-description">유기동물 보호소에서 개와 고양이들의 케이지를 청소하고 먹이를 주었습니다. 사랑과 관심이 필요한 동물들에게 따뜻한 보살핌을 제공했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">동물복지</span>
+                                <span class="activity-date">2023.06.20</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">지역 축제 운영 보조</div>
+                        <div class="activity-description">우리 동네 여름 축제에서 부스 운영과 행사 안내를 도왔습니다. 지역 주민들과 함께 즐거운 시간을 보내며 축제의 성공적인 진행을 도왔습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">문화</span>
+                                <span class="activity-date">2023.07.10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">초등학교 방과 후 학습 지도</div>
+                        <div class="activity-description">지역 초등학교에서 저소득층 학생들의 방과 후 학습을 지도했습니다. 학생들의 학업 향상을 위해 개별 지도와 학습 동기 부여를 진행했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">교육</span>
+                                <span class="activity-date">2023.08.05</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--     <jsp:include page="../common/footer.jsp"/> -->
+	<div th:insert = "common/footer.html"></div>
+</body>
+</html>    
+    
