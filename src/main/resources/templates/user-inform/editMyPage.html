@@ -4,226 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 정보 수정</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            line-height: 1.5;
-            background-color: #f8f9fa;
-            color: #333;
-            min-height: 100vh;
-            letter-spacing: -0.3px;
-        }
-
-        /* Header Styles */
-        #top {
-            background-color: white;
-            border-bottom: 1px solid #e9ecef;
-            padding: 0 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            height: 64px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .logo a {
-            font-size: 26px;
-            font-weight: 700;
-            color: #0066ff;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        /* Main Container */
-        .main-container {
-            display: flex;
-            padding-top: 64px;
-            min-height: calc(100vh - 64px);
-            background: #f8f9fa;
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            width: 240px;
-            background-color: white;
-            border-right: 1px solid #e9ecef;
-            position: fixed;
-            left: 0;
-            top: 64px;
-            height: calc(152vh - 64px);
-            padding: 2rem 0;
-            overflow-y: auto;
-        }
-
-        .sidebar nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar nav ul li {
-            margin: 0.25rem 0;
-        }
-
-        .sidebar nav ul li a {
-            display: block;
-            padding: 0.875rem 1.5rem;
-            color: #495057;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar nav ul li a:hover {
-            background-color: #f8f9fa;
-            color: #0066ff;
-            border-left-color: #0066ff;
-        }
-
-        /* Content Area */
-        .content-wrapper {
-            flex: 1;
-            margin-left: 240px;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .content {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            padding: 2.5rem;
-        }
-
-        /* Edit Form Styles */
-        .edit-form h1 {
-            font-size: 28px;
-            color: #212529;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .info-section {
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #212529;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .edit-form label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #495057;
-        }
-
-        .edit-form input[type="text"],
-        .edit-form input[type="password"],
-        .edit-form input[type="email"],
-        .edit-form input[type="tel"] {
-            height: 44px;
-            padding: 0 1rem;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            font-size: 15px;
-            color: #495057;
-            background-color: #fff;
-            transition: all 0.2s ease;
-        }
-
-        .edit-form input[readonly] {
-            background-color: #f8f9fa;
-            color: #868e96;
-            cursor: not-allowed;
-        }
-
-        .edit-form input:focus {
-            outline: none;
-            border-color: #0066ff;
-            box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
-        }
-
-        .edit-form button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 200px;
-            height: 48px;
-            margin-top: 2rem;
-            background-color: #0066ff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .edit-form button:hover {
-            background-color: #0052cc;
-            transform: translateY(-1px);
-        }
-
-        .edit-form button:active {
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            
-            .content-wrapper {
-                margin-left: 0;
-                padding: 1rem;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .edit-form button {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/user_inform/user.css">
 </head>
 <body>
     <header id="top">
@@ -233,7 +14,11 @@
         </div>
     </header>
     <div class="main-container">
+<<<<<<< HEAD
     <div th:insert ="user-inform/sidebar.html"></div>
+=======
+<div th:insert ="user-inform/sidebar.html"></div>
+>>>>>>> 1a7205b1ffa45a00fc28c8d3cd3e816af11a46c3
 <!--         <jsp:include page="sideBar.jsp" /> -->
         <div class="content-wrapper">
             <div class="container">
@@ -315,7 +100,7 @@
                 return;
             }            
             alert('수정이 완료되었습니다.');
-            window.location.href = "${pageContext.request.contextPath}/mypage";
+            window.location.href = "/member/myPage";
         });
     </script>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
