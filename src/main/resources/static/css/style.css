@@ -46,6 +46,7 @@ main {
 }
 
 .board-grid {
+	margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
@@ -98,6 +99,8 @@ img {
     position: relative;
     height: 450px;
     background: linear-gradient(#f0f2ff, #feffed);
+    background-size: cover; /* 이미지가 배경 영역을 가득 채우게 함 */
+    background-position: center; /* 이미지가 중앙에 배치되도록 함 */
     color: #1a1a1a;
     display: flex;
     flex-direction: column;
