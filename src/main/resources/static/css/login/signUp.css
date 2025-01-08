@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+}
+
+.container {
+    max-width: 460px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group.with-button {
+    display: flex;
+    gap: 10px;
+}
+
+.form-group.with-button input {
+    flex: 1;
+}
+
+.button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+.button.secondary {
+    background-color: #f8f9fa;
+    color: #1a73e8;
+    border: 1px solid #1a73e8;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.gender-group {
+    display: flex;
+    flex-direction: row; /* 가로 정렬 */
+    gap: 60px;
+    align-items: center;
+}
+
+.gender-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.gender-group input[type="radio"] {
+	width: 16px;
+}
+
+.checkbox-group {
+    margin-top: 20px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.submit-button {
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px;
+    font-size: 16px;
+}
