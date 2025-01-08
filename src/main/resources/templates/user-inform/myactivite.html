@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 참여한 활동</title>
+    <link rel="stylesheet" href="/css/user_inform/user.css">
+</head>
+<body>
+    <header id="top">
+        <div class="logo">
+        <a href="/home">HAMO</a>
+<!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
+        </div>
+    </header>
+    <div class="main-container">
+   <div th:insert ="user-inform/sidebar.html"></div>
+<!--         <jsp:include page="sideBar.jsp" /> -->
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="content">
+                    <h1>
+                        MY ACTIVITE
+                        <span class="activity-count">총 5건</span>
+                    </h1>
+                    
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">지역 공원 청소 봉사</div>
+                        <div class="activity-description">우리 동네 공원의 환경을 개선하기 위해 쓰레기를 줍고 꽃을 심었습니다. 주민들과 함께하는 환경 정화 활동을 통해 지역 사회의 아름다움을 되찾았습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">환경</span>
+                                <span class="activity-date">2023.05.15</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">노인복지관 식사 봉사</div>
+                        <div class="activity-description">지역 노인복지관에서 어르신들께 점심 식사를 대접하고 말벗이 되어드렸습니다. 따뜻한 마음과 정성으로 준비한 식사를 통해 어르신들께 기쁨을 전달했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">복지</span>
+                                <span class="activity-date">2023.06.02</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">동물 보호소 봉사</div>
+                        <div class="activity-description">유기동물 보호소에서 개와 고양이들의 케이지를 청소하고 먹이를 주었습니다. 사랑과 관심이 필요한 동물들에게 따뜻한 보살핌을 제공했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">동물복지</span>
+                                <span class="activity-date">2023.06.20</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">지역 축제 운영 보조</div>
+                        <div class="activity-description">우리 동네 여름 축제에서 부스 운영과 행사 안내를 도왔습니다. 지역 주민들과 함께 즐거운 시간을 보내며 축제의 성공적인 진행을 도왔습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">문화</span>
+                                <span class="activity-date">2023.07.10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="activity-status completed">활동 완료</div>
+                        <div class="activity-title">초등학교 방과 후 학습 지도</div>
+                        <div class="activity-description">지역 초등학교에서 저소득층 학생들의 방과 후 학습을 지도했습니다. 학생들의 학업 향상을 위해 개별 지도와 학습 동기 부여를 진행했습니다.</div>
+                        <div class="activity-meta">
+                            <div class="activity-info">
+                                <span class="activity-category">교육</span>
+                                <span class="activity-date">2023.08.05</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--     <jsp:include page="../common/footer.jsp"/> -->
+	<div th:insert = "common/footer.html"></div>
+</body>
+</html>    
+    
