@@ -27,7 +27,7 @@ public class MemberController {
 		return "user-inform/myPage";
 	}
 	
-	@GetMapping("/member/checkPwd")
+	@PostMapping("/member/checkPwd")
 	public String checkPwd(){
 	   return "user-inform/checkPwd";
 	}

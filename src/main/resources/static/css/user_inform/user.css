@@ -46,7 +46,7 @@
             min-height: calc(100vh - 64px);
             background: #f8f9fa;
         }
-
+		
         /* Sidebar Styles */
         .sidebar {
             width: 240px;
@@ -55,9 +55,10 @@
             position: fixed;
             left: 0;
             top: 64px;
-            height: calc(168vh - 64px);
+            height: calc(100vh - 64px); 
             padding: 2rem 0;
             overflow-y: auto;
+          
         }
 
         .sidebar nav ul {
@@ -93,12 +94,21 @@
             margin-left: 240px;
             padding: 2rem;
         }
+        .content-wrapper1 {
+            flex: 1;
+            margin-left: 100px;
+            padding: 8rem;
+        }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
-
+        
+        .container1 {
+            max-width: 400px;
+            margin: 0 auto;
+        }
         .content {
             background-color: transparent;
             padding: 0;
