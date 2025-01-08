@@ -33,5 +33,10 @@ public class BoardController {
 	public String noticeDetail() {
 		return "board/noticeDetail";
 	}
+	
+	@GetMapping("board/project")
+	public String project() {
+		return "board/project";
+	}
 
 }
