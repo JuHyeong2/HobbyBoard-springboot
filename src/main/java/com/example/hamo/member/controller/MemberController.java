@@ -22,6 +22,11 @@ public class MemberController {
 		return "index";
 	}
 	
+	@GetMapping("/member/signUp")
+	public String signUp() {
+		return "login/signUp";
+	}
+	
 	@GetMapping("/member/myPage")
 	public String myPage() {
 		return "user-inform/myPage";
