@@ -314,12 +314,13 @@
         }
 
         .edit-form button {
-            display: inline-flex;
+            display: inline-flex; 
             align-items: center;
             justify-content: center;
-            width: 200px;
+            width: 250px;
             height: 48px;
             margin-top: 2rem;
+            margin-left : 16rem;
             background-color: #0066ff;
             color: white;
             border: none;
