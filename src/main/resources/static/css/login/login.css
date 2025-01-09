@@ -3,8 +3,8 @@
 * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+/*       box-sizing: border-box; */
+      
 }
 
 main {
@@ -14,7 +14,8 @@ main {
     align-items: center;
     min-height: 100vh;
 /*     background-color: #f3f4f6; */
-    padding-top: 2rem; /*Add some padding to the top*/
+    padding-top: 2rem; 
+    font-family: 'Arial', sans-serif;
 }
 
 .login-card {
@@ -92,27 +93,27 @@ main {
     background-color: #f3f4f6;
 }
 
-.top-menu {
-    background-color: #2563eb;
-    padding: 1rem;
-}
+/* .top-menu { */
+/*     background-color: #2563eb; */
+/*     padding: 1rem; */
+/* } */
 
-.top-menu ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: flex-start;
-    gap: 1rem;
-}
+/* .top-menu ul { */
+/*     list-style-type: none; */
+/*     display: flex; */
+/*     justify-content: flex-start; */
+/*     gap: 1rem; */
+/* } */
 
-.top-menu a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
+/* .top-menu a { */
+/*     color: white; */
+/*     text-decoration: none; */
+/*     font-weight: bold; */
+/* } */
 
-.top-menu a:hover {
-    text-decoration: underline;
-}
+/* .top-menu a:hover { */
+/*     text-decoration: underline; */
+/* } */
 
 .links {
     display: flex;
