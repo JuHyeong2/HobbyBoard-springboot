@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사 소개</title>
+    <link rel="stylesheet" href="/css/board/project.css">
+</head>
+<body>
+    <header>
+        <h1 onclick="location.href='/home'">HAMO</h1>
+    </header>
+    <main>
+        <section id="home" class="page">
+            <div class="title">하모에서 하비 모임</div>
+            <div class="home-content">
+            	편하게 즐기는 나의 취미<br/>
+            	다이나믹한 나의 취미<br/>
+            	쉬운 나의 취미
+            </div>
+            
+        </section>
+        <section id="progress" class="page">
+            <div class="title">개발 과정</div>
+            <div class="progrss-content"></div>
+            
+        </section>
+        <section id="programers" class="page">
+            <div class="title">코폭컴퍼니</div>
+            <div class="members-list">
+            	<div class="programers-content">이주형 PL</div>
+            	<div class="programers-content">김영찬</div>
+            	<div class="programers-content">황성현</div>
+            	<div class="programers-content">강형준</div>
+            </div>
+        </section>
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const main = document.querySelector('main');
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+        let isScrolling = false;
+
+        function scrollToPage(pageIndex) {
+            isScrolling = true;
+            pages[pageIndex].scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        }
+
+        main.addEventListener('wheel', (event) => {
+            if (isScrolling) return;
+
+            if (event.deltaY > 0 && currentPage < pages.length - 1) {
+                currentPage++;
+                scrollToPage(currentPage);
+            } else if (event.deltaY < 0 && currentPage > 0) {
+                currentPage--;
+                scrollToPage(currentPage);
+            }
+        });
+
+        document.querySelector('header h1').addEventListener('click', (event) => {
+            event.preventDefault();
+            currentPage = 0;
+            scrollToPage(currentPage);
+        });
+    });
+    </script>
+</body>
+</html>

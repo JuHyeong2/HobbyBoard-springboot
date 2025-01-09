@@ -18,6 +18,12 @@ public class BoardController {
 		return "board/boardInsert"; 
 	}
 	
+	@GetMapping("/board/boardUpdate")
+	public String boardUpdate() {
+		return "board/boardUpdate";
+	}
+		
+	
 	@GetMapping("board/noticeView")
 	public String noticeView() {
 		return "board/noticeView";
@@ -26,6 +32,11 @@ public class BoardController {
 	@GetMapping("board/noticeDetail")
 	public String noticeDetail() {
 		return "board/noticeDetail";
+	}
+	
+	@GetMapping("board/project")
+	public String project() {
+		return "board/project";
 	}
 
 }
