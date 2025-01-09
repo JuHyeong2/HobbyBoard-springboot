@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -19,13 +19,20 @@
             </div>
 
             <div class="title-section">
-                <span>카테고리</span><select class="category-select">
+                <span>카테고리</span>
+                <select class="category-select">
                     <option>카테고리</option>
                 </select>
+                
+                <span>지역</span>
                 <select class="location-select">
                 	<option>지역을 입력하세요</option>
                 </select>
+                
+                <span>참가인원</span>
                 <input type="number" class="participant-input" placeholder="참가인원은 입력하세요">
+                
+                <span>제목</span>
                 <input type="text" class="title-input" placeholder="제목을 입력하세요">
             </div>
 

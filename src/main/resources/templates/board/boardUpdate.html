@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>boardUpdate</title>
-<!-- <link rel="stylesheet" href="/css/board/boardInser.css"> -->
-<link rel="stylesheet" href="/css/board/boardUpdate.css">
+<title>Insert title here</title>
 
+<link rel="stylesheet" href="/css/board/boardInsert.css">
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
 	    <main class="editor-container">
         <div class="post-editor">
             <div class="editor-header">
-                <h2>게시글 수정</h2>
+                <h2>모임 만들기</h2>
                 <div class="editor-actions">
                     <span class="attachment-count">첨부파일 0</span>
                     <button class="submit-button">수정</button>
@@ -20,13 +19,20 @@
             </div>
 
             <div class="title-section">
+                <span>카테고리</span>
                 <select class="category-select">
                     <option>카테고리</option>
                 </select>
+                
+                <span>지역</span>
                 <select class="location-select">
                 	<option>지역을 입력하세요</option>
                 </select>
-                <input type="number" class="participant-input" placeholder="참가인원을 입력하세요">
+                
+                <span>참가인원</span>
+                <input type="number" class="participant-input" placeholder="참가인원은 입력하세요">
+                
+                <span>제목</span>
                 <input type="text" class="title-input" placeholder="제목을 입력하세요">
             </div>
 
@@ -55,22 +61,22 @@
             </div>
         </div>
 
-<!--         <aside class="sidebar"> -->
-<!--             <div class="sidebar-section"> -->
-<!--                 <h3>공개 설정</h3> -->
-<!--                 <ul> -->
-<!--                     <li>전체공개</li> -->
-<!--                     <li>깐부공개</li> -->
-<!--                 </ul> -->
-<!--             </div> -->
-<!--             <div class="sidebar-section"> -->
-<!--                 <h3>추가 설정</h3> -->
-<!--                 <ul> -->
-<!--                     <li>댓글 허용</li> -->
-<!--                     <li>스크랩 허용</li> -->
-<!--                 </ul> -->
-<!--             </div> -->
-<!--         </aside> -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>공개 설정</h3>
+                <ul>
+                    <li>전체공개</li>
+                    <li>깐부공개</li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>추가 설정</h3>
+                <ul>
+                    <li>댓글 허용</li>
+                    <li>스크랩 허용</li>
+                </ul>
+            </div>
+        </aside>
     </main>
 </body>
 </html>
