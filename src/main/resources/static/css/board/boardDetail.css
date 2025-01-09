@@ -53,34 +53,66 @@
     margin-top: auto;
 }
 
-/* Seller info styles */
-.seller-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+.reply {
+	margin-bottom: 50px;
+	
 }
 
-.seller-profile {
+.rp-user-info {
+/*     display: flex; */
+/*     justify-content: space-between; */
+    align-items: center;
+    padding: 0.2rem;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    
+/*     border-radius: 8px; */
+/*     margin-bottom: 2rem; */
+}
+
+.rp-user-profile {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.profile-image {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #f8f9fa;
+/* user info styles */
+.user-info {
+/*     display: flex; */
+/*     justify-content: space-between; */
+    align-items: center;
+    padding: 0.2rem;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    
+/*     border-radius: 8px; */
+/*     margin-bottom: 2rem; */
 }
 
-.temperature {
-    color: #0066cc;
-    font-weight: bold;
+.user-details {
+	width: 100%
 }
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    width: 64px !important;
+    height: 64px !important;
+    display: inline-block;
+}
+
+
+/* .comment-media .photo img { */
+/*     border-radius: 50%; */
+/*     width: 64px !important; */
+/*     height: 64px !important; */
+/*     display: inline-block; */
+/* } */
 
 /* Items grid styles */
 .items-grid {
@@ -96,35 +128,6 @@
     border-radius: 8px;
 }
 
-/* Footer styles */
-
-
-.footer {
-    background-color: #f0f2ff;
-    padding: 3rem 1rem;
-    margin-top: 4rem;
-}
-
-.app-download {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.store-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.store-buttons button {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid #0066cc;
-    border-radius: 4px;
-    background-color: white;
-    color: #0066cc;
-    cursor: pointer;
-}
 
 .borad-slider {
     display: flex;
@@ -162,7 +165,13 @@ img {
 	
 }
 
+.reply-enroll {
+	margin-bottom: 20px !important;
+}
 
+.reply-enroll-btn{
+/* 	여기 버튼 오른족으로 밀어야함 */
+}
 
         .notice-item {
             display: flex;
@@ -211,3 +220,14 @@ img {
             text-align: right;
             min-width: 100px;
         }
+
+        
+input {
+	width: 100%;
+	height: 50px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+	
+}        

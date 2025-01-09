@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Board Details</title>
@@ -20,7 +20,6 @@
                 <div class="main-image"></div>
                 <div class="image-thumbnails"></div>
             </div>
-
             <div class="gathering-info">
                 <h1 class="gathering-title">코드폭격기 신나는 코딩모임</h1>
                 <div class="price">코딩모임</div>
@@ -34,43 +33,51 @@
                 <button class="purchase-btn">참가하기</button>
             </div>
         </div>
-
-        <section class="seller-info">
-            <div class="seller-profile">
-                <div class="profile-image"><img alt="board-img" src="#"></div>
-                <div class="seller-details">
+        
+        
+        <div class="reply">
+        <div class="reply-enroll">
+		<section class="rp-user-info">
+			<div class="rp-user-profile">
+				<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+				<div class="user-details">
+					<h3>도로로 병장</h3>
+					<input type="text" name="content" placeholder="댓글을 입력하세요~.">
+				</div>
+			</div>
+			<button class="reply-enroll-btn">등록</button>
+		</section>
+		</div>
+			
+        <section class="user-info">
+            <div class="user-profile">
+                <div class="profile-image"><img alt="board-img" src="/image/img1.jpg"></div>
+                <div class="user-details">
                     <h3>케로로중사</h3>
                     <p>이야~ 코드폭격기 ㅋㅋㅋㅋ</p>
                 </div>
             </div>
-            <div class="temperature">
-                <span></span>
-            </div>
         </section>
-        <section class="seller-info">
-            <div class="seller-profile">
-                <div class="profile-image"><img alt="board-img" src="#"></div>
-                <div class="seller-details">
-                    <h3>타마마 이병</h3>
+        <section class="user-info">
+            <div class="user-profile">
+                <div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+                <div class="user-details">
+                    <h3>도로로 병장</h3>
                     <p>코드좀 침??ㅋㅋ</p>
                 </div>
             </div>
-            <div class="temperature">
-                <span></span>
-            </div>
         </section>
-        <section class="seller-info">
-            <div class="seller-profile">
-                <div class="profile-image"><img alt="board-img" src="#"></div>
-                <div class="seller-details">
+        <section class="user-info">
+            <div class="user-profile">
+                <div class="profile-image"><img alt="board-img" src="/image/img5.jpg"></div>
+                <div class="user-details">
                     <h3>뚜뇽</h3>
                     <p>응 나 아기천사</p>
                 </div>
             </div>
-            <div class="temperature">
-                <span></span>
-            </div>
         </section>
+        </div>
+        
         
         <div class="notice-list">
             <div class="notice-item">
@@ -107,7 +114,7 @@
         </div>
 
 
-<!--         <section class="seller-items"> -->
+<!--         <section class="user-items"> -->
 <!--             <h2>코딩 관련 모임</h2> -->
 <!--             <div class="items-grid"> -->
 <!--                 판매 물품 그리드 아이템들 -->

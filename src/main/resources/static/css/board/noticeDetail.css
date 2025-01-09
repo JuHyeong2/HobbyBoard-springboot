@@ -26,13 +26,17 @@
             gap: 12px;
             margin-top: 30px;
         }
-
+        
         .notice-badge {
-            background-color: #007bff;
+        	background-color: #007bff;
+            padding: 4px 8px;
             color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 12px;
+            min-width: 60px;
+            text-align: center;
+            font-weight: bold;
         }
 
         .notice-title {
