@@ -1,9 +1,11 @@
 package com.example.hamo.member.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -22,9 +24,26 @@ public class MemberController {
 		return "index";
 	}
 	
+	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
 	public String signUp() {
 		return "login/signUp";
+	}
+	
+	// 아이디 찾기 페이지로 이동
+	@GetMapping("/member/findId")
+	public String findId(Model model, HttpServletRequest request) {
+		model.addAttribute("loc", request.getRequestURI());
+		System.out.println(model.getAttribute("loc").toString());
+		return "login/findId";
+	}
+	
+	// 아이디 찾기 페이지로 이동
+	@GetMapping("/member/findPwd")
+	public String findPwd(Model model, HttpServletRequest request) {
+		model.addAttribute("loc", request.getRequestURI());
+		System.out.println(model.getAttribute("loc").toString());
+		return "login/findPwd";
 	}
 	
 	@GetMapping("/member/myPage")

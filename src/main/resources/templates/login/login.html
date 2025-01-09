@@ -8,7 +8,7 @@
 </head>
 <body>
     <div th:insert="common/top.html"></div>
-<!-- 	<div th:replace="~{common/top.html :: top"}></div> -->
+<!-- 	<div th:replace="common/top.html"></div> -->
     <main>
 	    <div class="login-card">
 	        <h1 class="login-title">로그인</h1>
@@ -28,7 +28,7 @@
 	            <button type="submit" class="login-button">로그인</button>
 	            <div class="links">
                 	<a href="/member/signUp">회원가입</a>
-                	<a href="#">아이디/비밀번호 찾기</a>
+                	<a href="/member/findId">아이디/비밀번호 찾기</a>
            		</div>
 	        </form>
 	    </div>
