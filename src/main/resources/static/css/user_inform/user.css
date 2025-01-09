@@ -45,7 +45,18 @@
             padding-top: 64px;
             min-height: calc(100vh - 64px);
             background: #f8f9fa;
+            position:relative;
         }
+		
+		footer {
+    position: relative;
+    z-index: 20;
+    background-color: #f0f2ff;
+    padding: 2rem 0;
+    margin-top: 3rem;
+	}
+		
+		
 		
         /* Sidebar Styles */
         .sidebar {
@@ -58,7 +69,7 @@
             height: calc(100vh - 64px); 
             padding: 2rem 0;
             overflow-y: auto;
-          
+          	z-index:5;
         }
 
         .sidebar nav ul {
