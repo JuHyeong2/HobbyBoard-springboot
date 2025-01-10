@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 목록</title>
+    <link rel="stylesheet" href="/css/admin/users.css">
+</head>
+<body>
+    <div th:replace="admin/admin-main.html"></div>
+
+    <div class="header">
+        <h1>USER LIST</h1>
+        <input type="text" placeholder="사용자 검색..." aria-label="사용자 검색" class="search-bar">
+        
+        <div class="content-wrapper">
+            <!-- 사용자 카드 목록 -->
+            <div class="user-list">
+                <!-- 사용자 카드 -->
+                <div class="user-card">
+                    <span class="user-id">No.12</span> <!-- 추가된 텍스트 -->
+                    <h3 class="user-name">홍길동</h3>
+                    <p>아이디: hong123</p>
+                    <p>이메일: hong123@example.com</p>
+                    <p>휴대폰 번호: 010-1234-5678</p>
+                    <p>닉네임: 길동이</p>
+                    <p>활동 여부: 활성</p>
+                    <p>가입일: 2023-01-15</p>
+                    <p>거주 지역: 서울특별시</p>
+                    <button class="button activate-btn">활성화</button>
+                    <button class="button deactivate-btn">비활성화</button>
+                </div>
+
+                <div class="user-card">
+                    <span class="user-id">No.13</span> <!-- 추가된 텍스트 -->
+                    <h3 class="user-name">김철수</h3>
+                    <p>아이디: kim123</p>
+                    <p>이메일: kim123@example.com</p>
+                    <p>휴대폰 번호: 010-9876-5432</p>
+                    <p>닉네임: 철수맨</p>
+                    <p>활동 여부: 비활성</p>
+                    <p>가입일: 2023-03-20</p>
+                    <p>거주 지역: 부산광역시</p>
+                    <button class="button activate-btn">활성화</button>
+                    <button class="button deactivate-btn">비활성화</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelectorAll('.activate-btn').forEach(button => {
+        button.addEventListener('click', () => alert('사용자가 활성화되었습니다.'));
+    });
+
+    document.querySelectorAll('.deactivate-btn').forEach(button => {
+        button.addEventListener('click', () => alert('사용자가 비활성화되었습니다.'));
+    });
+</script>
+</html>

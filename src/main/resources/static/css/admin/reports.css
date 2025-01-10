@@ -1,0 +1,131 @@
+/* 전체 레이아웃 설정 */
+@charset "UTF-8";
+
+.header {
+  margin-left: 250px; /* 사이드바 너비만큼 여백 */
+  padding: 20px;
+  width: calc(100% - 250px); /* 나머지 공간을 차지 */
+  overflow: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+.content-wrapper {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-right: 200px;
+}
+
+/* 신고 목록 */
+.report-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.report-card {
+    width: calc(25% - 20px); /* 한 행에 4개 카드 표시 */
+    height: 200px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.report-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.report-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.report-card .button {
+    margin-top: auto;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.report-card .button:hover {
+    background-color: #0056b3;
+}
+
+/* 신고 폼 */
+.report-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.report-form h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.report-form .form-item {
+    margin-bottom: 20px;
+}
+
+.report-form .form-item label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.report-form .form-item input,
+.report-form .form-item textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.report-form .form-item textarea {
+    resize: vertical;
+}
+
+.report-form .submit-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.report-form .submit-btn:hover {
+    background-color: #218838;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .report-card {
+        width: calc(33.33% - 20px); /* 1024px 이하에서는 3개씩 표시 */
+    }
+}
+
+@media (max-width: 768px) {
+    .report-card {
+        width: calc(50% - 20px); /* 768px 이하에서는 2개씩 표시 */
+    }
+}
+
+@media (max-width: 480px) {
+    .report-card {
+        width: 100%; /* 480px 이하에서는 1개씩 표시 */
+    }
+}

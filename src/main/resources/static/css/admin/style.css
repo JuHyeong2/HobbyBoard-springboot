@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/* #a{ */
+/*     font-family: 'Inter', sans-serif; */
+/*     margin: 0; */
+/*     padding: 0; */
+/*     display: flex; */
+/*     height: 100vh; */
+/* } */
+
+/* 전체 레이아웃 설정 */
+
+.HAMO {
+	
+	margin-top: 30px;
+	margin-left: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+#a {
+  font-family:'Inter', sans-serif;
+  display: flex;
+  height: 100vh;
+}
+
+/* 사이드바 설정 */
+.sidebar {
+  position: fixed; /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 250px; /* 사이드바 너비 */
+  height: 100%; /* 화면 전체 높이 */
+  background-color: #2c3e50; /* 배경 색 */
+  color: white;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+/* 사이드바 내부와 배너 사이 공간*/
+.sideMain {
+	margin-top: 50px;
+}
+
+/* 사이드바 내 항목 스타일 */
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+}
