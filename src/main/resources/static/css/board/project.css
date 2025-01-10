@@ -20,6 +20,10 @@ header {
     font-weight: bold;
 }
 
+h1{
+	cursor: pointer;
+}
+
 .page {
     height: 100%;
     width: 100%;
@@ -58,41 +62,41 @@ main {
 
 }
 
-        .company-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 8rem;
-            color: #444;
-        }
+.company-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 8rem;
+    color: #444;
+}
 
-        .members-list {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
+.members-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 
-        .programers-content {
-            font-size: 1.5rem;
-            color: #666;
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-        }
+.programers-content {
+    font-size: 1.5rem;
+    color: #666;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+}
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .company-title {
-                font-size: 2rem;
-                margin-bottom: 4rem;
-            }
+/* Responsive design */
+@media (max-width: 768px) {
+    .company-title {
+        font-size: 2rem;
+        margin-bottom: 4rem;
+    }
 
-            .members-list {
-                flex-direction: column;
-                align-items: center;
-            }
+    .members-list {
+        flex-direction: column;
+        align-items: center;
+    }
 
-            .member {
-                font-size: 1.25rem;
-            }
-        }
+    .member {
+        font-size: 1.25rem;
+    }
+}
