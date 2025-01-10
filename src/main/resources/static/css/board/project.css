@@ -7,7 +7,6 @@
 }
 
 body {
-/*     font-family: Arial, sans-serif; */
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow-x: hidden; 
 }
@@ -31,68 +30,97 @@ header {
 }
 
 main {
+	position: relative;
     height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
 }
 
 #home {
-/*     background-color: #f0f0f0; */
     background: linear-gradient(#f0f2ff, #feffed);
 }
 
+#home .title {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+#home .home-content {
+	position: absolute;
+	top: 40%;
+	left: 15%;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+p {
+	margin-bottom: 8px;
+}
+
+
 #progress {
-/*     background-color: #e0e0e0; */
     background: linear-gradient(#feffed, #f0f2ff);
 }
 
+#progress .title {
+	position: absolute;
+	top: 120%;
+	left: 10%;
+}
+
+
 #programers {
-/*     background-color: #d0d0d0; */
     background: linear-gradient(#f0f2ff, #feffed);    
+}
+
+#programers .title {
+	position: absolute;
+	top: 216%;
+}
+
+#progrmers .members-list {
+	position: absolute;
+	top: 225%;
+}
+
+#programers img {
+	margin-top: 2rem;
+	border-radius: 5%;
+	width: 240px !important;
+    height: 300px !important;
+    display: inline-block;
+}
+
+img {
+	width: 100%;
+	height: 100%;
 }
 
 .title{
 	font-size: 80px;
 	font-weight: bold;
-	
-
 }
 
-        .company-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 8rem;
-            color: #444;
-        }
+.company-title {
+	font-size: 2.5rem;
+	font-weight: bold;
+	margin-bottom: 8rem;
+	color: #444;
+}
 
-        .members-list {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
+.members-list {
+	position:absolute;
+	top: 235%;
+	display: flex;
+	justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10rem;
+}
 
-        .programers-content {
-            font-size: 1.5rem;
-            color: #666;
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-        }
+.programers-content {
+	font-size: 1.8rem;
+    color: #666;
+    text-align: center;
+}
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .company-title {
-                font-size: 2rem;
-                margin-bottom: 4rem;
-            }
-
-            .members-list {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .member {
-                font-size: 1.25rem;
-            }
-        }
