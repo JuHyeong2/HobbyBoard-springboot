@@ -32,41 +32,11 @@
             </div>
 
             <!-- 공지 작성 -->
-            <button id="toggle-notice-form" class="toggle-button">작성하기</button>
-            <div id="notice-create" class="notice-create hidden">
-                <h2>새로운 공지 작성</h2>
-                <form action="create_notice.jsp" method="post">
-                    <label for="title">제목:</label>
-                    <input type="text" id="title" name="title" required>
-                    <label for="content">내용:</label>
-                    <textarea id="content" name="content" required></textarea>
-
-                    <label for="author">작성자:</label>
-                    <input type="text" id="author" name="author" required>
-                    <label for="date">게시 기간:</label>
-                    <input type="date" id="date" name="date" required>
-
-                    <button type="submit">공지 작성</button>
-                </form>
-            </div>
+            <button id="toggle-notice-form" class="toggle-button" onclick="location.href='/admin/noticeWrite'">작성하기</button>
+           
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const toggleButton = document.getElementById('toggle-notice-form');
-        const noticeCreate = document.getElementById('notice-create');
 
-        toggleButton.addEventListener('click', () => {
-            // display 속성의 값이 'block'이면 'none'으로, 'none'이면 'block'으로 변경
-            if (noticeCreate.style.display === 'none') {
-                noticeCreate.style.display = 'block';
-            } else {
-                noticeCreate.style.display = 'none';
-            }
-        });
-    });
-
-    </script>
 </body>
 </html>

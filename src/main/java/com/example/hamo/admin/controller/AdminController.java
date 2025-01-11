@@ -29,5 +29,10 @@ public class AdminController {
 	public String notice() {
 		return "admin/notice";
 	}
+	
+	@GetMapping("/admin/noticeWrite")
+	public String noticeWrite() {
+		return "admin/noticeWrite";
+	}
 
 }
