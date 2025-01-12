@@ -134,41 +134,42 @@
     </div>
 
     <script>
+    		// 참가자 목록을 토글 
         function toggleParticipants(post) {
-            const participants = post.querySelector('.participants');
-            const currentDisplay = participants.style.display;
-            const allParticipants = document.querySelectorAll('.participants');
+            const participants = post.querySelector('.participants');	// 클릭된 포스트의 참가자 목록 요소를 찾음
+            const currentDisplay = participants.style.display;			// 현재 참가자 목록의 표시 상태 확인
+            const allParticipants = document.querySelectorAll('.participants');	// 페이지 내의 모든 참가자 목록 선택
            
-            allParticipants.forEach(p => {
+            allParticipants.forEach(p => {		// 모든 참가자 목록 숨김
                 p.style.display = 'none';
             });
-            
+            // 클릭된 포스트의 참가자 목록 표시 상태를 토글로 
             participants.style.display = currentDisplay === 'none' ? 'block' : 'none';
         }
-
+			// 참가자 수락, 거절 처리 
         function handleParticipant(event, button, action) {
-            event.stopPropagation();
-            const participant = button.closest('.participant');
-            const name = participant.querySelector('p:first-child').textContent.split(' ')[1];
+            event.stopPropagation();	// 이벤트가 상위 요소로 가는것 방지(버블링 방지) 
+            const participant = button.closest('.participant');  // 클릭된 버튼의 가장 가까운 상위 .participant 요소를 찾음
+            const name = participant.querySelector('p:first-child').textContent.split(' ')[1];  // 참가자 이름 추출
             
-            if (action === 'accept') {
+            if (action === 'accept') {			// accpet 이면 수락
                 alert(`${name}님의 참가 신청을 수락했습니다.`);
-            } else {
+            } else {							// 아니면 거절
                 alert(`${name}님의 참가 신청을 거절했습니다.`);
             }
+	            
+	        //participant.style.opacity = '0';		// 투명도 0 
+            //participant.style.transform = 'translateY(-10px)';	// y축으로 -10px이동 
+            //participant.style.transition = 'all 0.3s ease';		// 변화 
             
-            participant.style.opacity = '0';
-            participant.style.transform = 'translateY(-10px)';
-            participant.style.transition = 'all 0.3s ease';
-            
-            setTimeout(() => {
+            //setTimeout(() => {		// 애니메이션 끝난 후 참가자 요소 제거 
                 participant.remove();
                 
-                const participants = participant.closest('.participants');
+                const participants = participant.closest('.participants');	// 가장 가까운 상위 .participants 요소 찾음
                 if (!participants.querySelector('.participant')) {
                     participants.style.display = 'none';
                 }
-            }, 300);
+            //}, 300);
         }
     </script>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
