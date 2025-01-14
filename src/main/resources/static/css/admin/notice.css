@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+/* /* 숨김 클래스 */ */
+/* .hidden { */
+/*     display: none; */
+/* } */
+
+/* 전체 레이아웃 설정 */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* 사이드바를 제외한 메인 콘텐츠 영역 */
+.header {
+    margin-left: 250px; /* 사이드바 너비만큼 여백 */
+    padding: 20px;
+    width: calc(100% - 250px); /* 나머지 공간을 차지 */
+    overflow: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+
+
+/* 공지 목록 스타일 */
+.notice-list {
+    margin-top: 20px;
+}
+
+.notice-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.notice-item h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.notice-item p {
+    font-size: 14px;
+    color: #555;
+}
+
+
+/* 공지 작성 버튼 */
+.toggle-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.toggle-button:hover {
+    background-color: #34495e; /* 원래 색(#2c3e50)보다 약간 밝은 색 */
+    color: #ffffff; /* 글씨를 흰색으로 변경해 대비 증가 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 호버 시 박스 그림자 추가 */
+    transition: all 0.3s ease; /* 부드러운 애니메이션 추가 */
+}
+
+
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .notice-item {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .notice-item {
+        width: 100%;
+    }
+}

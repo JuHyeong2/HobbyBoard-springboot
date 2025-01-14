@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+/* 전체 레이아웃 */
+.header {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+    overflow: auto;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.user-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 300px;
+    flex: 1 1 calc(33% - 40px);
+    position: relative;
+}
+
+.user-id {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px;
+    border-radius: 5px;
+	
+}
+
+.user-card h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.user-card p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.button {
+    margin-top: 10px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+	width: 60px;
+}
+
+.activate-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.deactivate-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.button:hover {
+    opacity: 0.9;
+}

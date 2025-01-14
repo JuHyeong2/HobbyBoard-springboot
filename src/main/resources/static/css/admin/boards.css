@@ -1,0 +1,128 @@
+/* 기존의 기본 스타일 유지 */
+@charset "UTF-8";
+
+.header {
+    margin-left: 250px; /* 사이드바 너비만큼 여백 */
+    padding: 20px;
+    width: calc(100% - 250px); /* 나머지 공간을 차지 */
+    overflow: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+.content-wrapper {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-left: 250px; /* 여기 수정 (오른쪽 여백 제거, 사이드바만큼만 왼쪽으로 이동) */
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 검색 입력창 스타일 */
+.search-bar {
+    margin-right: 350px; /* 사이드바 크기만큼 왼쪽 여백 설정 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 게시글 목록을 flex로 한 행에 4개씩 정렬 */
+.board-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+/* 각 게시글 카드 크기 설정 */
+.board-card {
+    width: calc(25% - 20px); /* 한 행에 4개씩 표시 */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.boardNo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 3px 6px;
+    border-radius: 5px;
+}
+
+.board-item {
+    margin-bottom: 10px;
+}
+
+.author, .title {
+    display: block;
+    font-size: 14px;
+    color: #555;
+}
+
+.author {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.title {
+    margin-top: 5px;
+}
+
+@media (max-width: 1024px) {
+    .board-card {
+        width: calc(33.33% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .board-card {
+        width: calc(50% - 20px);
+    }
+    .board-list {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* 토글 버튼 */
+.toggle-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+.toggle-btn:hover {
+    color: #007bff;
+}

@@ -110,7 +110,7 @@ img {
 
 .banner-content {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 130px 250px;
     width: 100%;
 }
 
@@ -126,6 +126,7 @@ img {
     border-radius: 4px;
     margin-top: 1rem;
     cursor: pointer;
+    background : black;
 }
 
 .banner-navigation {
@@ -138,16 +139,32 @@ img {
 
 .dots {
     display: flex;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 8px;
 }
 
 .dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: lightgray;
+    background-color: #bbb;
+    transition: background-color 0.3s ease;
 }
 
 .dot.active {
-    background: white;
+    background-color: #0066cc;
+}
+
+.prev, .next {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+.prev:hover, .next:hover {
+    color: #0066cc;
 }
