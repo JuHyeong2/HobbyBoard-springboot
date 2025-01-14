@@ -11,14 +11,14 @@
 	<main>
 	    <div class="container">
 	        <h1 id="h1">회원가입</h1>
-	        <form>
+	        <form action="/member/signUp" method="POST">
 	            <div class="form-group with-button">
-	                <input type="text" id="userid" placeholder="아이디" required>
+	                <input type="text" name="memberId" id="userid" placeholder="아이디" required>
 	                <button type="button" class="button secondary">중복확인</button>
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="password" id="password" placeholder="비밀번호" required>
+	                <input type="password" name="memberPwd" id="password" placeholder="비밀번호" required>
 	            </div>
 	
 	            <div class="form-group">
@@ -26,21 +26,21 @@
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="text" id="name" placeholder="이름" required>
+	                <input type="text" name="memberName" id="name" placeholder="이름" required>
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="date" id="birthdate" placeholder="생년월일" required>
+	                <input type="date" name="memberBirth" id="birthdate" placeholder="생년월일" required>
 	            </div>
 	
 	            <div class="form-group">
 	                <div class="gender-group">
 	                    <label>
-	                        <input type="radio" name="gender" value="male" required>
+	                        <input type="radio" name="memberGender" value="M" required>
 	                        남성
 	                    </label>
 	                    <label>
-	                        <input type="radio" name="gender" value="female">
+	                        <input type="radio" name="memberGender" value="F">
 	                        여성
 	                    </label>
 	                </div>

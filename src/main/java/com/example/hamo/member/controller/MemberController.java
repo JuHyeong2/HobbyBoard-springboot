@@ -3,7 +3,10 @@ package com.example.hamo.member.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.hamo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,11 @@ public class MemberController {
 	@GetMapping("/member/signUp")
 	public String signUp() {
 		return "login/signUp";
+	}
+	
+	@PostMapping("/member/signUp")
+	public String signUp(@ModelAttribute("Member") Member member ) {
+		return "";
 	}
 	
 	// 아이디 찾기 페이지로 이동
