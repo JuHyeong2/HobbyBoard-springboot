@@ -19,10 +19,6 @@ header {
     font-weight: bold;
 }
 
-h1{
-	cursor: pointer;
-}
-
 .page {
     height: 100%;
     width: 100%;
@@ -38,6 +34,10 @@ main {
     height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
+}
+
+h1 {
+	cursor: pointer; 
 }
 
 #home {
@@ -107,44 +107,6 @@ img {
 }
 
 .company-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 8rem;
-    color: #444;
-}
-
-.members-list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.programers-content {
-    font-size: 1.5rem;
-    color: #666;
-    flex: 1;
-    min-width: 200px;
-    text-align: center;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .company-title {
-        font-size: 2rem;
-        margin-bottom: 4rem;
-    }
-
-    .members-list {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .member {
-        font-size: 1.25rem;
-    }
-}
-
 	font-size: 2.5rem;
 	font-weight: bold;
 	margin-bottom: 8rem;
@@ -165,5 +127,3 @@ img {
     color: #666;
     text-align: center;
 }
-
->>>>>>> b520076575f2f6df2bd93ce8dca92f533505d736
