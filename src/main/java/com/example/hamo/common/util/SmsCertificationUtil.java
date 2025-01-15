@@ -13,18 +13,11 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Component
 public class SmsCertificationUtil {
-//	@Value("${coolsms.apikey}") // coolsms의 API 키 주입
-//    private String apiKey;
-//
-//    @Value("${coolsms.apisecret}") // coolsms의 API 비밀키 주입
-//    private String apiSecret;
-//
-//    @Value("${coolsms.fromnumber}") // 발신자 번호 주입
-//    private String fromNumber;
+
     
-    private String apiKey = "NCSAWBN2EKTN2MUA";
-    private String apiSecret = "AXIGLYCWYZCR0BEC5TPGQQ2WOMGGQU1P";
-    private String fromNumber = "01093688846";
+    private String apiKey = "";
+    private String apiSecret = "";
+    private String fromNumber = "";
     
     private DefaultMessageService messageService; // 메시지 서비스를 위한 객체
 
