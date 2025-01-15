@@ -53,15 +53,18 @@
 }
 
 .reply {
-	margin-bottom: 50px;
+	margin-bottom: 50px;	
 	
 }
 
 .rp-user-info {
     align-items: center;
-    padding: 0.2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-top: 1px solid #e9ecef;
     border-bottom: 1px solid #e9ecef;
+    margin-bottom: 2rem;
+    
 }
 
 .rp-user-profile {
@@ -88,7 +91,7 @@
 .user-info {
     align-items: center;
     padding: 0.2rem;
-    border-top: 1px solid #e9ecef;
+/*     border-top: 1px solid #e9ecef; */
     border-bottom: 1px solid #e9ecef;    
 }
 
@@ -124,7 +127,7 @@ img {
 }
 
 .reply-enroll-btn{
-/* 	여기 버튼 오른족으로 밀어야함 */s
+/* 	여기 버튼 오른족으로 밀어야함 */
 }
 
 .notice-item {

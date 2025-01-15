@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
     <link rel="stylesheet" href="/css/login/signUp.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
 	<main>
 	    <div class="container">
 	        <h1 id="h1">회원가입</h1>
-	        <form>
+	        <form action="/member/signUp" method="POST">
 	            <div class="form-group with-button">
-	                <input type="text" id="userid" placeholder="아이디" required>
+	                <input type="text" name="memberId" id="userid" placeholder="아이디" required>
 	                <button type="button" class="button secondary">중복확인</button>
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="password" id="password" placeholder="비밀번호" required>
+	                <input type="password" name="memberPwd" id="password" placeholder="비밀번호" required>
 	            </div>
 	
 	            <div class="form-group">
@@ -26,38 +27,39 @@
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="text" id="name" placeholder="이름" required>
+	                <input type="text" name="memberName" id="name" placeholder="이름" required>
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="date" id="birthdate" placeholder="생년월일" required>
+	                <input type="date" name="memberBirth" id="birthdate" placeholder="생년월일" required>
 	            </div>
 	
 	            <div class="form-group">
 	                <div class="gender-group">
 	                    <label>
-	                        <input type="radio" name="gender" value="male" required>
+	                        <input type="radio" name="memberGender" value="M" required>
 	                        남성
 	                    </label>
 	                    <label>
-	                        <input type="radio" name="gender" value="female">
+	                        <input type="radio" name="memberGender" value="F">
 	                        여성
 	                    </label>
 	                </div>
 	            </div>
 	
 	            <div class="form-group">
-	                <input type="email" id="email" placeholder="이메일" required>
+	                <input type="email" name="memberEmail" id="email" placeholder="이메일" required>
 	            </div>
 	
 	            <div class="form-group with-button">
-	                <input type="tel" id="phone" placeholder="휴대폰번호" required>
-	                <button type="button" class="button">인증번호 전송</button>
+	                <input type="tel" name="memberPhone" id="phone" placeholder="휴대폰번호" required>
+	                <button type="button" id="smsButton" class="button">인증번호 전송</button>
+	                
 	            </div>
 	
 	            <div class="form-group with-button">
 	                <input type="text" id="verification" placeholder="인증번호 입력" required>
-	                <button type="button" class="button">확인</button>
+	                <button type="button" id="smsButton2" class="button">확인</button>
 	                <button type="button" class="button secondary">재전송</button>
 	            </div>
 	
@@ -72,6 +74,34 @@
 	        </form>
 	    </div>
 	</main>
+	
+	<script>
+		document.getElementById('smsButton').addEventListener('click', ()=>{
+			const phone = document.getElementById('phone').value;
+			console.log(phone);
+			if(phone != null || phone != ''){
+				$.ajax({
+					type: "POST",
+					url: "/sendSMS",
+					data: {phone:phone},
+					dataType: 'json',
+					success: data=>{
+						console.log(data);
+						if(data != null || data != ''){
+							document.getElementById('smsButton2').addEventListener('click', ()=>{
+								const certificationNum = document.getElementById('verification').value;
+								if(certificationNum == data){
+									alert('휴대폰 인증에 성공했습니다.');
+								}else{
+									alert('인증번호가 다릅니다.');
+								}
+							})
+						}
+					}
+				})
+			}
+		})
+	</script>
 </body>
 </html>
 
