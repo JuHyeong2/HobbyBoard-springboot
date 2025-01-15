@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.hamo.admin.model.vo.Admin;
 
 @Mapper
-public interface AdminMapper {
+public interface AdminMapper { 
 
 	int writeNotice(Admin admin);
 

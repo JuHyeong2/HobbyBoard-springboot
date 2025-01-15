@@ -1,6 +1,7 @@
 package com.example.hamo.member.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	
 	private final MemberService mService;
+	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
 	
 	@GetMapping("/member/login")
@@ -46,9 +48,14 @@ public class MemberController {
 	
 	@PostMapping("/member/signUp")
 	public String signUp(@ModelAttribute("Member") Member member ) {
-		return "";
+		
+		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
+		int result = mService.insertMember(member);
+		
+		return "member/login";
 	}
 	
+	// 회원가입 -> 휴대폰 인증번호 전송시 호출되는 메서드
 	@PostMapping("/sendSMS")
 	@ResponseBody
 	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
