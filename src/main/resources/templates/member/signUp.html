@@ -15,7 +15,7 @@
 	        <form action="/member/signUp" method="POST">
 	            <div class="form-group with-button">
 	                <input type="text" name="memberId" id="userid" placeholder="아이디" required>
-	                <button type="button" class="button secondary">중복확인</button>
+	                <button type="button" id="idCheck" class="button secondary">중복확인</button>
 	            </div>
 	
 	            <div class="form-group">
@@ -59,9 +59,11 @@
 	
 	            <div class="form-group with-button">
 	                <input type="text" id="verification" placeholder="인증번호 입력" required>
-	                <button type="button" id="smsButton2" class="button">확인</button>
-	                <button type="button" class="button secondary">재전송</button>
+	                <button type="button" id="smsButton2" class="button" disabled>확인</button>
+	                
 	            </div>
+	            
+	            <p id="time"></p>
 	
 	            <div class="checkbox-group">
 	                <label>
@@ -70,16 +72,24 @@
 	                </label>
 	            </div>
 	
-	            <button type="submit" class="button submit-button">가입하기</button>
+	            <button type="button" id="submitBtn" class="button submit-button">가입하기</button>
 	        </form>
 	    </div>
 	</main>
 	
 	<script>
+		document.getElementById("submitBtn").addEventListener('click', (e)=>{
+			if(e.target.type == "button"){
+				alert('모두 입력해주세요.')
+			}else{
+				
+			}
+		})
+		
 		document.getElementById('smsButton').addEventListener('click', ()=>{
 			const phone = document.getElementById('phone').value;
 			console.log(phone);
-			if(phone != null || phone != ''){
+			if(phone != null && phone != ''){
 				$.ajax({
 					type: "POST",
 					url: "/sendSMS",
@@ -87,11 +97,37 @@
 					dataType: 'json',
 					success: data=>{
 						console.log(data);
-						if(data != null || data != ''){
+						if(data != null && data != ''){
+							document.getElementById('smsButton2').disabled = false;
+// 							document.getElementById('reSmsButton').disabled = false;
+							document.getElementById('verification').innerText = '재전송';
+							let startMin = 1;
+							let startSec = 0;
+							const timer = setInterval(()=>{
+								
+								document.getElementById('time').innerText = startMin + ":" + startSec;
+								if(startSec == 0){
+									if(startMin == 0){
+										crearInterval(timer);	
+										document.getElementById('smsButton2').disabled = true;
+									}
+									startMin = startMin - 1;
+									startSec = 60;
+								}
+								
+								startSec = startSec - 1;
+								
+								if(startMin == 0 && startSec == 0){
+									
+								}
+							}, 1000)	
+							
+							document.getElementById('time').innerText = 
 							document.getElementById('smsButton2').addEventListener('click', ()=>{
 								const certificationNum = document.getElementById('verification').value;
 								if(certificationNum == data){
 									alert('휴대폰 인증에 성공했습니다.');
+									document.getElementById('submitBtn').type = 'submit'
 								}else{
 									alert('인증번호가 다릅니다.');
 								}
@@ -101,6 +137,22 @@
 				})
 			}
 		})
+		
+		document.getElementById('idCheck').addEventListener('click', ()=>{
+			const userId = document.getElementById('userid');
+			if(userId != null && userId != ''){
+				$.ajax({
+					type: "POST",
+					url: "/idCheck",
+					data: {userId:userId},
+					dataType: 'json',
+					success: data=>{
+					
+					}
+				})
+			}
+		})
+
 	</script>
 </body>
 </html>
