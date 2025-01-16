@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
@@ -18,6 +19,7 @@ import com.example.hamo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -36,6 +38,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
 	public String login(@ModelAttribute("Member") Member m, Model model) {
@@ -47,6 +50,14 @@ public class MemberController {
 			return "fail";
 		}
 	}
+	
+	@GetMapping("/member/logout")
+	public String logOut(SessionStatus session) {
+		session.setComplete();
+		
+		return "redirect:/home";
+	}
+	
 	
 	// Home으로 가는 모든 버튼
 	@GetMapping("/home")
@@ -95,7 +106,7 @@ public class MemberController {
 	public String findId(Model model, HttpServletRequest request) {
 		model.addAttribute("loc", request.getRequestURI());
 		System.out.println(model.getAttribute("loc").toString());
-		return "login/findId";
+		return "member/findId";
 	}
 	
 	// 아이디 찾기 페이지로 이동
@@ -103,7 +114,7 @@ public class MemberController {
 	public String findPwd(Model model, HttpServletRequest request) {
 		model.addAttribute("loc", request.getRequestURI());
 		System.out.println(model.getAttribute("loc").toString());
-		return "login/findPwd";
+		return "member/findPwd";
 	}
 	
 	@GetMapping("/member/myPage")
