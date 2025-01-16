@@ -41,7 +41,7 @@
 			        </form>
 			
 			        <!-- 내용 100자 제한 -->
-			        <p>
+			        <p th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">
 			            내용 : <span th:text="${#strings.length(a.content) > 10 ? #strings.substring(a.content, 0, 10) + '...' : a.content}"></span>
 			        </p>
 			
