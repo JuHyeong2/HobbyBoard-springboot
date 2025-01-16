@@ -54,6 +54,7 @@ body {
 
 /* 토굴 버튼*/
 .plus-btn {
+
     border: none;
     background: none;
     font-size: 18px;
@@ -75,10 +76,11 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000; /* 다른 요소 위에 표시되도록 */
     padding: 5px;
+    
 }
 
 .options button {
-    display: block;
+    display: none;
     padding: 5px 10px;
     border: none;
     background-color: #f1f1f1;

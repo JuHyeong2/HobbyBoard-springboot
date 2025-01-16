@@ -17,8 +17,7 @@
 		select board_no, title, content, a.create_date, a.update_date, views, admin_board_status, writer, member_nickname
 		from admin_board a
 			 join member m on(writer=member_no)
-		where admin_board_status = 'Y' and
-			  writer=1
+		where admin_board_status = 'Y'
 		order by create_date desc
 	</select>
 	

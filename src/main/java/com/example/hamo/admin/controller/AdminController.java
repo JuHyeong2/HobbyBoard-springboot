@@ -73,8 +73,8 @@ public class AdminController {
 	@PostMapping("write")
 	public String write(@ModelAttribute Admin admin, HttpSession session) {
 		Member m = (Member)session.getAttribute("loginUser");
-		// System.out.println(admin);
-		admin.setWriter(1);
+		 System.out.println(m);
+		admin.setWriter(m.getMemberNo());
 		
 		int result = aService.writeNotice(admin);
 		if(result > 0) {
