@@ -15,9 +15,9 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 public class SmsCertificationUtil {
 
     
-    private String apiKey = "";
-    private String apiSecret = "";
-    private String fromNumber = "";
+    private String apiKey = "NCSAWBN2EKTN2MUA";
+    private String apiSecret = "AXIGLYCWYZCR0BEC5TPGQQ2WOMGGQU1P";
+    private String fromNumber = "01093688846";
     
     private DefaultMessageService messageService; // 메시지 서비스를 위한 객체
 

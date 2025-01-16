@@ -10,11 +10,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-	private MemberMapper mMapper;
+	private final MemberMapper mMapper;
 	
 	public int insertMember(Member member) {
 		
 		return mMapper.insertMember(member);
+	}
+
+	public int idCheck(String userId) {
+		
+		return mMapper.idCheck(userId);
+	}
+
+	public Member login(Member m) {
+		
+		return mMapper.login(m);
 	}
 
 }
