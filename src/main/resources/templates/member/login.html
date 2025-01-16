@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAMO - 로그인</title>
     <link rel="stylesheet" href="/css/login/login.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
     <div th:insert="common/top.html"></div>
@@ -12,19 +13,9 @@
     <main>
 	    <div class="login-card">
 	        <h1 class="login-title">로그인</h1>
-	        <form class="login-form">
-	            <input 
-	                type="text" 
-	                class="input-field" 
-	                placeholder="아이디" 
-	                required
-	            >
-	            <input 
-	                type="password" 
-	                class="input-field" 
-	                placeholder="비밀번호" 
-	                required
-	            >
+	        <form id="login-form" class="login-form" action="/member/login" method="POST">
+	            <input type="text" class="input-field" name="memberId" placeholder="아이디" required>
+	            <input type="password" class="input-field" name="memberPwd" placeholder="비밀번호" required>
 	            <button type="submit" class="login-button">로그인</button>
 	            <div class="links">
                 	<a href="/member/signUp">회원가입</a>
@@ -33,5 +24,25 @@
 	        </form>
 	    </div>
     </main>
+    
+    <script>
+    	document.getElementById("login-form").addEventListener('submit', e=>{
+    		e.preventDefault(); // submit 방어
+    		const id = document.getElementsByName('memberId')[0];
+    		const pwd = document.getElementsByName('memberPwd')[0];
+    		$.ajax({
+    			url: '/member/login',
+    			type: 'POST',
+    			data: {memberId:id.value, memberPwd:pwd.value},
+    			success: data=>{
+    				if(data === 'success'){
+    					location.href='/home';
+    				}else{
+    					alert('아이디, 비밀번호가 틀립니다.');
+    				}
+    			}
+    		})
+    	})
+    </script>
 </body>
 </html>

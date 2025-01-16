@@ -47,12 +47,6 @@ header {
     
 }
 
-.img {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #0066cc;
-    margin-right: 30px;
-}
 
 .search-bar {
     display: flex;
@@ -142,6 +136,16 @@ header {
     margin: 0 auto;
     justify-content: space-between;
 }
+
+.top-button img {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+label{
+	font-weight: bold;
+	margin-top: 3px;
+}
 </style>
 
 </head>
@@ -176,9 +180,16 @@ header {
                	 	<li><a href="/board/project">프로젝트 소개</a></li>
             	</ul>
         	</nav>
-        	<nav class="top-nav">
+        	
+        	<nav class="top-nav" th:if="${session.loginUser == null}">
 				<a class="top-button" href="/member/login" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             	<a class="top-button" href="/member/signUp" >회원가입</a>
+			</nav>
+			<nav class="top-nav" th:if="${session.loginUser != null}">
+				<label>[[${session.loginUser.memberNickname}]]님</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top-button" href="/member/myPage" >
+					<img src="/image/myinfo.png">
+				</img></a>
 			</nav>
 		</div>
 		

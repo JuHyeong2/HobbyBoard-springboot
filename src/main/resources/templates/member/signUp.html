@@ -29,6 +29,10 @@
 	            <div class="form-group">
 	                <input type="text" name="memberName" id="name" placeholder="이름" required>
 	            </div>
+	            
+	            <div class="form-group">
+	                <input type="text" name="memberNickname" id="nickname" placeholder="닉네임" required>
+	            </div>
 	
 	            <div class="form-group">
 	                <input type="date" name="memberBirth" id="birthdate" placeholder="생년월일" required>
@@ -78,13 +82,13 @@
 	</main>
 	
 	<script>
-		document.getElementById("submitBtn").addEventListener('click', (e)=>{
-			if(e.target.type == "button"){
-				alert('모두 입력해주세요.')
-			}else{
-				
-			}
-		})
+// 		document.getElementById("submitBtn").addEventListener('click', (e)=>{
+// 			if(e.target.type == "button"){
+// 				alert('모두 입력해주세요.')
+// 			}else{
+// 				e.target.submit();
+// 			}
+// 		})
 		
 		document.getElementById('smsButton').addEventListener('click', ()=>{
 			const phone = document.getElementById('phone').value;
@@ -92,7 +96,7 @@
 			if(phone != null && phone != ''){
 				$.ajax({
 					type: "POST",
-					url: "/sendSMS",
+					url: "/member/sendSMS",
 					data: {phone:phone},
 					dataType: 'json',
 					success: data=>{
@@ -140,14 +144,18 @@
 		
 		document.getElementById('idCheck').addEventListener('click', ()=>{
 			const userId = document.getElementById('userid');
-			if(userId != null && userId != ''){
+			if(userId.value.trim() != null && userId.value.trim() != ''){
+				console.log('들어옴');
 				$.ajax({
 					type: "POST",
-					url: "/idCheck",
-					data: {userId:userId},
-					dataType: 'json',
+					url: "/member/idCheck",
+					data: {userId:userId.value},
 					success: data=>{
-					
+						if(data === 0){
+							alert('사용 가능한 아이디입니다.');
+						}else{
+							alert('사용할 수 없는 아이디입니다.');
+						}
 					}
 				})
 			}
