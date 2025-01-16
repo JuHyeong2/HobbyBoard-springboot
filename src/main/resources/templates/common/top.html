@@ -79,23 +79,28 @@ header {
 
 .main-nav li {
     margin-right: 2rem;
+    padding-bottom: 10px;
 }
 
 #category:hover .dropdown-content {
 	display: block;
 }
 
-.dropdown-content {
-	display: none;
+#myPage:hover .dropdown-content-2 {
+	display: block;
+}
+
+.dropdown-content, .dropdown-content-2{
+ 	display: none; 
 	background-color: white;
 	position: absolute;
-	top: 19%;
+	top: 20%;
 	min-width: 160px;
 	box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
 	z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content a, .dropdown-content-2 a {
     text-decoration: none;
     transition: all 0.3s ease;
     padding: 0.6rem 1rem; /* 버튼 크기 증가 */
@@ -106,7 +111,7 @@ header {
     justify-content: center; /* 가로 중앙 정렬 */
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover, .dropdown-content-2 a:hover {
 	background-color: lightgray;
 
     border-radius: 5px;
@@ -125,9 +130,16 @@ header {
 /* 	flex-direction: column; */
 }
 
+.top-nav-2{
+	list-style: none;
+    max-width: 1200px;
+    padding: 1rem 2rem;
+}
+
 .top-button {
     color: #1a1a1a;
     cursor: pointer;
+    display: flex;
 }
 
 .navigation {
@@ -138,13 +150,14 @@ header {
 }
 
 .top-button img {
-    width: 30px !important;
-    height: 30px !important;
+    width: 25px !important;
+    height: 25px !important;
+    margin-right: 5px;
 }
 
-label{
+.top-button label{
 	font-weight: bold;
-	margin-top: 3px;
+	cursor: pointer;
 }
 </style>
 
@@ -185,11 +198,21 @@ label{
 				<a class="top-button" href="/member/login" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             	<a class="top-button" href="/member/signUp" >회원가입</a>
 			</nav>
-			<nav class="top-nav" th:if="${session.loginUser != null}">
-				<label>[[${session.loginUser.memberNickname}]]님</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a class="top-button" href="/member/myPage" >
-					<img src="/image/myinfo.png">
-				</img></a>
+			<nav class="main-nav" th:if="${session.loginUser != null}">
+				<ul>
+					<li id="myPage">
+						<a class="top-button" href="/member/myPage" >
+							<img src="/image/myinfo.png"></img>
+							<label id="aaa">[[${session.loginUser.memberNickname}]]님</label>
+						</a>
+						<div class="dropdown-content-2">
+						    <a href="/member/myPage">MY PAGE</a>
+						    <a href="/member/myactivite">MY ACTIVITY</a>
+						    <a href="/member/mypost">MY POST</a>
+						    <a href="/member/logout">로그아웃</a>
+			        	</div>
+					</li>
+				</ul>
 			</nav>
 		</div>
 		
