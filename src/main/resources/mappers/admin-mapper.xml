@@ -7,10 +7,26 @@
 		#{content}, default, default, default, default, #{writer})
 	</insert>
 	
-	<select id="selectNoticeList" resultType="Admin">
-		select * 
+	<select id="getListCount" resultType="_int">
+		select count(*)
 		from admin_board
 		where admin_board_status = 'Y'
 	</select>
 	
+	<select id="selectNoticeList" resultType="Admin">
+		select board_no, title, content, a.create_date, a.update_date, views, admin_board_status, writer, member_nickname
+		from admin_board a
+			 join member m on(writer=member_no)
+		where admin_board_status = 'Y' and
+			  writer=1
+		order by create_date desc
+	</select>
+	
+	<select id="selectNoticeOne" resultType="Admin">
+		select  board_no, title, content
+		from admin_board
+		where admin_board_status = 'Y' and
+			  board_no = #{id}
+			 
+	</select>
 </mapper>

@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
+import com.example.hamo.common.Pagination;
+import com.example.hamo.common.vo.PageInfo;
 import com.example.hamo.member.model.vo.Member;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -48,9 +52,13 @@ public class AdminController {
 	
 	// notice mapping
 	@GetMapping("notice")
-	public String notice(Model model) {
-		ArrayList<Admin> list = aService.selectNoticeList();
-		model.addAttribute("list", list);
+	public String notice(Model model, @RequestParam(value="page", defaultValue="1")int currentPage, HttpServletRequest request) {
+		int listCount =  aService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+		ArrayList<Admin> list = aService.selectNoticeList(pi);
+		model.addAttribute("list", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
+//		System.out.println(list);
+		
 		return "admin/notice";
 	}
 	
@@ -77,5 +85,18 @@ public class AdminController {
 //		}
 		return "redirect:/admin/notice";
 	}
-
+	
+	// 공지사항 수정 페이지 이동 
+	@PostMapping("edit")
+	public String edit(@RequestParam("id") int id, @RequestParam("page") String page, HttpSession session, Model model ) {
+		Admin admin = aService.selectNoticeOne(id);
+		model.addAttribute("admin", admin).addAttribute("page", page);
+		return "admin/noticeEdit";
+	}
+	
+	// 공지사항 수정
+	@PostMapping("update")
+	public void update(@ModelAttribute Admin admin, @RequestParam("page") String page) {
+		System.out.println(admin);
+	}
 }

@@ -6,30 +6,127 @@
 <link rel="stylesheet" href="/css/admin/notice.css">
 </head>
 <body>
-    <!-- 관리자 메인 페이지 포함 -->
+	<!-- 관리자 메인 페이지 포함 -->
 	<div th:replace="admin/admin-main.html"></div>
 
-    <!-- 공지 페이지 제목 -->
-    <div class="header">
-        <h1>NOTICE</h1>
+	<!-- 공지 페이지 제목 -->
+	<div class="header">
+		<h1>NOTICE</h1>
 
-        <!-- 공지 목록 및 공지 작성 -->
-        <div class="content-wrapper">
-            <!-- 공지 목록 -->
-            <div class="notice-list">
-                <div class="notice-item" th:each="a : ${list}">
-                    <h3>제목 : [[${a.title}]]</h3>
-                    <p>내용 : [[${a.content}]]</p>
-                    <p>작성자 : [[${a.writer}]]| 작성일: [[${a.createDate}]]</p>
-                </div>
-                <!-- 추가적인 공지 항목들 -->
-            </div>
+		<!-- 공지 목록 및 공지 작성 -->
+		<div class="content-wrapper">
+			<!-- 공지 목록 -->
+			<!-- 공지 목록 -->
+			<div class="notice-list">
+			    <div class="notice-item" th:each="a : ${list}">
+			        <!-- 제목 50자 제한 -->
+			        <h3>
+			            제목 : <span th:text="${#strings.length(a.title) > 20 ? #strings.substring(a.title, 0, 20) + '...' : a.title}"></span>
+			            <!-- plus-btn을 제목 우측으로 배치 -->
+			            <!-- plus-btn -->
+						<button class="plus-btn">⋮</button>
 
-            <!-- 공지 작성 -->
-            <button id="toggle-notice-form" class="toggle-button" onclick="location.href='/admin/noticeWrite'">작성하기</button>
-           
-        </div>
-    </div>
+			        </h3>
+			
+			        <!-- 수정 & 삭제 버튼을 위한 form -->
+			        <form method="post" id = "editDeleteForm">
+			            <input type="hidden" name="id" th:value="${a.boardNo}" />
+			            <input type="hidden" name="page" th:value="${pi.currentPage}"/>
+			
+			            <!-- 옵션 메뉴 -->
+			            <div class="options" style="display: none;">
+			                <button class="edit-btn" type="button">수정하기</button>
+			                <button class="delete-btn" type="button">삭제하기</button>
+			            </div>
+			        </form>
+			
+			        <!-- 내용 100자 제한 -->
+			        <p>
+			            내용 : <span th:text="${#strings.length(a.content) > 10 ? #strings.substring(a.content, 0, 10) + '...' : a.content}"></span>
+			        </p>
+			
+			        <p>작성자 : [[${a.memberNickname}]] | 작성일: [[${a.createDate}]]</p>
+			    </div>
+			</div>
+
+
+			<!-- 공지 작성 -->
+			<button id="notice-form" class="submit-btn"
+				onclick="location.href='/admin/noticeWrite'">작성하기</button>
+		</div>
+	</div>
+	<!-- 페이지 하단 중앙에 페이징 처리 -->
+	<nav aria-label="Standard pagination example">
+		<ul class="pagination">
+			<!-- 이전 페이지 -->
+			<li><th:block th:if='${pi.startPage} > 0'>
+					<a th:href="@{${loc}(page=${pi.currentPage-1})}"> <span><</span>
+					</a>
+				</th:block></li>
+
+			<!-- 페이지 번호 -->
+			<li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+				<a th:href="@{${loc}(page=${p})}">[[${p}]]</a>
+			</li>
+
+			<!-- 다음 페이지 -->
+			<li><a th:href="@{${loc}(page=${pi.currentPage+1})}"> <span>></span>
+			</a></li>
+		</ul>
+	</nav>
+	<script>
+		document.querySelectorAll('.plus-btn').forEach(button => {
+		    button.addEventListener('click', function() {
+		        // 클릭한 버튼의 부모 notice-item에서 .options를 직접 탐색
+		        const noticeItem = this.closest('.notice-item');
+		        const options = noticeItem.querySelector('.options');
+		       
+		        // 옵션 메뉴의 표시 여부 토글
+		        if (options.style.display === "none" || options.style.display === "") {
+		            options.style.display = "block";
+		        } else {
+		            options.style.display = "none";
+		        }
+		    });
+		});
+		
+		document.querySelectorAll('.edit-btn').forEach(button => {
+		    button.addEventListener('click', function() {
+		        const form = this.closest('.notice-item').querySelector('form');  // 부모 중 .notice-item 내의 form 찾기
+		        if (form) {
+		        	form.method = 'post';
+		            form.action = '/admin/edit';
+		            form.submit();
+		        } else {
+		            alert('폼을 찾을 수 없습니다!');
+		        }
+		    });
+		});
+
+		document.querySelectorAll('.delete-btn').forEach(button => {
+		    button.addEventListener('click', function() {
+		        const form = this.closest('.notice-item').querySelector('form');  // .notice-item 내의 form 찾기
+		        if (form) {
+		            form.action = '/admin/delete';
+		            form.submit();
+		        } else {
+		            alert('폼을 찾을 수 없습니다!');
+		        }
+		    });
+		});
+
+
+		// 상세보기
+// 		const mainView = document.getElementsByClassName('notice-list');
+// 		for(const list of mainView) {
+// 			list.style='focus';
+// 			list.addEventListener('click', () =>{
+				
+// 			});
+// 		}	
+	 
+	
+	</script>
 
 
 </body>
