@@ -26,10 +26,15 @@ repositories {
 dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+<<<<<<< HEAD
 
 	implementation 'net.nurigo:sdk:4.3.2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+=======
+	implementation 'net.nurigo:sdk:4.3.2'
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+>>>>>>> 7c1232d957e9a92ee69f702ef3e1f5e6e4d6536c
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

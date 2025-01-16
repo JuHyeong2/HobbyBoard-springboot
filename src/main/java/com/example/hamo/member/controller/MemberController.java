@@ -1,5 +1,7 @@
 package com.example.hamo.member.controller;
 
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
@@ -18,15 +21,30 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@SessionAttributes("loginUser")
 public class MemberController {
 	
 	private final MemberService mService;
+	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
 	
+	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")
-	public String login() {
+	public String loginView() {
 		
 		return "member/login";
+	}
+	
+	@PostMapping("/member/login")
+	@ResponseBody
+	public String login(@ModelAttribute("Member") Member m, Model model) {
+		Member loginUser = mService.login(m);
+		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			model.addAttribute("loginUser", loginUser);
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	// Home으로 가는 모든 버튼
@@ -44,10 +62,15 @@ public class MemberController {
 	
 	@PostMapping("/member/signUp")
 	public String signUp(@ModelAttribute("Member") Member member ) {
-		return "";
+		
+		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
+		int result = mService.insertMember(member);
+		
+		return "member/login";
 	}
 	
-	@PostMapping("/sendSMS")
+	// 회원가입 -> 휴대폰 인증번호 전송시 호출되는 메서드
+	@PostMapping("/member/sendSMS")
 	@ResponseBody
 	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
 		System.out.println(phone);
@@ -55,6 +78,15 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
+	}
+	
+	@PostMapping("/member/idCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam("userId") String userId) {
+//		System.out.println(userId);
+		int result = mService.idCheck(userId);
+		System.out.println(result);
+		return result;
 	}
 	
 	// 아이디 찾기 페이지로 이동

@@ -8,7 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.example.hamo.admin.model.vo.Admin;
 
 @Mapper
-public interface AdminMapper {
+public interface AdminMapper { 
 
 	int writeNotice(Admin admin);
 
