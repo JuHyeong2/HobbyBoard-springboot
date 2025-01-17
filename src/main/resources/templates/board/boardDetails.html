@@ -12,7 +12,7 @@
 	
     <main class="main-container">
         <div class="breadcrumb">
-            <span>홈</span> &gt; <span>코딩</span> &gt; <span></span>
+            <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span></span>
         </div>
 
         <div class="gathering-detail">
@@ -21,14 +21,13 @@
                 <div class="image-thumbnails"></div>
             </div>
             <div class="gathering-info">
-                <h1 class="gathering-title">코드폭격기 신나는 코딩모임</h1>
-                <div class="price">코딩모임</div>
+                <h1 class="gathering-title">[[${board.title}]]</h1>
+                <div class="price">[[${board.title}]]</div>
                 <div class="gathering-meta">
-                    <span class="upload-time">종로구/4시간 전</span>
+                    <span class="upload-time">[[${board.locationName}]]/4시간 전</span>
                 </div>
                 <div class="gathering-description">
-                    <p>세미프로젝트를 만들자</p>
-                    <p>코드폭격 가보자잇</p>
+                    <p>[[${board.content}]]</p>
                 </div>
                 <button class="purchase-btn">참가하기</button>
             </div>
@@ -42,7 +41,7 @@
 				<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
 				<div class="user-details">
 					<h3>도로로 병장</h3>
-					<input type="text" name="content" placeholder="댓글을 입력하세요~.">
+					<input type="text" name="content" class="reply-input" placeholder="댓글을 입력하세요~.">
 				</div>
 			</div>
 			<button class="reply-enroll-btn">등록</button>
