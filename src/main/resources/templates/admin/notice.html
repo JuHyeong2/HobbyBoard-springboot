@@ -24,7 +24,7 @@
 			            제목 : <span th:text="${#strings.length(a.title) > 20 ? #strings.substring(a.title, 0, 20) + '...' : a.title}"></span>
 			            <!-- plus-btn을 제목 우측으로 배치 -->
 			            <!-- plus-btn -->
-						<button class="plus-btn">⋮</button>
+						<button class="plus-btn"  th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">⋮</button>
 
 			        </h3>
 			
@@ -34,14 +34,14 @@
 			            <input type="hidden" name="page" th:value="${pi.currentPage}"/>
 			
 			            <!-- 옵션 메뉴 -->
-			            <div class="options" style="display: none;">
+			            <div class="options" style="display:none">
 			                <button class="edit-btn" type="button">수정하기</button>
 			                <button class="delete-btn" type="button">삭제하기</button>
 			            </div>
 			        </form>
 			
 			        <!-- 내용 100자 제한 -->
-			        <p th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">
+			        <p>
 			            내용 : <span th:text="${#strings.length(a.content) > 10 ? #strings.substring(a.content, 0, 10) + '...' : a.content}"></span>
 			        </p>
 			
@@ -74,15 +74,15 @@
 			</a></li>
 		</ul>
 	</nav>
-	<script>
+	<script th:inline="javascript">
 		document.querySelectorAll('.plus-btn').forEach(button => {
 		    button.addEventListener('click', function() {
 		        // 클릭한 버튼의 부모 notice-item에서 .options를 직접 탐색
 		        const noticeItem = this.closest('.notice-item');
 		        const options = noticeItem.querySelector('.options');
-
+		        
 		        // 옵션 메뉴의 표시 여부 토글
-		        if (options.style.display === "none" || options.style.display === "") {
+		        if (options.style.display == "none" || options.style.display == "") {
 		            options.style.display = "block";
 		        } else {
 		            options.style.display = "none";

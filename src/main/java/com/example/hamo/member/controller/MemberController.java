@@ -60,8 +60,8 @@ public class MemberController {
 	
 	// Home으로 가는 모든 버튼
 	@GetMapping("/home")
-	public String home() {
-		
+	public String home(Model model, HttpSession session) {
+//		model.addAttribute("loginUser", session.getAttribute("loginUser"));
 		return "index";
 	}
 	

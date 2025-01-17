@@ -66,6 +66,7 @@ body {
 
 /* 옵션 버튼을 제목 위에 겹쳐서 표시 */
 .options {
+	
     position: absolute;
     top: 30px; /* 제목 아래에 살짝 떨어지도록 설정 */
     right: 10px; /* plus-btn 옆에 위치 */
@@ -80,7 +81,7 @@ body {
 }
 
 .options button {
-    display: none;
+    
     padding: 5px 10px;
     border: none;
     background-color: #f1f1f1;
