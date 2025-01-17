@@ -13,4 +13,6 @@ public interface MemberMapper {
 
 	Member login(Member m);
 
+	Member findId(int phone);
+
 }

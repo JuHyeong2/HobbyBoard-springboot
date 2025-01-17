@@ -27,4 +27,9 @@ public class MemberService {
 		return mMapper.login(m);
 	}
 
+	public Member findId(int phone) {
+		
+		return mMapper.findId(phone);
+	}
+
 }
