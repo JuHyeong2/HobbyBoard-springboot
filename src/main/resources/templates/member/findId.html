@@ -27,7 +27,7 @@
 	                    <label for="email">이메일</label>
 	                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
 	                </div>
-	                <button class="button-find" type="submit">아이디 찾기</button>
+	                <button class="button-find" type="submit" id="emailSubmit">아이디 찾기</button>
 	            </form>
 	        </div>
 	
@@ -39,9 +39,16 @@
 	                </div>
 	                <div class="form-group">
 	                    <label for="phone">휴대폰 번호</label>
-	                    <input class="input-find" type="tel" id="phone" placeholder="휴대폰 번호를 입력하세요">
+	                    <div class="phone-group">
+		                    <input class="input-find" type="tel" id="phone" placeholder="휴대폰 번호를 입력하세요">
+		                    <button type="button" id="smsButton" class="button">인증번호 전송</button>
+	                    </div>
 	                </div>
-	                <button class="button-find" type="submit">아이디 찾기</button>
+	                <div class="form-group">
+	                    <label for="phone">인증 번호</label>
+	                    <input class="input-find" type="text" id="checkphone" placeholder="인증번호를 입력하세요">
+	                </div>
+	                <button class="button-find" type="submit" id="phoneSubmit">아이디 찾기</button>
 	            </form>
 	        </div>
 	    </div>

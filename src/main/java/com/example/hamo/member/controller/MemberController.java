@@ -1,5 +1,7 @@
 package com.example.hamo.member.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
 import com.example.hamo.member.model.vo.Member;
@@ -29,7 +32,7 @@ public class MemberController {
 	
 	private final MemberService mService;
 	private final BCryptPasswordEncoder bcrypt;
-//	private final SmsCertificationUtil smsUtil;
+	private final SmsCertificationUtil smsUtil;
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")
@@ -41,6 +44,20 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
+
+	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
+		Member loginUser = mService.login(m);
+		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			model.addAttribute("loginUser", loginUser);
+//			session.setAttribute("loginUser", loginUser);
+			System.out.println(session.getAttribute("loginUser"));
+			System.out.println("success");
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+
 //	public String login(@ModelAttribute("Member") Member m, Model model) {
 //		Member loginUser = mService.login(m);
 //		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
@@ -50,6 +67,7 @@ public class MemberController {
 //			return "fail";
 //		}
 //	}
+
 	
 	@GetMapping("/member/logout")
 	public String logOut(SessionStatus session) {
@@ -60,11 +78,15 @@ public class MemberController {
 	
 	
 	// Home으로 가는 모든 버튼
-	@GetMapping("/home")
-	public String home() {
-		
-		return "index";
-	}
+//	@GetMapping("/home")
+//	public String home() {
+//		ArrayList<Board> list = bService.selectBoardList();
+//		System.out.println("list : " + list);
+//		
+//		model.addAttribute("list", list);
+//		
+//		return "index";
+//	}
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
@@ -84,12 +106,12 @@ public class MemberController {
 	// 회원가입 -> 휴대폰 인증번호 전송시 호출되는 메서드
 	@PostMapping("/member/sendSMS")
 	@ResponseBody
-//	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
-//		System.out.println(phone);
-//		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
-//		smsUtil.sendSMS(phone, certificationCode);
-//		
-//		return certificationCode;
+	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
+		System.out.println(phone);
+		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+		smsUtil.sendSMS(phone, certificationCode);
+		
+		return certificationCode;
 	}
 	
 	@PostMapping("/member/idCheck")
