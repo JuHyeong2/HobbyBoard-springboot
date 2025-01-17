@@ -31,9 +31,7 @@
 		</div>
 	</section>
 	<main>
-
 		<h2>나를 기다리는 하모</h2>
-<<<<<<< HEAD
 		<form method="get" action="board/boardDetails" id="myform">
 			<section class="board-grid">
 				<div class="board-item" th:each="b : ${list}">
@@ -53,63 +51,64 @@
 	</main>
 
 
-	<script>
-		
-		//게시글 클릭하면 게시글 상세 페이지로 날아가는 스크립트
-		window.onload = () => {
-			const board = document.getElementsByClassName('board-item');
-			const form = document.getElementById('myform');
 
-			for (const div of board) {
-				div.addEventListener('click', () => {
-					form.submit(); // 폼 제출
-				});
-			}
-		};
 
-	</script>
-=======
-        <section class="board-grid">
-            <div class="board-item">
-                <div class="board-img"><img alt="board-img" src="image/img1.jpg"></div>
-                <div class="board-info">
-                    <h3>게시글 제목</h3>
-                    <p class="board-name">게시글 제목</p>
-                    <p class="board-details">카테고리 | 지역 | 1/10</p>
-                </div>
-            </div>
-            <!-- Repeated board-item divs -->
+<!--        <section class="board-grid">-->
+<!--            <div class="board-item">-->
+<!--                <div class="board-img"><img alt="board-img" src="image/img1.jpg"></div>-->
+<!--                <div class="board-info">-->
+<!--                    <h3>게시글 제목</h3>-->
+<!--                    <p class="board-name">게시글 제목</p>-->
+<!--                    <p class="board-details">카테고리 | 지역 | 1/10</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--             Repeated board-item divs -->
             
-            <div class="board-item">
-                <div class="board-img"><img alt="board-img" src="image/img2.jpg"></div>
-                <div class="board-info">
-                    <h3>게시글 제목</h3>
-                    <p class="board-name">게시글 제목</p>
-                    <p class="board-details">카테고리 | 지역 | 1/10</p>
-                </div>
-            </div>
+<!--            <div class="board-item">-->
+<!--                <div class="board-img"><img alt="board-img" src="image/img2.jpg"></div>-->
+<!--                <div class="board-info">-->
+<!--                    <h3>게시글 제목</h3>-->
+<!--                    <p class="board-name">게시글 제목</p>-->
+<!--                    <p class="board-details">카테고리 | 지역 | 1/10</p>-->
+<!--                </div>-->
+<!--            </div>-->
             
-            <div class="board-item">
-                <div class="board-img"><img alt="board-img" src="image/img3.jpg"></div>
-                <div class="board-info">
-                    <h3>게시글 제목</h3>
-                    <p class="board-name">게시글 제목</p>
-                    <p class="board-details">카테고리 | 지역 | 1/10</p>
-                </div>
-            </div>
-            <div class="board-item">
-                <div class="board-img"><img alt="board-img" src="image/img4.jpg"></div>
-                <div class="board-info">
-                    <h3>게시글 제목</h3>
-                    <p class="board-name">게시글 제목</p>
-                    <p class="board-details">카테고리 | 지역 | 1/10</p>
-                </div>
-            </div>
-        </section>
-        <br/>
-       
->>>>>>> 716ae0eebd6d166c0f59019e26ffb8460901cc95
+<!--            <div class="board-item">-->
+<!--                <div class="board-img"><img alt="board-img" src="image/img3.jpg"></div>-->
+<!--                <div class="board-info">-->
+<!--                    <h3>게시글 제목</h3>-->
+<!--                    <p class="board-name">게시글 제목</p>-->
+<!--                    <p class="board-details">카테고리 | 지역 | 1/10</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="board-item">-->
+<!--                <div class="board-img"><img alt="board-img" src="image/img4.jpg"></div>-->
+<!--                <div class="board-info">-->
+<!--                    <h3>게시글 제목</h3>-->
+<!--                    <p class="board-name">게시글 제목</p>-->
+<!--                    <p class="board-details">카테고리 | 지역 | 1/10</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--        <br/>-->
 
 </body>
+
+
+<script>
+	
+	//게시글 클릭하면 게시글 상세 페이지로 날아가는 스크립트
+	window.onload = () => {
+		const board = document.getElementsByClassName('board-item');
+		const form = document.getElementById('myform');
+
+		for (const div of board) {
+			div.addEventListener('click', () => {
+				form.submit(); // 폼 제출
+			});
+		}
+	};
+
+</script>
 
 </html>

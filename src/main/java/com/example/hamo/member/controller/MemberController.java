@@ -29,7 +29,7 @@ public class MemberController {
 	
 	private final MemberService mService;
 	private final BCryptPasswordEncoder bcrypt;
-	private final SmsCertificationUtil smsUtil;
+//	private final SmsCertificationUtil smsUtil;
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")
@@ -41,15 +41,15 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
-	public String login(@ModelAttribute("Member") Member m, Model model) {
-		Member loginUser = mService.login(m);
-		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			model.addAttribute("loginUser", loginUser);
-			return "success";
-		}else {
-			return "fail";
-		}
-	}
+//	public String login(@ModelAttribute("Member") Member m, Model model) {
+//		Member loginUser = mService.login(m);
+//		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+//			model.addAttribute("loginUser", loginUser);
+//			return "success";
+//		}else {
+//			return "fail";
+//		}
+//	}
 	
 	@GetMapping("/member/logout")
 	public String logOut(SessionStatus session) {
@@ -75,8 +75,8 @@ public class MemberController {
 	@PostMapping("/member/signUp")
 	public String signUp(@ModelAttribute("Member") Member member ) {
 		
-		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
-		int result = mService.insertMember(member);
+//		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
+//		int result = mService.insertMember(member);
 		
 		return "member/login";
 	}
@@ -84,12 +84,12 @@ public class MemberController {
 	// 회원가입 -> 휴대폰 인증번호 전송시 호출되는 메서드
 	@PostMapping("/member/sendSMS")
 	@ResponseBody
-	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
-		System.out.println(phone);
-		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
-		smsUtil.sendSMS(phone, certificationCode);
-		
-		return certificationCode;
+//	public String sendSms(@RequestParam("phone") String phone, HttpServletResponse response) {
+//		System.out.println(phone);
+//		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+//		smsUtil.sendSMS(phone, certificationCode);
+//		
+//		return certificationCode;
 	}
 	
 	@PostMapping("/member/idCheck")
