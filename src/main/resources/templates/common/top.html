@@ -26,7 +26,7 @@ a:hover{
 
 h1{
 	cursor: pointer;
-	font-size: 50px;  /* 프레임워크 설정 덮어쓰기 */
+	font-size: 3rem;  /* 프레임워크 설정 덮어쓰기 */
 }
 
 /* Header styles */
@@ -47,12 +47,6 @@ header {
     
 }
 
-.img {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #0066cc;
-    margin-right: 30px;
-}
 
 .search-bar {
     display: flex;
@@ -85,23 +79,28 @@ header {
 
 .main-nav li {
     margin-right: 2rem;
+    padding-bottom: 10px;
 }
 
 #category:hover .dropdown-content {
 	display: block;
 }
 
-.dropdown-content {
-	display: none;
+#myPage:hover .dropdown-content-2 {
+	display: block;
+}
+
+.dropdown-content, .dropdown-content-2{
+ 	display: none; 
 	background-color: white;
 	position: absolute;
-	top: 19%;
+	top: 11rem;
 	min-width: 160px;
 	box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
 	z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content a, .dropdown-content-2 a {
     text-decoration: none;
     transition: all 0.3s ease;
     padding: 0.6rem 1rem; /* 버튼 크기 증가 */
@@ -112,7 +111,7 @@ header {
     justify-content: center; /* 가로 중앙 정렬 */
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover, .dropdown-content-2 a:hover {
 	background-color: lightgray;
 
     border-radius: 5px;
@@ -131,9 +130,16 @@ header {
 /* 	flex-direction: column; */
 }
 
+.top-nav-2{
+	list-style: none;
+    max-width: 1200px;
+    padding: 1rem 2rem;
+}
+
 .top-button {
     color: #1a1a1a;
     cursor: pointer;
+    display: flex;
 }
 
 .navigation {
@@ -141,6 +147,17 @@ header {
     display: flex;
     margin: 0 auto;
     justify-content: space-between;
+}
+
+.top-button img {
+    width: 25px !important;
+    height: 25px !important;
+    margin-right: 5px;
+}
+
+.top-button label{
+	font-weight: bold;
+	cursor: pointer;
 }
 </style>
 
@@ -176,9 +193,26 @@ header {
                	 	<li><a href="/board/project">프로젝트 소개</a></li>
             	</ul>
         	</nav>
-        	<nav class="top-nav">
+        	
+        	<nav class="top-nav" th:if="${session.loginUser == null}">
 				<a class="top-button" href="/member/login" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             	<a class="top-button" href="/member/signUp" >회원가입</a>
+			</nav>
+			<nav class="main-nav" th:if="${session.loginUser != null}">
+				<ul>
+					<li id="myPage">
+						<a class="top-button" href="/member/myPage" >
+							<img src="/image/myinfo.png"></img>
+							<label id="aaa">[[${session.loginUser.memberNickname}]]님</label>
+						</a>
+						<div class="dropdown-content-2">
+						    <a href="/member/myPage">MY PAGE</a>
+						    <a href="/member/myactivite">MY ACTIVITY</a>
+						    <a href="/member/mypost">MY POST</a>
+						    <a href="/member/logout">로그아웃</a>
+			        	</div>
+					</li>
+				</ul>
 			</nav>
 		</div>
 		

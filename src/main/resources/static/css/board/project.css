@@ -36,6 +36,10 @@ main {
     scroll-snap-type: y mandatory;
 }
 
+h1 {
+	cursor: pointer; 
+}
+
 #home {
     background: linear-gradient(#f0f2ff, #feffed);
 }
@@ -123,4 +127,3 @@ img {
     color: #666;
     text-align: center;
 }
-
