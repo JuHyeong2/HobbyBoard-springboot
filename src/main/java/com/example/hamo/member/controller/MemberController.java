@@ -41,10 +41,13 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
-	public String login(@ModelAttribute("Member") Member m, Model model) {
+	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			model.addAttribute("loginUser", loginUser);
+//			session.setAttribute("loginUser", loginUser);
+			System.out.println(session.getAttribute("loginUser"));
+			System.out.println("success");
 			return "success";
 		}else {
 			return "fail";
