@@ -44,7 +44,6 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
-
 	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
@@ -73,7 +72,7 @@ public class MemberController {
 	public String logOut(SessionStatus session) {
 		session.setComplete();
 		
-		return "redirect:/home";
+		return "redirect:/";
 	}
 	
 	
@@ -97,8 +96,8 @@ public class MemberController {
 	@PostMapping("/member/signUp")
 	public String signUp(@ModelAttribute("Member") Member member ) {
 		
-//		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
-//		int result = mService.insertMember(member);
+		member.setMemberPwd(bcrypt.encode(member.getMemberPwd()));
+		int result = mService.insertMember(member);
 		
 		return "member/login";
 	}
@@ -121,6 +120,15 @@ public class MemberController {
 		int result = mService.idCheck(userId);
 		System.out.println(result);
 		return result;
+	}
+	
+	@PostMapping("/member/findId")
+	@ResponseBody
+	public Member findId(@RequestParam("phone") int phone) {
+//		System.out.println(userId);
+		Member m = mService.findId(phone);
+		System.out.println(m.getMemberId());
+		return m;
 	}
 	
 	// 아이디 찾기 페이지로 이동
