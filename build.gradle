@@ -24,17 +24,24 @@ repositories {
 }
 
 dependencies {
+<<<<<<< HEAD
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+=======
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 <<<<<<< HEAD
 
 	implementation 'net.nurigo:sdk:4.3.2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+<<<<<<< HEAD
 
 =======
 	implementation 'net.nurigo:sdk:4.3.2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 >>>>>>> 7c1232d957e9a92ee69f702ef3e1f5e6e4d6536c
+=======
+>>>>>>> 716ae0eebd6d166c0f59019e26ffb8460901cc95
+>>>>>>> c893a48f02ddcfbdb3321f4aa870865ffa361abb
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -50,6 +57,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	
 }
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()
