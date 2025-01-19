@@ -1,4 +1,4 @@
-package com.example.hamo.member.model.vo;
+	package com.example.hamo.member.model.vo;
 
 import java.sql.Date;
 

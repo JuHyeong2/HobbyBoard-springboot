@@ -26,6 +26,44 @@
 		from admin_board
 		where admin_board_status = 'Y' and
 			  board_no = #{id}
-			 
+	</select>
+	
+	<update id="updateNotice">
+		update admin_board
+		set title=#{title},
+			content=#{content},
+			update_date=sysdate
+		where board_no=#{boardNo}
+	</update>
+	
+	<update id="deleteNotice">
+		update admin_board
+		set admin_board_status = 'N'
+		where board_no=#{boardNo}
+	</update>
+	
+	<select id="selectAllMember">
+		select * 
+		from member
+		where is_admin = 'N'
+	</select>
+	<update id="changeStatus">
+		update member
+		set status=#{isStatus}
+		where member_no=#{mId}
+	</update>
+	
+	<select id="searchUserList" resultType="Member">
+	    SELECT *
+	    FROM member
+	    WHERE member_name LIKE '%' || #{searchValue} || '%'
+	</select>
+
+	
+	<select id="selectAllBoardList">
+		select board_no, title, member_no, member_nickname
+		from board b
+			 join member m using(member_no)
+		where board_status='Y'
 	</select>
 </mapper>
