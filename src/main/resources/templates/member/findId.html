@@ -25,8 +25,18 @@
 	                    <input class="input-find" type="text" id="nameEmail" placeholder="이름을 입력하세요">
 	                </div>
 	                <div class="form-group">
-	                    <label for="email">이메일</label>
-	                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
+	                	<label for="email">이메일</label>
+	                	<div class="phone-group">
+		                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
+		                    <button type="button" id="emailButton" class="button">인증번호 전송</button>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="email">인증번호</label>
+	                    <div class="phone-group">
+	                    	<input class="input-find" type="text" id="checkemail" placeholder="인증번호를 입력하세요">
+	                    	<button type="button" id="emailButton2" class="button" disabled>확인</button>
+	                    </div>
 	                </div>
 	                <button class="button-find" type="button" id="emailSubmit">아이디 찾기</button>
 	            </form>
@@ -64,9 +74,9 @@
 	        <span class="close-button" id="closeModal">&times;</span>
 	        <h2>아이디 찾기 성공</h2>
 	        <p>회원님의 아이디는 <strong id="userId">example_id</strong> 입니다.</p>
-	        <div class="phone-group">
-		        <button type="button" id="smsButton3" class="button">로그인</button>
-		        <button type="button" id="smsButton3" class="button">비밀번호 찾기</button>
+	        <div class="findidButton">
+		        <button type="button" class="button" onclick='location.href="/member/login"'>로그인</button>
+		        <button type="button" class="button" onclick='location.href="/member/findPwd"'>비밀번호 찾기</button>
 	        </div>
 	    </div>
 	</div>
@@ -89,6 +99,8 @@
                 document.getElementById('phoneTab').classList.add('active');
             }
         }
+        
+        // 휴대폰 인증번호 전송 버튼 클릭 시 인증번호 비동기로 전송
         let idCheck = false;
         document.getElementById('smsButton').addEventListener('click', ()=>{
 			const phone = document.getElementById('phone').value;
@@ -103,7 +115,7 @@
 						console.log(data);
 						if(data != null && data != ''){
 							document.getElementById('smsButton2').disabled = false;
-							let startMin = 1;
+							let startMin = 5;
 							let startSec = 0;
 							const timer = setInterval(()=>{
 								document.getElementById('time').innerText = startMin + ":" + startSec;
@@ -123,7 +135,7 @@
 								}
 							}, 1000)	
 							
-							document.getElementById('time').innerText = 
+							
 							document.getElementById('smsButton2').addEventListener('click', ()=>{
 								const certificationNum = document.getElementById('checkphone').value;
 								if(certificationNum == data){
@@ -131,6 +143,7 @@
 									idCheck = true;
 								}else{
 									alert('인증번호가 다릅니다.');
+									idCheck = false;
 								}
 							})
 						}
@@ -139,13 +152,24 @@
 			}
 		})
 		
-		document.getElementById('phoneSubmit').addEventListener('click', ()=>{
+		// 휴대폰으로 아이디찾기 버튼 클릭 시
+		document.getElementById('phoneSubmit').addEventListener('click', (e)=>{
+			findId('phone');
+		})
+		
+		// 이메일로 아이디찾기 버튼 클릭 시
+		document.getElementById('emailSubmit').addEventListener('click', (e)=>{
+			findId('email');
+		})
+		
+		// 아이디 DB에서 찾는 비동기 함수
+		const findId=(tab)=>{
 			if(idCheck){
-				const phone = document.getElementById('phone').value;
+				const val = document.getElementById(tab).value;
 				$.ajax({
 					url: '/member/findId',
 					type: 'POST',
-					data: {phone: phone},
+					data: {value: val, column: tab},
 					success: data=>{
 						console.log(data);
 						if(data != null){
@@ -159,10 +183,37 @@
 					}
 				})
 			}else alert('이름, 휴대폰번호를 확인해 주세요.');
-
-		})
+		}
 		
-		smsButton3
+		// 이메일 인증번호 전송 버튼 클릭 시 인증번호 비동기로 전송
+		document.getElementById('emailButton').addEventListener('click', ()=>{
+			const email = document.getElementById('email').value;
+			console.log(phone);
+			if(email != null && email != ''){
+				$.ajax({
+					type: "POST",
+					url: "/member/sendEmail",
+					data: {email:email},
+					dataType: 'json',
+					success: data=>{
+						console.log(data);
+						if(data != null && data != ''){
+							document.getElementById('emailButton2').disabled = false;
+							document.getElementById('emailButton2').addEventListener('click', ()=>{
+								const certificationNum = document.getElementById('checkemail').value;
+								if(certificationNum == data){
+									alert('이메일 인증에 성공했습니다.');
+									idCheck = true;
+								}else{
+									alert('인증번호가 다릅니다.');
+									idCheck = false;
+								}
+							})
+						}
+					}
+				})
+			}
+		})
     </script>
 </body>
 </html>
