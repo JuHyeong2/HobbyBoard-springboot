@@ -1,5 +1,7 @@
 package com.example.hamo.member.model.mapper;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.hamo.member.model.vo.Member;
@@ -13,6 +15,6 @@ public interface MemberMapper {
 
 	Member login(Member m);
 
-	Member findId(int phone);
+	Member findId(HashMap<String, String> map);
 
 }

@@ -1,5 +1,7 @@
 package com.example.hamo.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.stereotype.Service;
 
 import com.example.hamo.member.model.mapper.MemberMapper;
@@ -27,9 +29,9 @@ public class MemberService {
 		return mMapper.login(m);
 	}
 
-	public Member findId(int phone) {
+	public Member findId(HashMap<String, String> map) {
 		
-		return mMapper.findId(phone);
+		return mMapper.findId(map);
 	}
 
 }

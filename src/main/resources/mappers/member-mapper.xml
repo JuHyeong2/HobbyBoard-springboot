@@ -19,10 +19,10 @@
 		where member_id = #{memberId}
 	</select>
 	
-	<select id="findId">
+	<select id="findId" parameterType="hashMap">
 		select *
 		from member
-		where member_phone = #{phone}
+		where ${column} = #{value}
 	</select>
 
 </mapper>
