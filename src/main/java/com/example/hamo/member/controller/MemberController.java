@@ -1,6 +1,12 @@
 package com.example.hamo.member.controller;
 
 
+
+
+import java.util.ArrayList;
+
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
 import com.example.hamo.member.model.vo.Member;
@@ -40,30 +47,66 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
+
 	public String login(@ModelAttribute("Member") Member m, Model model) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			model.addAttribute("loginUser", loginUser);
+
+	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
+		Member loginUser = mService.login(m);
+		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			model.addAttribute("loginUser", loginUser);
+//			session.setAttribute("loginUser", loginUser);
+			System.out.println(session.getAttribute("loginUser"));
+			System.out.println("success");
+
 			return "success";
 		}else {
 			return "fail";
 		}
 	}
+
+
+
+//	public String login(@ModelAttribute("Member") Member m, Model model) {
+//		Member loginUser = mService.login(m);
+//		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+//			model.addAttribute("loginUser", loginUser);
+//			return "success";
+//		}else {
+//			return "fail";
+//		}
+//	}
+
+
 	
 	@GetMapping("/member/logout")
 	public String logOut(SessionStatus session) {
 		session.setComplete();
 		
-		return "redirect:/home";
+		return "redirect:/";
 	}
 	
 	
 	// Home으로 가는 모든 버튼
+
 	@GetMapping("/home")
 	public String home(Model model, HttpSession session) {
 
 		return "index";
 	}
+
+//	@GetMapping("/home")
+//	public String home() {
+//		ArrayList<Board> list = bService.selectBoardList();
+//		System.out.println("list : " + list);
+//		
+//		model.addAttribute("list", list);
+//		
+//		return "index";
+//	}
+
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
@@ -89,7 +132,11 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
+
 }
+
+	}
+
 	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
@@ -98,6 +145,15 @@ public class MemberController {
 		int result = mService.idCheck(userId);
 		System.out.println(result);
 		return result;
+	}
+	
+	@PostMapping("/member/findId")
+	@ResponseBody
+	public Member findId(@RequestParam("phone") int phone) {
+//		System.out.println(userId);
+		Member m = mService.findId(phone);
+		System.out.println(m.getMemberId());
+		return m;
 	}
 	
 	// 아이디 찾기 페이지로 이동

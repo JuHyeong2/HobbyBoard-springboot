@@ -18,5 +18,11 @@
 		from member
 		where member_id = #{memberId}
 	</select>
+	
+	<select id="findId">
+		select *
+		from member
+		where member_phone = #{phone}
+	</select>
 
 </mapper>
