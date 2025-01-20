@@ -22,4 +22,5 @@ public class Admin {
 	private int views;
 	private String adminBoardStatus;
 	private int writer;
+	private String memberNickname;
 }
