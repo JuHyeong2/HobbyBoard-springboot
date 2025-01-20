@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.hamo.admin.model.service.AdminService;
+import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.board.model.service.BoardService;
 import com.example.hamo.board.model.vo.Board;
 
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/board")
 public class BoardController {
 	private final BoardService bService;
-	
+	private final AdminService aService;
 	@GetMapping("boardDetails")
 	public String boarDetails(@RequestParam("boardNo") int boardNo,Model model) {
 		
@@ -48,7 +48,9 @@ public class BoardController {
 		
 	
 	@GetMapping("noticeView")
-	public String noticeView() {
+	public String noticeView(Model model) {
+		ArrayList<Admin> aList = aService.selectNoticeList();
+		model.addAttribute("aList", aList); 
 		return "board/noticeView";
 	}
 	

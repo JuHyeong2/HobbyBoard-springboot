@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>공지사항 작성</title>
     <link rel="stylesheet" href="/css/admin/noticeWrite.css">
+    <style>
+        /* CKEditor의 기본 높이를 CSS로 설정 */
+        .ck-editor__editable {
+            height: 1000px !important; /* 높이를 고정 */
+            overflow-y: auto; /* 내용이 많을 경우 스크롤이 생기게 설정 */
+        }
+    </style>
 </head>
 <body>
     <div th:replace="admin/admin-main.html"></div>
@@ -22,5 +30,34 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#content'), {
+                toolbar: [ // 사용할 툴바 항목
+                    'heading', '|',
+                    'bold', 'italic', 'link', '|',
+                    'bulletedList', 'numberedList', '|',
+                    'blockQuote', 'insertTable', 'undo', 'redo'
+                ],
+                // 자동 크기 조정 활성화
+                autoGrow_onStartup: true, // 페이지 로드시 자동 크기 조정
+                autoGrow_minHeight: 1000, // 최소 높이 설정
+                autoGrow_maxHeight: 2000, // 최대 높이 설정
+                autoGrow_bottomSpace: 50 // 여백 설정
+            })
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+
+
+
+
 </body>
 </html>

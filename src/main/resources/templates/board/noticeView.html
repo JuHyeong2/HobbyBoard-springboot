@@ -14,29 +14,12 @@
             <h1>공지사항</h1>
         </div>
 
-        <div class="notice-list">
+        <div class="notice-list" th:each="a : ${aList}">
             <div class="notice-item">
-                <span class="notice-badge badge-green">점검</span>
                 <div class="notice-content">
-                    <p href="#" class="notice-title">[점검완료] 1/3(금) 정기 웹 서버점검 (13:00~14:00)</p>
+                    [[${a.content}]]
                 </div>
-                <div class="notice-date">2024.01.03</div>
-            </div>
-
-            <div class="notice-item">
-                <span class="notice-badge badge-blue">공지</span>
-                <div class="notice-content">
-                    <a href="/board/noticeDetail" class="notice-title">모임간 주의 사항 안내</a>
-                </div>
-                <div class="notice-date">2024.01.01</div>
-            </div>
-
-            <div class="notice-item">
-                <span class="notice-badge badge-blue">공지</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">게시글 작성 방법 안내</p>
-                </div>
-                <div class="notice-date">2023.12.31</div>
+                <div class="notice-date">[[${a.createDate}]]</div>
             </div>
         </div>
 

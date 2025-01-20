@@ -13,7 +13,7 @@
    
        <div class="header">
            <h1>USER LIST</h1>
-           <form id="admin-user" >
+<!--            <form id="admin-user" > -->
               <div class="search-container">
                 <input type="text" placeholder="사용자 검색..." aria-label="사용자 검색" class="search-bar" name="searchList">
                 <button type="button" class="search-btn" id="search-btn">
@@ -44,51 +44,52 @@
                       </div>
                   </div>
               </div>
-         </form>
+<!--          </form> -->
        </div>
    </body>
 <script th:inline="javascript">
-    const statusBtns = document.querySelectorAll('.activate-btn');
+	//부모 요소에 이벤트 위임
+	document.querySelector('.user-list').addEventListener('click', (event) => {
+	    if (event.target.classList.contains('activate-btn')) {
+	        const statusBtn = event.target;
+	        const isChecked = confirm('사용자 상태를 변경하시겠습니까?');
+	
+	        if (isChecked) {
+	            const userCard = statusBtn.closest('.user-card');
+	            const mId = userCard.querySelector('input[name="mId"]').value;
+	
+	            const isStatus = statusBtn.innerText === '활성' ? false : true;
+	
+	            $.ajax({
+	                url: '/admin/changeStatus',
+	                type: 'post',
+	                data: { mId: mId, isStatus: isStatus.toString() },
+	                dataType: 'json',
+	                success: data => {
+	                    if (data.result !== 0) {
+	                        alert('상태 변경에 성공했습니다.');
+	
+	                        // 버튼 상태 변경
+	                        statusBtn.innerText = isStatus ? '활성' : '비활성';
+	                        statusBtn.style.background = isStatus ? '' : 'red';
+	
+	                        // <p id="status"> 업데이트
+	                        const statusElement = userCard.querySelector('#status');
+	                        statusElement.innerText = `활동 여부: ${data.status}`;
+	                    } else {
+	                        alert('상태 변경에 실패했습니다.');
+	                    }
+	                },
+	                error: () => {
+	                    alert('서버와 통신 중 오류가 발생했습니다.');
+	                }
+	            });
+	        } else {
+	            alert('상태 변경을 취소합니다.');
+	        }
+	    }
+	});
 
-    statusBtns.forEach(statusBtn => {
-        statusBtn.addEventListener('click', () => {
-            const isChecked = confirm('사용자 상태를 변경하시겠습니까?');
-            
-            if (isChecked) {
-                const userCard = statusBtn.closest('.user-card');
-                const mId = userCard.querySelector('input[name="mId"]').value;
-
-                const isStatus = statusBtn.innerText === '활성' ? false : true;
-
-                $.ajax({
-                    url: '/admin/changeStatus',
-                    type: 'post',
-                    data: { mId: mId, isStatus: isStatus.toString() }, // true/false를 문자열로 전달
-                    dataType: 'json',
-                    success: data => {
-                        if (data.result !== 0) {
-                            alert('상태 변경에 성공했습니다.');
-
-                            // 버튼 상태 변경
-                            statusBtn.innerText = isStatus ? '활성' : '비활성';
-                            statusBtn.style.background = isStatus ? '' : 'red';
-
-                            // <p id="status"> 업데이트
-                            const statusElement = userCard.querySelector('#status');
-                            statusElement.innerText = `활동 여부: ${data.status}`;
-                        } else {
-                            alert('상태 변경에 실패했습니다.');
-                        }
-                    },
-                    error: () => {
-                        alert('서버와 통신 중 오류가 발생했습니다.');
-                    }
-                });
-            } else {
-                alert('상태 변경을 취소합니다.');
-            }
-        });
-    });
     
     // searchUser 함수 정의
     function searchUser() {
@@ -117,7 +118,7 @@
                             <p>휴대폰 번호: ${obj.memberPhone}</p>
                             <p>닉네임: ${obj.memberNickname}</p>
                             <p id="status">활동 여부: ${obj.status}</p>
-                            <p>가입일 : ${obj.createDate}</p>
+                            <p>가입일: ${obj.createDate}</p>
                             <th:block>
                                 <button type="button" class="button activate-btn" style="background: ${obj.status === 'Y' ? '' : 'red'}">
                                     ${obj.status === 'Y' ? '활성' : '비활성'}
@@ -137,7 +138,7 @@
 
     // search-btn 클릭 시 폼 제출 방지하고 검색 실행
     document.getElementById('search-btn').addEventListener('click', (event) => {
-        event.preventDefault(); // 폼 제출 막기
+//         event.preventDefault(); // 폼 제출 막기
         searchUser();  // 검색 실행
     });
 
@@ -145,6 +146,8 @@
     document.querySelector('.search-bar').addEventListener('keyup', function(event) {
         if (event.key === 'Enter') {  // Enter 키가 눌렸을 때
             searchUser();  // 검색 실행
+        } else { 	
+        	console.log();
         }
     });
 

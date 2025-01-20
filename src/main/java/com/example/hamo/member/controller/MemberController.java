@@ -4,6 +4,7 @@ package com.example.hamo.member.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.common.util.EmailCertificationUtil;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
 import com.example.hamo.member.model.vo.Member;
@@ -36,6 +38,7 @@ public class MemberController {
 	private final MemberService mService;
 	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
+	private final EmailCertificationUtil emailUtil;
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")	
@@ -138,6 +141,15 @@ public class MemberController {
 	}
 
 	
+	@PostMapping("/member/sendEmail")
+	@ResponseBody
+	public String sendEmail(@RequestParam("email") String email) {
+		System.out.println("email : " + email);
+		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+		emailUtil.sendEmail(email, certificationCode);
+		return certificationCode;
+	}
+	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
 	public int idCheck(@RequestParam("userId") String userId) {
@@ -149,9 +161,12 @@ public class MemberController {
 	
 	@PostMapping("/member/findId")
 	@ResponseBody
-	public Member findId(@RequestParam("phone") int phone) {
+	public Member findId(@RequestParam("value") String value, @RequestParam("column") String column) {
 //		System.out.println(userId);
-		Member m = mService.findId(phone);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("column", "member_" + column);
+		map.put("value", value);
+		Member m = mService.findId(map);
 		System.out.println(m.getMemberId());
 		return m;
 	}
