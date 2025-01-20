@@ -7,10 +7,63 @@
 		#{content}, default, default, default, default, #{writer})
 	</insert>
 	
-	<select id="selectNoticeList" resultType="Admin">
-		select * 
+	<select id="getListCount" resultType="_int">
+		select count(*)
 		from admin_board
 		where admin_board_status = 'Y'
 	</select>
 	
+	<select id="selectNoticeList" resultType="Admin">
+		select board_no, title, content, a.create_date, a.update_date, views, admin_board_status, writer, member_nickname
+		from admin_board a
+			 join member m on(writer=member_no)
+		where admin_board_status = 'Y'
+		order by create_date desc
+	</select>
+	
+	<select id="selectNoticeOne" resultType="Admin">
+		select  board_no, title, content
+		from admin_board
+		where admin_board_status = 'Y' and
+			  board_no = #{id}
+	</select>
+	
+	<update id="updateNotice">
+		update admin_board
+		set title=#{title},
+			content=#{content},
+			update_date=sysdate
+		where board_no=#{boardNo}
+	</update>
+	
+	<update id="deleteNotice">
+		update admin_board
+		set admin_board_status = 'N'
+		where board_no=#{boardNo}
+	</update>
+	
+	<select id="selectAllMember">
+		select * 
+		from member
+		where is_admin = 'N'
+	</select>
+	<update id="changeStatus">
+		update member
+		set status=#{isStatus}
+		where member_no=#{mId}
+	</update>
+	
+	<select id="searchUserList" resultType="Member">
+	    SELECT *
+	    FROM member
+	    WHERE member_name LIKE '%' || #{searchValue} || '%'
+	</select>
+
+	
+	<select id="selectAllBoardList">
+		select board_no, title, member_no, member_nickname
+		from board b
+			 join member m using(member_no)
+		where board_status='Y'
+	</select>
 </mapper>

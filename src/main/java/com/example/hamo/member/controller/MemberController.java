@@ -1,15 +1,18 @@
 package com.example.hamo.member.controller;
 
+
+
+
 import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -35,7 +38,7 @@ public class MemberController {
 	private final SmsCertificationUtil smsUtil;
 	
 	// 로그인 화면으로 가는 메서드
-	@GetMapping("/member/login")
+	@GetMapping("/member/login")	
 	public String loginView() {
 		
 		return "member/login";
@@ -44,6 +47,12 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
+
+	public String login(@ModelAttribute("Member") Member m, Model model) {
+		Member loginUser = mService.login(m);
+		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			model.addAttribute("loginUser", loginUser);
+
 	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
@@ -51,11 +60,14 @@ public class MemberController {
 //			session.setAttribute("loginUser", loginUser);
 			System.out.println(session.getAttribute("loginUser"));
 			System.out.println("success");
+
 			return "success";
 		}else {
 			return "fail";
 		}
 	}
+
+
 
 //	public String login(@ModelAttribute("Member") Member m, Model model) {
 //		Member loginUser = mService.login(m);
@@ -67,6 +79,7 @@ public class MemberController {
 //		}
 //	}
 
+
 	
 	@GetMapping("/member/logout")
 	public String logOut(SessionStatus session) {
@@ -77,6 +90,13 @@ public class MemberController {
 	
 	
 	// Home으로 가는 모든 버튼
+
+	@GetMapping("/home")
+	public String home(Model model, HttpSession session) {
+
+		return "index";
+	}
+
 //	@GetMapping("/home")
 //	public String home() {
 //		ArrayList<Board> list = bService.selectBoardList();
@@ -86,6 +106,7 @@ public class MemberController {
 //		
 //		return "index";
 //	}
+
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
@@ -111,7 +132,11 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
+
+}
+
 	}
+
 	
 	@PostMapping("/member/idCheck")
 	@ResponseBody

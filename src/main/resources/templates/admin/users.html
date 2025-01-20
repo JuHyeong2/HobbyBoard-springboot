@@ -1,59 +1,155 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>유저 목록</title>
-    <link rel="stylesheet" href="/css/admin/users.css">
-</head>
-<body>
-    <div th:replace="admin/admin-main.html"></div>
-
-    <div class="header">
-        <h1>USER LIST</h1>
-        <input type="text" placeholder="사용자 검색..." aria-label="사용자 검색" class="search-bar">
-        
-        <div class="content-wrapper">
-            <!-- 사용자 카드 목록 -->
-            <div class="user-list">
-                <!-- 사용자 카드 -->
-                <div class="user-card">
-                    <span class="user-id">No.12</span> <!-- 추가된 텍스트 -->
-                    <h3 class="user-name">홍길동</h3>
-                    <p>아이디: hong123</p>
-                    <p>이메일: hong123@example.com</p>
-                    <p>휴대폰 번호: 010-1234-5678</p>
-                    <p>닉네임: 길동이</p>
-                    <p>활동 여부: 활성</p>
-                    <p>가입일: 2023-01-15</p>
-                    <p>거주 지역: 서울특별시</p>
-                    <button class="button activate-btn">활성</button>
-                    <button class="button deactivate-btn">비활성</button>
-                </div>
-
-                <div class="user-card">
-                    <span class="user-id">No.13</span> <!-- 추가된 텍스트 -->
-                    <h3 class="user-name">김철수</h3>
-                    <p>아이디: kim123</p>
-                    <p>이메일: kim123@example.com</p>
-                    <p>휴대폰 번호: 010-9876-5432</p>
-                    <p>닉네임: 철수맨</p>
-                    <p>활동 여부: 비활성</p>
-                    <p>가입일: 2023-03-20</p>
-                    <p>거주 지역: 부산광역시</p>
-                    <button class="button activate-btn">활성</button>
-                    <button class="button deactivate-btn">비활성</button>
-                </div>
+   <!DOCTYPE html>
+   <html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <meta charset="UTF-8">
+       <title>유저 목록</title>
+       <link rel="stylesheet" href="/css/admin/users.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+       <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>   <!-- 제이쿼리 -->
+       
+   </head>
+   <body>
+       <div th:replace="admin/admin-main.html"></div>
+   
+       <div class="header">
+           <h1>USER LIST</h1>
+           <form id="admin-user" >
+              <div class="search-container">
+                <input type="text" placeholder="사용자 검색..." aria-label="사용자 검색" class="search-bar" name="searchList">
+                <button type="button" class="search-btn" id="search-btn">
+                    <i class="fa fa-search"></i> <!-- 돋보기 아이콘 -->
+                </button>
             </div>
-        </div>
-    </div>
-</body>
-<script>
-    document.querySelectorAll('.activate-btn').forEach(button => {
-        button.addEventListener('click', () => alert('사용자가 활성화되었습니다.'));
+              
+              <div class="content-wrapper">
+                  <!-- 사용자 카드 목록 -->
+                  <div class="user-list">
+                      <!-- 사용자 카드 -->
+                      <div class="user-card"  th:each="m : ${ mList }">
+                          <span class="user-id">No. [[${m.memberNo}]]</span> <!-- 추가된 텍스트 -->
+                          <input type="hidden" id="mId" name="mId" th:value="${m.memberNo}">
+                          <h3 class="user-name">[[${m.memberName}]]</h3>
+                          <p>아이디: [[${m.memberId}]]</p>
+                          <p>이메일: [[${m.memberEmail}]]</p>
+                          <p>휴대폰 번호: [[${m.memberPhone}]]</p>   
+                          <p>닉네임: [[${m.memberNickname}]]</p>
+                          <p id="status">활동 여부: [[${m.status}]]</p>
+                          <p>가입일: [[${m.createDate}]]</p>
+                          <th:block th:if="${m.status == 'Y'}">
+                          <button type="button" class="button activate-btn" >활성</button>
+                          </th:block>
+                          <th:block th:if="${m.status != 'Y'}">
+                          <button type="button" class="button activate-btn" style="background: red" >비활성</button>
+                          </th:block>
+                      </div>
+                  </div>
+              </div>
+         </form>
+       </div>
+   </body>
+<script th:inline="javascript">
+    const statusBtns = document.querySelectorAll('.activate-btn');
+
+    statusBtns.forEach(statusBtn => {
+        statusBtn.addEventListener('click', () => {
+            const isChecked = confirm('사용자 상태를 변경하시겠습니까?');
+            
+            if (isChecked) {
+                const userCard = statusBtn.closest('.user-card');
+                const mId = userCard.querySelector('input[name="mId"]').value;
+
+                const isStatus = statusBtn.innerText === '활성' ? false : true;
+
+                $.ajax({
+                    url: '/admin/changeStatus',
+                    type: 'post',
+                    data: { mId: mId, isStatus: isStatus.toString() }, // true/false를 문자열로 전달
+                    dataType: 'json',
+                    success: data => {
+                        if (data.result !== 0) {
+                            alert('상태 변경에 성공했습니다.');
+
+                            // 버튼 상태 변경
+                            statusBtn.innerText = isStatus ? '활성' : '비활성';
+                            statusBtn.style.background = isStatus ? '' : 'red';
+
+                            // <p id="status"> 업데이트
+                            const statusElement = userCard.querySelector('#status');
+                            statusElement.innerText = `활동 여부: ${data.status}`;
+                        } else {
+                            alert('상태 변경에 실패했습니다.');
+                        }
+                    },
+                    error: () => {
+                        alert('서버와 통신 중 오류가 발생했습니다.');
+                    }
+                });
+            } else {
+                alert('상태 변경을 취소합니다.');
+            }
+        });
+    });
+    
+    // searchUser 함수 정의
+    function searchUser() {
+        const searchValue = document.querySelector('.search-bar').value;
+        $.ajax({
+            url: '/admin/searchUser',
+            type: 'get',
+            data: { searchValue: searchValue },
+            dataType: 'json',
+            success: data => {
+                const userListContainer = document.querySelector('.user-list');
+                userListContainer.innerHTML = '';  // 기존 사용자 목록을 비운다
+
+                // 검색 결과를 받아와서 사용자 카드 추가
+                if (data && data.length > 0) {
+                    for (const obj of data) {
+                        const userCard = document.createElement('div');
+                        userCard.classList.add('user-card');
+                        
+                        userCard.innerHTML = `
+                            <span class="user-id">No. ${obj.memberNo}</span>
+                            <input type="hidden" id="mId" name="mId" value="${obj.memberNo}">
+                            <h3 class="user-name">${obj.memberName}</h3>
+                            <p>아이디: ${obj.memberId}</p>
+                            <p>이메일: ${obj.memberEmail}</p>
+                            <p>휴대폰 번호: ${obj.memberPhone}</p>
+                            <p>닉네임: ${obj.memberNickname}</p>
+                            <p id="status">활동 여부: ${obj.status}</p>
+                            <p>가입일 : ${obj.createDate}</p>
+                            <th:block>
+                                <button type="button" class="button activate-btn" style="background: ${obj.status === 'Y' ? '' : 'red'}">
+                                    ${obj.status === 'Y' ? '활성' : '비활성'}
+                                </button>
+                            </th:block>
+                        `;
+                        
+                        userListContainer.appendChild(userCard);
+                    }
+                } else {
+                    userListContainer.innerHTML = '<p>검색된 사용자가 없습니다.</p>';
+                }
+            },
+            error: data => console.log(data)
+        });
+    }
+
+    // search-btn 클릭 시 폼 제출 방지하고 검색 실행
+    document.getElementById('search-btn').addEventListener('click', (event) => {
+        event.preventDefault(); // 폼 제출 막기
+        searchUser();  // 검색 실행
     });
 
-    document.querySelectorAll('.deactivate-btn').forEach(button => {
-        button.addEventListener('click', () => alert('사용자가 비활성화되었습니다.'));
+    // Enter 키 눌렀을 때 검색 실행
+    document.querySelector('.search-bar').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {  // Enter 키가 눌렸을 때
+            searchUser();  // 검색 실행
+        }
     });
+
 </script>
-</html>
+
+
+   
+   </html>
