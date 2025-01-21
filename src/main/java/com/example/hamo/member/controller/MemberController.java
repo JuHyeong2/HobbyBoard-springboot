@@ -1,9 +1,13 @@
 package com.example.hamo.member.controller;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
-import java.util.HashMap;
+=======
 
-import org.springframework.http.ResponseEntity;
+
+
+>>>>>>> 1d8a7baad3fa21d37c3ff3e345117920d381b651
+import java.util.HashMap;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.util.EmailCertificationUtil;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
@@ -60,6 +63,7 @@ public class MemberController {
 			return "fail";
 		}
 	}
+	
 
 
 
@@ -126,8 +130,13 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1d8a7baad3fa21d37c3ff3e345117920d381b651
 	}
 
+		
 	
 	@PostMapping("/member/sendEmail")
 	@ResponseBody

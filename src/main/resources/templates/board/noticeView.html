@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게임 공지사항</title>
     <link rel="stylesheet" href="/css/board/noticeView.css">
-
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
@@ -14,41 +13,57 @@
             <h1>공지사항</h1>
         </div>
 
-        <div class="notice-list">
-            <div class="notice-item">
-                <span class="notice-badge badge-green">점검</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">[점검완료] 1/3(금) 정기 웹 서버점검 (13:00~14:00)</p>
-                </div>
-                <div class="notice-date">2024.01.03</div>
-            </div>
+        <!-- 글번호, 제목, 작성일 헤더 -->
+        <div class="notice-header-row">
+            <div class="notice-no-header">글번호</div>
+            <div class="notice-title-header">제목</div>
+            <div class="notice-date-header">작성일</div>
+        </div>
 
+        <div class="notice-list" th:each="a : ${aList}">
+            <input type="hidden" name="id" th:value="${a.boardNo}">
+            <input type="hidden" name="page" th:value="${pi.currentPage}">
             <div class="notice-item">
-                <span class="notice-badge badge-blue">공지</span>
-                <div class="notice-content">
-                    <a href="/board/noticeDetail" class="notice-title">모임간 주의 사항 안내</a>
-                </div>
-                <div class="notice-date">2024.01.01</div>
-            </div>
-
-            <div class="notice-item">
-                <span class="notice-badge badge-blue">공지</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">게시글 작성 방법 안내</p>
-                </div>
-                <div class="notice-date">2023.12.31</div>
+                <div class="notice-no">[[${a.boardNo}]]</div>
+                <div class="notice-content">[[${a.title}]]</div>
+                <div class="notice-date">[[${a.createDate}]]</div>
             </div>
         </div>
 
-        <div class="pagination">
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">다음</a>
-        </div>
+        <nav aria-label="Standard pagination example">
+            <ul class="pagination">
+                <!-- 이전 페이지 -->
+                <li>
+                    <th:block th:if='${pi.startPage} > 0'>
+                        <a th:href="@{${loc}(page=${pi.currentPage-1})}">
+                            <span><</span>
+                        </a>
+                    </th:block>
+                </li>
+
+                <!-- 페이지 번호 -->
+                <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+                    <a th:href="@{${loc}(page=${p})}">[[${p}]]</a>
+                </li>
+
+                <!-- 다음 페이지 -->
+                <li>
+                    <a th:href="@{${loc}(page=${pi.currentPage+1})}">
+                        <span>></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-<!--     <div th:insert="common/footer.html"></div> -->
+    <script>
+        const noticeLists = document.getElementsByClassName('notice-list');
+        for (let noticeList of noticeLists) {
+            noticeList.addEventListener('click', function() {
+                // 클릭 이벤트 처리 로직
+                let boardId = this.children[2].children[0].innerText;
+                location.href = "/board/" + boardId + "/" + /*<!CDATA[*//*[[${pi.currentPage}]]*/1/*]]*/;
+            });
+        }
+    </script>
 </body>
 </html>

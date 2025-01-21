@@ -3,6 +3,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -29,6 +30,21 @@ body {
     font-weight: bold;
 }
 
+/* 헤더 행 스타일 */
+.notice-header-row {
+    display: flex;
+    background-color: #f8f9fa;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+}
+
+.notice-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .search-box {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -36,17 +52,64 @@ body {
     width: 200px;
 }
 
+.notice-no-header,
+.notice-no {
+    flex: 0 0 10%; /* 글번호는 10% 고정 크기 */
+    text-align: center;
+}
+
+.notice-title-header {
+    text-align: center; /* 제목 헤더를 가운데 정렬 */
+}
+
+.notice-title-header,
+.notice-content {
+	margin-left: 30px;
+    flex: 1; /* 제목은 가변 크기 */
+    padding-left: 10px; /* 여백 추가 */
+}
+
+.notice-date-header,
+.notice-date {
+    flex: 0 0 15%; /* 작성일은 15% 고정 크기 */
+    text-align: center;	
+}
+
+.notice-header-row div {
+    border-right: 1px solid #ddd; /* 열 구분선 추가 */
+}
+
+.notice-header-row div:last-child {
+    border-right: none; /* 마지막 열의 구분선 제거 */
+}
+
+.notice-item div {
+    border-right: 1px solid #eee; /* 각 열 구분선 추가 */
+}
+
+.notice-item div:last-child {
+    border-right: none; /* 마지막 열의 구분선 제거 */
+}
+
 
 .notice-item {
     display: flex;
+    align-items: center;
     padding: 16px;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer; 
 }
 
+
 .notice-item:hover {
-	kground-color: lightgrey;
+    background-color: #f0f0f0;  /* 배경색 변경 */
+    transform: scale(1.02);      /* 살짝 확대 */
 }
-	
+
+.notice-date-header {
+    border-right: none;
+}
 
 .notice-badge {
     padding: 4px 8px;
@@ -86,15 +149,32 @@ body {
     min-width: 100px;
 }
 
+/* 페이징 컨테이너 */
 .pagination {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 8px;
+    position: fixed;
+    bottom: 40px; /* 화면 하단에서 20px */
+    left:50%;   /* 화면 중앙 기준 */
+    transform: translateX(-50%); /* 정확히 중앙에 맞춤 */
+    list-style: none;
+    padding: 0 0;
+    
+}
+
+.pagination li {
+    margin: 0 10px;
 }
 
 .pagination a {
-    padding: 8px 12px;
     text-decoration: none;
-    color: #666;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+}
+
+.pagination a:hover {	
+    background-color: #2c3e50;
+    color: white;
+    border-color: #2c3e50;
 }
