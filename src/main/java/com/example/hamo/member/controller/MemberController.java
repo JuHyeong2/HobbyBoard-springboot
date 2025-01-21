@@ -1,8 +1,5 @@
 package com.example.hamo.member.controller;
 
-
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,12 +47,6 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
-
-	public String login(@ModelAttribute("Member") Member m, Model model) {
-		Member loginUser = mService.login(m);
-		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			model.addAttribute("loginUser", loginUser);
-
 	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
@@ -135,9 +126,6 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
-
-}
-
 	}
 
 	

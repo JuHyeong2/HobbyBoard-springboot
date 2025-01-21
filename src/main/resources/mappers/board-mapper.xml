@@ -20,5 +20,9 @@
 		where board_no = #{boardNo}
 	</select>
 	
+	<insert id="boardInsert">
+		insert into board
+		values(seq_board.nextval, #{title}, #{content}, default, default, default, #{maxParticipants}, default, #{memberNo}, #{locationNo}, #{categoryNo})
+	</insert>
 	
 </mapper>

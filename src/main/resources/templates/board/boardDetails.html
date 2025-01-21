@@ -22,12 +22,11 @@
             </div>
             <div class="gathering-info">
                 <h1 class="gathering-title">[[${board.title}]]</h1>
-                <div class="price">[[${board.title}]]</div>
                 <div class="gathering-meta">
                     <span class="upload-time">[[${board.locationName}]]/4시간 전</span>
                 </div>
                 <div class="gathering-description">
-                    <p>[[${board.content}]]</p>
+                    <p th:utext="${board.content}"></p>
                 </div>
                 <button class="purchase-btn">참가하기</button>
             </div>
