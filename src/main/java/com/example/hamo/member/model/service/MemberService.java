@@ -34,4 +34,9 @@ public class MemberService {
 		return mMapper.findId(map);
 	}
 
+	public int updatePwd(Member m) {
+		
+		return mMapper.updatePwd(m);
+	}
+
 }
