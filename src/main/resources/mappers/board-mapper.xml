@@ -20,5 +20,15 @@
 		where board_no = #{boardNo}
 	</select>
 	
-	
+	<select id="selectNotice" resultType="Admin">
+		select *
+		from admin_board
+		where admin_board_status='Y' and
+			  board_no=#{boardNo}		  
+	</select>
+	<update id="updateNoticeCount">
+		update admin_board
+		set views = views+1
+		where board_no=#{boardNo}
+	</update>
 </mapper>
