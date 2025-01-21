@@ -3,10 +3,7 @@ package com.example.hamo.member.controller;
 
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.util.EmailCertificationUtil;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
@@ -50,12 +46,6 @@ public class MemberController {
 	// 로그인 기능을 하는 메소드
 	@PostMapping("/member/login")
 	@ResponseBody
-
-	public String login(@ModelAttribute("Member") Member m, Model model) {
-		Member loginUser = mService.login(m);
-		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			model.addAttribute("loginUser", loginUser);
-
 	public String login(@ModelAttribute("Member") Member m, Model model, HttpSession session) {
 		Member loginUser = mService.login(m);
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
@@ -69,6 +59,7 @@ public class MemberController {
 			return "fail";
 		}
 	}
+	
 
 
 
@@ -136,10 +127,9 @@ public class MemberController {
 		
 		return certificationCode;
 
-}
-
 	}
 
+		
 	
 	@PostMapping("/member/sendEmail")
 	@ResponseBody
