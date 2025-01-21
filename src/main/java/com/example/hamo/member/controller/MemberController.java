@@ -1,8 +1,7 @@
 package com.example.hamo.member.controller;
 
 
-
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -126,7 +125,6 @@ public class MemberController {
 		smsUtil.sendSMS(phone, certificationCode);
 		
 		return certificationCode;
-
 	}
 
 		

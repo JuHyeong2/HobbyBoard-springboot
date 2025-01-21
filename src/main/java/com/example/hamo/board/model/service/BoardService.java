@@ -25,7 +25,11 @@ public class BoardService {
 		
 		return mapper.selectBoard(boardNo);
 	}
-
+	public int boardInsert(Board b) {
+		
+		return mapper.boardInsert(b);
+	}
+	
 	 public Admin selectNotice(Member m, int bId) {
 		Admin a = mapper.selectNotice(bId);
 		int result = mapper.updateNoticeCount(bId);
@@ -33,5 +37,6 @@ public class BoardService {
 			a.setViews(result);
 		}
 		return a;
+
 	}
 }

@@ -23,7 +23,9 @@ public class Board {
 	private int maxParticipants;
 	private String boardStatus;
 	private int memberNo;
+	private int locationNo;
 	private String locationName;
+	private int categoryNo;
 	private String categoryName;
 	private String memberNickName;
 }
