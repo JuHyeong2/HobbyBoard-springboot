@@ -13,7 +13,7 @@ body {
 
 
 
-.editor-container {
+form {
     max-width: 1200px;
     margin: 20px auto;
     display: flex;
@@ -32,6 +32,9 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+/*     margin-left: 10px; */
+/*     margin-right: 10px; */
+    margin: 10px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
@@ -57,7 +60,12 @@ body {
 }
 
 .title-section {
+	display: block;
     margin-bottom: 20px;
+}
+
+span{
+	margin-bottom: 10px;
 }
 
 .category-select {
@@ -94,11 +102,13 @@ body {
 .editor-toolbar {
     display: flex;
     gap: 15px;
-    padding: 10px 0;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    padding: 10px;
+    flex-direction: row; /* 가로 정렬 */
+/*     padding: 10px 0; */
+/*     padding: 10px; */
+}
+
+.editor-toolbar select {
+	width: 300px;
 }
 
 .toolbar-group {

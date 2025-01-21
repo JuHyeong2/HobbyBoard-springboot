@@ -20,4 +20,8 @@ public class Pagination {
 		
 		return new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

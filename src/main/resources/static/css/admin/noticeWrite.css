@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 /* 기본 스타일 설정 */
+=======
+ /* 기본 스타일 설정 */
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f7f7f7;
@@ -102,4 +111,8 @@ body {
     .notice-create textarea {
         font-size: 16px;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

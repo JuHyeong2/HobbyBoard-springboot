@@ -19,6 +19,7 @@
 		where member_id = #{memberId}
 	</select>
 	
+<<<<<<< HEAD
 	<select id="findId">
 		select *
 		from member
@@ -94,5 +95,18 @@
 		member_email = #{memberEmail}, member_phone = #{memberPhone},member_pwd = #{memberPwd}
 	where member_id = #{memberId}	
     </update>
+=======
+	<select id="findId" parameterType="hashMap">
+		select *
+		from member
+		where ${column} = #{value}
+	</select>
+	
+	<update id="updatePwd">
+		update member
+		set member_pwd = #{memberPwd}
+		where member_id = #{memberId}
+	</update>
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
 </mapper>

@@ -1,10 +1,15 @@
 package com.example.hamo.member.controller;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+=======
+
+import java.util.ArrayList;
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import java.util.HashMap;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.hamo.board.model.vo.Board;
+=======
+
+import com.example.hamo.common.util.EmailCertificationUtil;
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
 import com.example.hamo.member.model.vo.Member;
@@ -37,9 +47,16 @@ public class MemberController {
 	private final MemberService mService;
 	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
+<<<<<<< HEAD
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")
+=======
+	private final EmailCertificationUtil emailUtil;
+	
+	// 로그인 화면으로 가는 메서드
+	@GetMapping("/member/login")	
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	public String loginView() {
 		
 		return "member/login";
@@ -55,10 +72,15 @@ public class MemberController {
 //			session.setAttribute("loginUser", loginUser);
 			System.out.println(session.getAttribute("loginUser"));
 			System.out.println("success");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 			return "success";
 		}else {
 			return "fail";
 		}
+<<<<<<< HEAD
 	}
 
 //	public String login(@ModelAttribute("Member") Member m, Model model) {
@@ -81,6 +103,41 @@ public class MemberController {
 	
 	
 	// Home으로 가는 모든 버튼
+=======
+	}
+	
+
+
+
+//	public String login(@ModelAttribute("Member") Member m, Model model) {
+//		Member loginUser = mService.login(m);
+//		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+//			model.addAttribute("loginUser", loginUser);
+//			return "success";
+//		}else {
+//			return "fail";
+//		}
+//	}
+
+
+	
+	@GetMapping("/member/logout")
+	public String logOut(SessionStatus session) {
+		session.setComplete();
+		
+		return "redirect:/";
+	}
+	
+	
+	// Home으로 가는 모든 버튼
+
+	@GetMapping("/home")
+	public String home(Model model, HttpSession session) {
+
+		return "index";
+	}
+
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 //	@GetMapping("/home")
 //	public String home() {
 //		ArrayList<Board> list = bService.selectBoardList();
@@ -90,6 +147,10 @@ public class MemberController {
 //		
 //		return "index";
 //	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
@@ -116,6 +177,20 @@ public class MemberController {
 		
 		return certificationCode;
 	}
+<<<<<<< HEAD
+=======
+
+		
+	
+	@PostMapping("/member/sendEmail")
+	@ResponseBody
+	public String sendEmail(@RequestParam("email") String email) {
+		System.out.println("email : " + email);
+		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+		emailUtil.sendEmail(email, certificationCode);
+		return certificationCode;
+	}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
@@ -128,9 +203,18 @@ public class MemberController {
 	
 	@PostMapping("/member/findId")
 	@ResponseBody
+<<<<<<< HEAD
 	public Member findId(@RequestParam("phone") int phone) {
 //		System.out.println(userId);
 		Member m = mService.findId(phone);
+=======
+	public Member findId(@RequestParam("value") String value, @RequestParam("column") String column) {
+//		System.out.println(userId);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("column", "member_" + column);
+		map.put("value", value);
+		Member m = mService.findId(map);
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 		System.out.println(m.getMemberId());
 		return m;
 	}
@@ -143,12 +227,29 @@ public class MemberController {
 		return "member/findId";
 	}
 	
-	// 아이디 찾기 페이지로 이동
+	// 비밀번호 찾기 페이지로 이동
 	@GetMapping("/member/findPwd")
 	public String findPwd(Model model, HttpServletRequest request) {
 		model.addAttribute("loc", request.getRequestURI());
 		System.out.println(model.getAttribute("loc").toString());
 		return "member/findPwd";
+<<<<<<< HEAD
+=======
+	}
+	
+	// 새 비밀번호 페이지로 이동
+	@PostMapping("/member/findPwd2")
+	public String findPwd2View(@ModelAttribute("Member") Member m, Model model) {
+		model.addAttribute("member", m);
+		return "member/findPwd2";
+	}
+	
+	@PostMapping("/member/newPwd")
+	public String updatePwd(@ModelAttribute("Member") Member m) {
+		m.setMemberPwd(bcrypt.encode(m.getMemberPwd()));
+		int result = mService.updatePwd(m);
+		return "member/login";
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	}
 	
 	// 내 정보 페이지로 이동
@@ -175,6 +276,7 @@ public class MemberController {
 		model.addAttribute("m", loginUser);
 		return "user-inform/editMyPage";
 	}
+<<<<<<< HEAD
 		
 	
 	@PostMapping("/member/editMyPage")
@@ -354,4 +456,6 @@ public class MemberController {
 		returnArr[1] = imgRename;
 		return returnArr;
 	}
+=======
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 }

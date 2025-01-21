@@ -27,15 +27,34 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+<<<<<<< HEAD
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+=======
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	implementation 'net.nurigo:sdk:4.3.2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+
+ 
+	implementation 'net.nurigo:sdk:4.3.2'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.0'
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+<<<<<<< HEAD
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+=======
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' 
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'

@@ -4,15 +4,18 @@
 <meta charset="UTF-8">
 <title>공지 페이지</title>
 <link rel="stylesheet" href="/css/admin/notice.css">
+
+
 </head>
 <body>
-    <!-- 관리자 메인 페이지 포함 -->
+	<!-- 관리자 메인 페이지 포함 -->
 	<div th:replace="admin/admin-main.html"></div>
 
-    <!-- 공지 페이지 제목 -->
-    <div class="header">
-        <h1>NOTICE</h1>
+	<!-- 공지 페이지 제목 -->
+	<div class="header">
+		<h1>NOTICE</h1>
 
+<<<<<<< HEAD
         <!-- 공지 목록 및 공지 작성 -->
         <div class="content-wrapper">
             <!-- 공지 목록 -->
@@ -24,12 +27,153 @@
                 </div>
                 <!-- 추가적인 공지 항목들 -->
             </div>
+=======
+		<!-- 공지 목록 및 공지 작성 -->
+		<div class="content-wrapper">
+			<!-- 공지 목록 -->
+			<!-- 공지 목록 -->
+			<div class="notice-list">
+				<div class="notice-item" th:each="a : ${list}">
+					<!-- 제목 50자 제한 -->
+					<h3>
+						제목 : <span
+							th:text="${#strings.length(a.title) > 20 ? #strings.substring(a.title, 0, 20) + '...' : a.title}"></span>
+						<!-- plus-btn	을 제목 우측으로 배치 -->
+						<!-- plus-btn -->
+						<button class="plus-btn"
+							th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">⋮</button>
 
-            <!-- 공지 작성 -->
-            <button id="toggle-notice-form" class="toggle-button" onclick="location.href='/admin/noticeWrite'">작성하기</button>
-           
-        </div>
-    </div>
+					</h3>
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
+
+					<!-- 수정 & 삭제 버튼을 위한 form -->
+					<form method="post" id="editDeleteForm">
+						<input type="hidden" name="id" th:value="${a.boardNo}" /> 
+						<input type="hidden" name="page" th:value="${pi.currentPage}" />
+
+						<!-- 옵션 메뉴 -->
+						<div class="options" style="display: none">
+							<button class="edit-btn" type="button">수정하기</button>
+							<button class="delete-btn" type="button">삭제하기</button>
+						</div>
+					</form>
+
+					<!-- 내용 100자 제한 -->
+					<p>
+						내용 : <span
+							th:text="${#strings.length(a.content) > 10 ? #strings.substring(a.content, 0, 10) + '...' : a.content}"></span>
+					</p>
+
+					<p>작성자 : [[${a.memberNickname}]] | 작성일: [[${a.createDate}]]</p>
+				</div>
+			</div>
+
+
+			<!-- 공지 작성 -->
+			<button id="notice-form" class="submit-btn"
+				onclick="location.href='/admin/noticeWrite'">작성하기</button>
+		</div>
+	</div>
+	<!-- 페이지 하단 중앙에 페이징 처리 -->
+	<nav aria-label="Standard pagination example">
+		<ul class="pagination">
+			<!-- 이전 페이지 -->
+			<li><th:block th:if='${pi.startPage} > 0'>
+					<a th:href="@{${loc}(page=${pi.currentPage-1})}"> <span><</span>
+					</a>
+				</th:block></li>
+
+			<!-- 페이지 번호 -->
+			<li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+				<a th:href="@{${loc}(page=${p})}">[[${p}]]</a>
+			</li>
+
+			<!-- 다음 페이지 -->
+			<li><a th:href="@{${loc}(page=${pi.currentPage+1})}"> <span>></span>
+			</a></li>
+		</ul>
+	</nav>
+	<script th:inline="javascript">
+	const plusButtons = document.querySelectorAll('.plus-btn');
+
+	for (const button of plusButtons) {
+	    button.addEventListener('click', (event) => {
+// 	        event.stopPropagation();  // 버튼 클릭 시 버블링 방지
+	        const noticeItem = button.closest('.notice-item');
+	        const options = noticeItem.querySelector('.options');
+	        
+	        // 옵션 메뉴의 표시 여부 토글
+	        if (options.style.display == "none" || options.style.display == "") {
+	            options.style.display = "block";
+	        } else {
+	            options.style.display = "none";
+	        }
+	    });
+	}
+
+	// 문서 전체에 클릭 이벤트 추가하여 다른 곳 클릭 시 메뉴 닫기
+	document.addEventListener('click', (event) => {
+	    const options = document.querySelectorAll('.options');
+	    for (const option of options) {
+	        // 클릭한 요소가 .plus-btn 또는 .options 내부가 아닐 때만 닫기
+	        if (!event.target.closest('.plus-btn') && !event.target.closest('.options')) {
+	            option.style.display = "none";
+	        }
+	    }
+	});
+
+
+		
+		
+		
+		document.querySelectorAll('.edit-btn').forEach(button => {
+		    button.addEventListener('click', function() {
+		        const form = this.closest('.notice-item').querySelector('form');  // 부모 중 .notice-item 내의 form 찾기
+ 
+		        if (form) {
+		        	form.method = 'post';
+		            form.action = '/admin/edit';
+		            form.submit();
+		        } else {
+		            alert('폼을 찾을 수 없습니다!');
+		        }
+		    });
+		});
+
+		const buttons = document.querySelectorAll('.delete-btn');
+		for (const button of buttons) {
+		    button.addEventListener('click', function() {
+		        const form = button.closest('.notice-item').querySelector('form');  // .notice-item 내의 form 찾기
+				const isConfirmed = confirm('공지사항을 삭제하시겠습니까?');
+		        if(isConfirmed) {
+		        if (form) {
+		            form.action = '/admin/delete';
+		            form.submit();
+		        }
+		    }
+		});
+	}
+
+
+
+		// 상세보기
+		const mainView = document.getElementsByClassName('notice-list');
+
+			for(const list of mainView) {
+				list.addEventListener('mouseenter', () => {
+				list.style.cursor = 'pointer';
+			});
+    
+    			list.addEventListener('mouseleave', () => {
+        		list.style.backgroundColor = '';
+        		list.style.border = '';
+        		list.style.cursor = '';
+			});
+		}
+	
+	 
+	
+	</script>
 
 
 </body>

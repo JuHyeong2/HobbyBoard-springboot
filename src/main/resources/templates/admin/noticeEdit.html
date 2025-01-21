@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 작성</title>
+    <link rel="stylesheet" href="/css/admin/noticeWrite.css">
+</head>
+<body>
+    <div th:replace="admin/admin-main.html"></div>
+    
+    <div class="header">
+        <div id="notice-create" class="notice-create">
+            <h1>공지사항 수정</h1>
+            <form action="/admin/update" method="post">
+            	<input type="hidden" name="boardNo" th:value="${admin.boardNo}">
+            	<input type="hidden" name="page" th:value="${page}">
+                <label for="title">제목: </label> 
+                <input type="text" id="title" name="title" th:value="${admin.title}" required>
+                
+                <label for="content">내용:</label>
+                <textarea id="content" name="content" required>[[${admin.content}]]</textarea>
+                
+                <button type="submit" id='submit-btn'>수정</button>
+            </form>
+        </div>
+    </div>
+	
+</body>
+</html>

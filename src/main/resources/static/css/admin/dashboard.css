@@ -119,7 +119,7 @@ table tbody tr:hover {
 }
 
 .table-container {
-    width: 100%; /* 전체 컨테이너의 너비를 100%로 설정 */
+    width: 97%; /* 전체 컨테이너의 너비를 100%로 설정 */
 }
 
 /* 캘린더 두 개를 가로로 배치 */
@@ -140,11 +140,11 @@ table tbody tr:hover {
 /* 제목 텍스트 스타일 및 투명 배경 설정 */
 .calendar-title {
     position: absolute; /* 제목을 절대 위치로 설정 */
-    top: 15px; /* 상단에 위치 */
-    left: 65px; /* 왼쪽에 위치 */
+    top: -32px; /* 상단에 위치 */
+    left: 0px; /* 왼쪽에 위치 */
     font-size: 14px; /* 제목 텍스트 크기 */
     font-weight: bold; /* 제목 텍스트 두껍게 */
-    background-color: rgba(255, 255, 255, 0.6); /* 배경을 반투명하게 설정 */
+    background-color: rgba(243, 244, 246, 0.6); /* 배경을 반투명하게 설정 */
     padding: 5px; /* 텍스트 주변 여백 */
     border-radius: 5px; /* 모서리 둥글게 */
 }
@@ -158,13 +158,13 @@ table tbody tr:hover {
 /* 헤더의 버튼들(이전, 다음, 오늘) 크기 줄이기 */
 .fc-button {
     font-size: 8px; /* 버튼 텍스트 크기 */
-    padding: 4px 4px; /* 버튼의 패딩(여백) 조정 */
+    padding: 4px 4px !important; /* 버튼의 패딩(여백) 조정 */
 }
 
 /* 캘린더 제목 텍스트 크기 줄이기 및 가운데 정렬 */
 .fc-toolbar-title {
     text-align: center; /* 텍스트 가운데 정렬 */
-    font-size: 8px; /* 제목 텍스트 크기 */
+    font-size: 30px !important; /* 제목 텍스트 크기 */
 }
 
 /* 캘린더 헤더에서 날짜와 버튼들 사이의 간격 줄이기 */
@@ -196,4 +196,22 @@ table tbody tr:hover {
 .fc-button {
     font-size: 8px;  /* 버튼 텍스트 크기 줄이기 */
     padding: 4px 8px;  /* 버튼 크기 줄이기 */
+<<<<<<< HEAD
 }
+=======
+}
+/* 그래프 크기 변경 */
+.echart {
+    margin-bottom: -36px !important;
+    margin-left: -94px !important;
+    width: 1200px !important;  /* 그래프의 가로 크기 */
+    height: 350px !important;  /* 그래프의 세로 크기 */
+}
+
+/* xAxis 레이블 간격 조정 */
+.echart .echarts-xaxis text {
+    font-size: 14px !important;  /* x축 레이블의 크기 */
+    margin-top: 10px !important;  /* 레이블과 그래프 간의 간격 */
+    margin-left: 10px !important;
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

@@ -4,8 +4,15 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.example.hamo.board.model.mapper.BoardMapper;
 import com.example.hamo.board.model.vo.Board;
+=======
+import com.example.hamo.admin.model.vo.Admin;
+import com.example.hamo.board.model.mapper.BoardMapper;
+import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.member.model.vo.Member;
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,4 +30,22 @@ public class BoardService {
 		
 		return mapper.selectBoard(boardNo);
 	}
+<<<<<<< HEAD
 }
+=======
+	public int boardInsert(Board b) {
+		
+		return mapper.boardInsert(b);
+	}
+	
+	 public Admin selectNotice(Member m, int bId) {
+		Admin a = mapper.selectNotice(bId);
+		int result = mapper.updateNoticeCount(bId);
+		if(result >0) {
+			a.setViews(result);
+		}
+		return a;
+
+	}
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

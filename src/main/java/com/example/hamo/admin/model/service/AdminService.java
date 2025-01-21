@@ -1,11 +1,23 @@
 package com.example.hamo.admin.model.service;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 
+=======
+import java.util.HashMap;
+
+import org.apache.ibatis.session.RowBounds;
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import org.springframework.stereotype.Service;
 
 import com.example.hamo.admin.model.mapper.AdminMapper;
 import com.example.hamo.admin.model.vo.Admin;
+<<<<<<< HEAD
+=======
+import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.common.vo.PageInfo;
+import com.example.hamo.member.model.vo.Member;
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,8 +30,52 @@ public class AdminService {
 		return mapper.writeNotice(admin);
 	}
 
+<<<<<<< HEAD
 	public ArrayList<Admin> selectNoticeList() {
 		return mapper.selectNoticeList();
 	}
 
 }
+=======
+	public ArrayList<Admin> selectNoticeList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
+		return mapper.selectNoticeList(rowBounds);
+	}
+
+	public int getListCount() {
+		return mapper.getListCount();
+	}
+
+	public Admin selectNoticeOne(int id) {
+		return mapper.selectNoticeOne(id);
+	}
+
+	public int updateNotice(Admin admin) {
+		return mapper.updateNotice(admin);
+	}
+
+	public int deleteNotice(int noticeId) {
+		return mapper.deleteNotice(noticeId);
+	}
+
+	public ArrayList<Member> selectAllMember() {
+		return mapper.selectAllMember();
+	}
+
+
+
+	public ArrayList<Board> selectAllBoardList() {
+		return mapper.selectAllBoardList();
+	}
+
+	public int changeStatus(HashMap<String, String> map) {
+		return mapper.changeStatus(map);
+	}
+
+	public ArrayList<Member> searchUserList(String searchValue) {
+		return mapper.searchUserList(searchValue);
+	}
+
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

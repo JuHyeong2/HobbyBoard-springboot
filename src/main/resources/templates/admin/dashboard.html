@@ -1,126 +1,202 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Dashboard</title>
-<link rel="stylesheet" href="/css/admin/dashboard.css">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <!-- FullCalendar 및 기타 스타일 및 스크립트 유지 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+    
+    <!-- ECharts 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
-
+    <style>
+        .graph-bar {
+            display: inline-block;
+            width: 120px;
+            text-align: center;
+            margin-right: 20px;
+            margin-top: 20px;
+        }
+        .graph-container {
+            text-align: center;
+        }
+        .calendar-container {
+            margin: 20px;
+        }
+        .calendar-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+        .calendar-title {
+            margin-bottom: 10px;
+        }
+        .echart {
+            width: 100%;
+            height: 250px;
+        }
+    </style>
 </head>
 <body>
-	<div>
-		<div th:replace="admin/admin-main.html"></div>
+    <div>
+        <div th:replace="admin/admin-main.html"></div>
 
-		<div class="content">
-			<h1>DASHBOARD</h1>
+        <div class="content">
+            <h1>DASHBOARD</h1>
 
-			<div class="graph-container">
-				<h2>1주 사용자 이용량</h2>
-				<div class="graph">
-					<!-- 각 요일별 사용자 수 및 높이 설정 -->
-					<div class="graph-bar">
-						<div class="bar" style="height: 80%;"></div>
-						<!-- 월요일: 80% -->
-						<span>월 (80명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 70%;"></div>
-						<!-- 화요일: 70% -->
-						<span>화 (70명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 60%;"></div>
-						<!-- 수요일: 60% -->
-						<span>수 (60명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 90%;"></div>
-						<!-- 목요일: 90% -->
-						<span>목 (90명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 50%;"></div>
-						<!-- 금요일: 50% -->
-						<span>금 (50명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 30%;"></div>
-						<!-- 토요일: 30% -->
-						<span>토 (30명)</span>
-					</div>
-					<div class="graph-bar">
-						<div class="bar" style="height: 40%;"></div>
-						<!-- 일요일: 40% -->
-						<span>일 (40명)</span>
-					</div>
-				</div>
-			</div>
+            <div class="graph-container">
+                <h2>1주 사용자 이용량</h2>
+                <div class="graph">
+                    <!-- ECharts로 그래프 변경 -->
+                    <div class="graph-bar">
+                        <div id="monChart" class="echart"></div>
+                        <span>월 (80명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="tueChart" class="echart"></div>
+                        <span>화 (70명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="wedChart" class="echart"></div>
+                        <span>수 (60명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="thuChart" class="echart"></div>
+                        <span>목 (90명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="friChart" class="echart"></div>
+                        <span>금 (50명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="satChart" class="echart"></div>
+                        <span>토 (30명)</span>
+                    </div>
+                    <div class="graph-bar">
+                        <div id="sunChart" class="echart"></div>
+                        <span>일 (40명)</span>
+                    </div>
+                </div>
+            </div>
 
-			<div class="table-container">
-				<div class="calendar-wrapper">
-					<div class="calendar-container">
-						<h3 class="calendar-title">게시글 수</h3>
-						<div id="calendar1"></div>
-					</div>
-					<div class="calendar-container">
-						<h3 class="calendar-title">이용자 수</h3>
-						<div id="calendar2"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl1 = document.getElementById('calendar1');
-			var calendarEl2 = document.getElementById('calendar2');
+            <div class="table-container">
+                <div class="calendar-wrapper">
+                    <div class="calendar-container">
+                        <h3 class="calendar-title">게시글 수</h3>
+                        <div id="calendar1"></div>
+                    </div>
+                    <div class="calendar-container">
+                        <h3 class="calendar-title">이용자 수</h3>
+                        <div id="calendar2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			var calendar1 = new FullCalendar.Calendar(calendarEl1, {
-				initialView : 'dayGridMonth',
-				headerToolbar : {
-					start : 'prev', // 이전 버튼
-					center : 'title', // 해당 달 표시
-					end : 'today next', // 다음 버튼, 오늘 버튼
-				},
-				locale : 'ko',
-				events : [ {
-					title : '20', // 추가할 텍스트
-					date : '2024-12-25', // 날짜
-				}, {
-					title : '20', // 추가할 텍스트
-					date : '2024-12-27', // 날짜
-				} ]
-			});
+    <script>
+        // ECharts 차트 설정
+        // ECharts 차트 설정
+		function drawChart(chartId, labels, values) {
+		    var chart = echarts.init(document.getElementById(chartId));
+		
+		    var option = {
+		    	    tooltip: {
+		    	        trigger: 'item',
+		    	        formatter: '{b}: {c}명'
+		    	    },
+		    	    xAxis: {
+		    	        type: 'category',
+		    	        data: labels,  // 여러 요일 데이터를 x축에 넣음
+		    	        axisLabel: {
+		    	            fontSize: 14,
+		    	            margin: 10,  // x축 레이블과 그래프 사이의 간격을 늘려줌
+		    	            padding: [0, 0, 10, 0],  // 위, 오른쪽, 아래, 왼쪽 padding 순서로 설정
+		    	        }
+		    	    },
+		    	    yAxis: {
+		    	        type: 'value',
+		    	        min: 0,
+		    	        max: 100,
+		    	        axisLabel: {
+		    	            fontSize: 14,
+		    	            formatter: '',
+		    	        }
+		    	    },
+		    	    series: [{
+		    	        data: values,
+		    	        type: 'line',
+		    	        itemStyle: {
+		    	            color: '#2c3e50'
+		    	        },
+		    	        lineStyle: {
+		    	            width: 3,
+		    	            type: 'solid'
+		    	        },
+// 		    	        smooth: true,
+		    	        symbol: 'circle',
+		    	        symbolSize: 6,
+		    	    }]
+		    	};
+		
+		    chart.setOption(option);
+		}
+		
+		// 여러 데이터 포인트로 차트 그리기
+		window.onload = function() {
+		    var days = ['월', '화', '수', '목', '금', '토', '일'];  // 요일
+		    var usage = [80, 70, 60, 90, 50, 30, 40];  // 각 요일별 이용자 수
+		
+		    drawChart('monChart', days, usage);  // 하나의 차트에 전체 데이터를 사용
+		};
 
-			var calendar2 = new FullCalendar.Calendar(calendarEl2, {
-				initialView : 'dayGridMonth',
-				headerToolbar : {
-					start : 'prev', // 이전 버튼
-					center : 'title', // 해당 달 표시
-					end : 'today next', // 다음 버튼, 오늘 버튼
-				},
-				locale : 'ko',
-				events : [ {
-					title : '20', // 추가할 텍스트
-					date : '2024-12-25', // 날짜
-				}, {
-					title : '20', // 추가할 텍스트
-					date : '2024-12-27', // 날짜
-				} ]
-			});
 
-			calendar1.render();
-			calendar2.render();
-		});
-	</script>
+        // FullCalendar 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl1 = document.getElementById('calendar1');
+            var calendarEl2 = document.getElementById('calendar2');
 
+            var calendar1 = new FullCalendar.Calendar(calendarEl1, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'prev', 
+                    center: 'title', 
+                    end: 'today next', 
+                },
+                locale: 'ko',
+                events: [{
+                    title: '20',
+                    date: '2024-12-25',
+                }, {
+                    title: '20',
+                    date: '2024-12-27',
+                }]
+            });
+
+            var calendar2 = new FullCalendar.Calendar(calendarEl2, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'prev', 
+                    center: 'title', 
+                    end: 'today next', 
+                },
+                locale: 'ko',
+                events: [{
+                    title: '20',
+                    date: '2024-12-25',
+                }, {
+                    title: '20',
+                    date: '2024-12-27',
+                }]
+            });
+
+            calendar1.render();
+            calendar2.render();
+        });
+    </script>
 </body>
 </html>

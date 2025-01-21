@@ -14,17 +14,41 @@
     margin-bottom: 20px;
 }
 
-.search-bar {
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
+.search-container {
+    display: flex;
+    align-items: center;
 }
+
+.search-bar {
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 400px;
+    border-radius: 25px 0 0 25px; /* 왼쪽 끝을 둥글게 */
+    border: 1px solid #ccc;
+}
+
+.search-btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0; /* 오른쪽 끝을 둥글게 */
+}
+
+.search-btn i {
+    font-size: 18px;
+    color: #555;
+}
+
+.search-btn:hover {
+    background-color: #f0f0f0;
+}
+
 
 .user-list {
     display: flex;
+    margin-top: 20px;
     flex-wrap: wrap;
     gap: 20px;
 }

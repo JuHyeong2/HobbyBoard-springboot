@@ -1,7 +1,48 @@
 package com.example.hamo.member.model.service;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
+=======
+import java.util.HashMap;
+
+import org.springframework.stereotype.Service;
+
+import com.example.hamo.member.model.mapper.MemberMapper;
+import com.example.hamo.member.model.vo.Member;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MemberService {
+	private final MemberMapper mMapper;
+	
+	public int insertMember(Member member) {
+		
+		return mMapper.insertMember(member);
+	}
+
+	public int idCheck(String userId) {
+		
+		return mMapper.idCheck(userId);
+	}
+
+	public Member login(Member m) {
+		
+		return mMapper.login(m);
+	}
+
+	public Member findId(HashMap<String, String> map) {
+		
+		return mMapper.findId(map);
+	}
+
+	public int updatePwd(Member m) {
+		
+		return mMapper.updatePwd(m);
+	}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
 import org.springframework.stereotype.Service;
 

@@ -22,4 +22,9 @@ public class Admin {
 	private int views;
 	private String adminBoardStatus;
 	private int writer;
+<<<<<<< HEAD
 }
+=======
+	private String memberNickname;
+}
+>>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
