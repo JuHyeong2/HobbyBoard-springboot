@@ -154,12 +154,26 @@ public class MemberController {
 		return "member/findId";
 	}
 	
-	// 아이디 찾기 페이지로 이동
+	// 비밀번호 찾기 페이지로 이동
 	@GetMapping("/member/findPwd")
 	public String findPwd(Model model, HttpServletRequest request) {
 		model.addAttribute("loc", request.getRequestURI());
 		System.out.println(model.getAttribute("loc").toString());
 		return "member/findPwd";
+	}
+	
+	// 새 비밀번호 페이지로 이동
+	@PostMapping("/member/findPwd2")
+	public String findPwd2View(@ModelAttribute("Member") Member m, Model model) {
+		model.addAttribute("member", m);
+		return "member/findPwd2";
+	}
+	
+	@PostMapping("/member/newPwd")
+	public String updatePwd(@ModelAttribute("Member") Member m) {
+		m.setMemberPwd(bcrypt.encode(m.getMemberPwd()));
+		int result = mService.updatePwd(m);
+		return "member/login";
 	}
 	
 	@GetMapping("/member/myPage")

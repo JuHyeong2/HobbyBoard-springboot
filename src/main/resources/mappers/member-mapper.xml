@@ -24,5 +24,11 @@
 		from member
 		where ${column} = #{value}
 	</select>
+	
+	<update id="updatePwd">
+		update member
+		set member_pwd = #{memberPwd}
+		where member_id = #{memberId}
+	</update>
 
 </mapper>
