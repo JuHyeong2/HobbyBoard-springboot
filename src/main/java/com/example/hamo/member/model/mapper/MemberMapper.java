@@ -17,4 +17,6 @@ public interface MemberMapper {
 
 	Member findId(HashMap<String, String> map);
 
+	int updatePwd(Member m);
+
 }
