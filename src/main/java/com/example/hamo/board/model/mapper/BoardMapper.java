@@ -14,12 +14,12 @@ public interface BoardMapper {
 
 	Board selectBoard(int boardNo);
 
-<<<<<<< HEAD
+
 	int boardInsert(Board b);
-=======
+
 	Admin selectNotice(int bId);
 
 	int updateNoticeCount(int bId);
->>>>>>> 1d8a7baad3fa21d37c3ff3e345117920d381b651
+
 
 }

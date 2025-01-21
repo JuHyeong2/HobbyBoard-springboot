@@ -20,13 +20,13 @@
 		where board_no = #{boardNo}
 	</select>
 	
-<<<<<<< HEAD
+
 	<insert id="boardInsert">
 		insert into board
 		values(seq_board.nextval, #{title}, #{content}, default, default, default, #{maxParticipants}, default, #{memberNo}, #{locationNo}, #{categoryNo})
 	</insert>
 	
-=======
+
 	<select id="selectNotice" resultType="Admin">
 		select *
 		from admin_board
@@ -38,5 +38,5 @@
 		set views = views+1
 		where board_no=#{boardNo}
 	</update>
->>>>>>> 1d8a7baad3fa21d37c3ff3e345117920d381b651
+
 </mapper>
