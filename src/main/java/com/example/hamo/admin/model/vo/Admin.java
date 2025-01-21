@@ -1,4 +1,4 @@
-package com.example.hamo.board.model.vo;
+package com.example.hamo.admin.model.vo;
 
 import java.sql.Date;
 
@@ -13,17 +13,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Board {
+public class Admin {
 	private int boardNo;
 	private String title;
 	private String content;
 	private Date createDate;
 	private Date updateDate;
 	private int views;
-	private int maxParticipants;
-	private String boardStatus;
-	private int memberNo;
-	private String locationName;
-	private String categoryName;
-	private String memberNickName;
+	private String adminBoardStatus;
+	private int writer;
 }

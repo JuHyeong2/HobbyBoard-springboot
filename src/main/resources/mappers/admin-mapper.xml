@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hamo.admin.model.mapper.AdminMapper">
+	<insert id="writeNotice">
+		insert into admin_board
+		values(seq_admin_board.nextval, #{title}, 
+		#{content}, default, default, default, default, #{writer})
+	</insert>
+	
+	<select id="selectNoticeList" resultType="Admin">
+		select * 
+		from admin_board
+		where admin_board_status = 'Y'
+	</select>
+	
+</mapper>

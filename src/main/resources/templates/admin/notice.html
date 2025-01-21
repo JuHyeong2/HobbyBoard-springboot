@@ -17,16 +17,10 @@
         <div class="content-wrapper">
             <!-- 공지 목록 -->
             <div class="notice-list">
-                <div class="notice-item">
-                    <h3>공지 제목 1</h3>
-                    <p>공지 내용: 시스템 점검이 예정되어 있습니다. 사용자에게 미리 안내해주세요.</p>
-                    <p>작성자: 관리자1 | 작성일: 2024-12-25</p>
-                </div>
-
-                <div class="notice-item">
-                    <h3>공지 제목 2</h3>
-                    <p>공지 내용: 규정 변경에 대한 중요한 내용입니다. 반드시 확인해주세요.</p>
-                    <p>작성자: 관리자2 | 작성일: 2024-12-20</p>
+                <div class="notice-item" th:each="a : ${list}">
+                    <h3>제목 : [[${a.title}]]</h3>
+                    <p>내용 : [[${a.content}]]</p>
+                    <p>작성자 : [[${a.writer}]]| 작성일: [[${a.createDate}]]</p>
                 </div>
                 <!-- 추가적인 공지 항목들 -->
             </div>

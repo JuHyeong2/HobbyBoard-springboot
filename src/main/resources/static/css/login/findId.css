@@ -19,7 +19,7 @@ main {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     padding: 2rem;
     margin-top: 2rem;
 }
@@ -85,7 +85,7 @@ label {
     border-color: #1a73e8;
 }
 
-.button-find[type="submit"] {
+.button-find[type="button"] {
     width: 100%;
     padding: 12px;
     background-color: #1a73e8;
@@ -97,6 +97,122 @@ label {
     margin-top: 10px;
 }
 
-.button-find[type="submit"]:hover {
+.button-find[type="button"]:hover {
     background-color: #1557b0;
+}
+
+.button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 130px;
+}
+
+#smsButton2 {
+	background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+#smsButton3 {
+	background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.phone-group {
+	display: flex;
+    gap: 10px;
+}
+
+p {
+	color: red;
+	margin-left: 1px
+}
+
+button:disabled {
+  background-color: gray !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+button:disabled:hover {
+  opacity: 0.6;
+}
+
+/* 모달 배경 스타일 */
+.modal {
+/*     display: none;  */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    z-index: 999; /* 화면 위로 올림 */
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+/* 닫기 버튼 스타일 */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ff0000; /* 닫기 버튼 hover 효과 */
+}
+
+/* 모달 내부 텍스트 스타일 */
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.modal-content p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.modal-content strong {
+    color: #007bff;
+    font-weight: bold;
 }

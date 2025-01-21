@@ -318,7 +318,7 @@
         .edit-form input[readonly] {
             background-color: #f8f9fa;
             color: #868e96;
-            cursor: not-allowed;
+/*             cursor: not-allowed; */
         }
 
         .edit-form input:focus {

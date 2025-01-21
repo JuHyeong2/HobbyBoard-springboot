@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 쓴 게시글</title>
     <link rel="stylesheet" href="/css/user_inform/user.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <header id="top">
         <div class="logo">
-        <a href="/home">HAMO</a>
+        <a href="/">HAMO</a>
 <!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
         </div>
     </header>
@@ -21,158 +22,135 @@
                 <div class="content">
                     <h1>
                         MY POST
-                        <span class="post-count">총 3건</span>
+                        <span class="post-count" th:text="'총 ' + ${count} + ' 건'"></span>
                     </h1>
                     
-                    <div class="post" onclick="toggleParticipants(this)">
-                        <div class="post-header">
+                    <div class="post" th:each="p : ${list}">
+                        <div class="post-header" th:onclick="toggleParticipants([[${p.boardNo}]])" >
                             <div>
-                                <div class="post-title">주말 등산 모임</div>
-                                <div class="post-description">북한산에서 함께 등산하실 분들을 모집합니다. 초보자도 환영합니다. 서로 도와가며 즐겁게 등산해요!</div>
+                                <div class="post-title" th:text="${p.title}"></div>
+                                <div class="post-description" th:text="${p.content}"></div>
                             </div>
-                            <span class="post-status">모집중</span>
+                            <span class="post-status" th:text="${p.boardStatus == 'Y' ? '모집중' : '모집완료'}"></span>
                         </div>
                         <div class="post-meta">
                             <div class="post-info">
-                                <span class="post-category">운동</span>
-                                <span class="post-location">은평구</span>
+                                <span class="post-category" th:text="${p.categoryName}"></span>
+                                <span class="post-location" th:text ="${p.locationName}"></span>
                             </div>
-                            <span class="post-date">2023.06.10</span>
-                        </div>
-                        <div class="participants">
-                            <div class="participant">
+                            <span class="post-date" th:text="${p.createDate}"></span>
+                        </div> 
+                       
+                        
+                        <div class="participants" id = "participants" th:each="pa : ${map.get(p.boardNo)}">
+                            <div class="participant" >
                                 <div class="participant-info">
-                                    <p><strong>이름</strong> 김철수</p>
-                                    <p><strong>자기소개</strong> 등산을 좋아하는 30대 직장인입니다.</p>
-                                    <p><strong>성별</strong> 남성</p>
-                                    <p><strong>생년월일</strong> 1988.05.15</p>
+                                    <p><strong>이름</strong><span th:text="${pa.memberName}"></span></p>
+<!--                                     <p><strong>자기소개</strong></p> -->
+                                    <p><strong>성별</strong><span th:text="${pa.memberGender == 'M' ? '남자' : '여자'}"></span></p>
+                                    <p><strong>생년월일</strong><span th:text="${pa.memberBirth}"></span></p>
                                 </div>
                                 <div class="participant-actions">
-                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
-                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
-                                </div>
-                            </div>
-                            <div class="participant">
-                                <div class="participant-info">
-                                    <p><strong>이름</strong> 이영희</p>
-                                    <p><strong>자기소개</strong> 등산 초보입니다. 잘 부탁드려요!</p>
-                                    <p><strong>성별</strong> 여성</p>
-                                    <p><strong>생년월일</strong> 1995.11.22</p>
-                                </div>
-                                <div class="participant-actions">
-                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
-                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
+                                    <button class="accept-btn" th:onclick="handleParticipant('a',[[${p.boardNo}]],[[${pa.memberNo}]])">수락</button>
+                                    <button class="reject-btn" th:onclick="handleParticipant('r',[[${p.boardNo}]],[[${pa.memberNo}]])">거절</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="post" onclick="toggleParticipants(this)">
-                        <div class="post-header">
-                            <div>
-                                <div class="post-title">독서 토론 모임</div>
-                                <div class="post-description">매주 토요일 오후에 다양한 책을 읽고 토론하는 모임입니다. 함께 책을 읽고 의견을 나누며 성장해요.</div>
-                            </div>
-                            <span class="post-status">모집중</span>
-                        </div>
-                        <div class="post-meta">
-                            <div class="post-info">
-                                <span class="post-category">문화</span>
-                                <span class="post-location">강남구</span>
-                            </div>
-                            <span class="post-date">2023.06.17</span>
-                        </div>
-                        <div class="participants">
-                            <div class="participant">
-                                <div class="participant-info">
-                                    <p><strong>이름</strong> 박지민</p>
-                                    <p><strong>자기소개</strong> 문학을 사랑하는 대학생입니다.</p>
-                                    <p><strong>성별</strong> 여성</p>
-                                    <p><strong>생년월일</strong> 2000.03.01</p>
-                                </div>
-                                <div class="participant-actions">
-                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
-                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="post" onclick="toggleParticipants(this)">
-                        <div class="post-header">
-                            <div>
-                                <div class="post-title">주말 자전거 라이딩</div>
-                                <div class="post-description">한강 자전거 도로를 따라 함께 라이딩 하실 분들을 찾습니다. 여유롭게 달리며 즐거운 시간 보내요.</div>
-                            </div>
-                            <span class="post-status">모집중</span>
-                        </div>
-                        <div class="post-meta">
-                            <div class="post-info">
-                                <span class="post-category">운동</span>
-                                <span class="post-location">영등포구</span>
-                            </div>
-                            <span class="post-date">2023.06.24</span>
-                        </div>
-                        <div class="participants">
-                            <div class="participant">
-                                <div class="participant-info">
-                                    <p><strong>이름</strong> 정민수</p>
-                                    <p><strong>자기소개</strong> 주말마다 자전거 타는 것을 즐기는 회사원입니다.</p>
-                                    <p><strong>성별</strong> 남성</p>
-                                    <p><strong>생년월일</strong> 1992.09.10</p>
-                                </div>
-                                <div class="participant-actions">
-                                    <button class="accept-btn" onclick="handleParticipant(event, this, 'accept')">수락</button>
-                                    <button class="reject-btn" onclick="handleParticipant(event, this, 'reject')">거절</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <div th:if="${#lists.isEmpty(list)}">
+                  	                  		<p>내가 쓴 게시글이 없습니다.</p>
+                  	</div>
+                  	
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-    		// 참가자 목록을 토글 
-        function toggleParticipants(post) {
-            const participants = post.querySelector('.participants');	// 클릭된 포스트의 참가자 목록 요소를 찾음
-            const currentDisplay = participants.style.display;			// 현재 참가자 목록의 표시 상태 확인
-            const allParticipants = document.querySelectorAll('.participants');	// 페이지 내의 모든 참가자 목록 선택
-           
-            allParticipants.forEach(p => {		// 모든 참가자 목록 숨김
-                p.style.display = 'none';
-            });
-            // 클릭된 포스트의 참가자 목록 표시 상태를 토글로 
-            participants.style.display = currentDisplay === 'none' ? 'block' : 'none';
-        }
-			// 참가자 수락, 거절 처리 
-        function handleParticipant(event, button, action) {
-            event.stopPropagation();	// 이벤트가 상위 요소로 가는것 방지(버블링 방지) 
-            const participant = button.closest('.participant');  // 클릭된 버튼의 가장 가까운 상위 .participant 요소를 찾음
-            const name = participant.querySelector('p:first-child').textContent.split(' ')[1];  // 참가자 이름 추출
-            
-            if (action === 'accept') {			// accpet 이면 수락
-                alert(`${name}님의 참가 신청을 수락했습니다.`);
-            } else {							// 아니면 거절
-                alert(`${name}님의 참가 신청을 거절했습니다.`);
+
+<script th:inline="javascript">
+const toggleParticipants = (boardNo) => {	
+    const participants = document.getElementById('participants');
+    const allParticipants = document.querySelector('.participants');
+    allParticipants.forEach( b => {
+    	b.style.display = 'none';
+    })
+    participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
+}
+
+const handleParticipant = (action, boardNo, participantId) => {
+    $.ajax({
+        url: '/member/handleParticipant',
+        type:'post',
+        data: {
+            action: action,
+            boardNo: boardNo,
+            participantId: participantId
+        },
+        success: data => {
+            if (data == 'success') {
+                alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
+                location.reload();
+            	
+            } else {
+                alert('처리 중 오류가 발생했습니다.');
             }
-	            
-	        //participant.style.opacity = '0';		// 투명도 0 
-            //participant.style.transform = 'translateY(-10px)';	// y축으로 -10px이동 
-            //participant.style.transition = 'all 0.3s ease';		// 변화 
-            
-            //setTimeout(() => {		// 애니메이션 끝난 후 참가자 요소 제거 
-                participant.remove();
-                
-                const participants = participant.closest('.participants');	// 가장 가까운 상위 .participants 요소 찾음
-                if (!participants.querySelector('.participant')) {
-                    participants.style.display = 'none';
-                }
-            //}, 300);
+        },
+        error: data => {
+           console.log(data)
         }
-    </script>
-<!--     <jsp:include page="../common/footer.jsp"/> -->
+    });
+}
+</script>
+
+<!-- <!--     <script th:inline = "javascript"> --> -->
+<!-- //     		// 참가자 목록을 토글  -->
+<!-- //         function toggleParticipants(post) { -->
+<!-- //             const participants = post.querySelector('.participants');	// 클릭된 포스트의 참가자 목록 요소를 찾음 -->
+<!-- //             const currentDisplay = participants.style.display;			// 현재 참가자 목록의 표시 상태 확인 -->
+<!-- //             const allParticipants = document.querySelectorAll('.participants');	// 페이지 내의 모든 참가자 목록 선택 -->
+           
+<!-- //             allParticipants.forEach(p => {		// 모든 참가자 목록 숨김 -->
+<!-- //                 p.style.display = 'none'; -->
+<!-- //             }); -->
+<!-- //             // 클릭된 포스트의 참가자 목록 표시 상태를 토글로  -->
+<!-- //             participants.style.display = currentDisplay === 'none' ? 'block' : 'none'; -->
+<!-- //         } -->
+<!-- // 			// 참가자 수락, 거절 처리  -->
+<!-- //         function handleParticipant(event, button, action,boarNo,participantId) { -->
+<!-- //             event.stopPropagation();	// 이벤트가 상위 요소로 가는것 방지(버블링 방지) -->
+<!-- //             $.ajax({ -->
+<!-- //             	url:"/" -->
+<!-- //             }); -->
+            
+            
+            
+            
+<!-- //             const participant = button.closest('.participant');  // 클릭된 버튼의 가장 가까운 상위 .participant 요소를 찾음 -->
+<!-- //             const name = participant.querySelector('p:first-child').textContent.split(' ')[1];  // 참가자 이름 추출 -->
+            
+<!-- //             if (action === 'accept') {			// accpet 이면 수락 -->
+<!-- //                 alert(`${name}님의 참가 신청을 수락했습니다.`); -->
+<!-- //             } else {							// 아니면 거절 -->
+<!-- //                 alert(`${name}님의 참가 신청을 거절했습니다.`); -->
+<!-- //             } -->
+	            
+<!-- // 	        //participant.style.opacity = '0';		// 투명도 0  -->
+<!-- //             //participant.style.transform = 'translateY(-10px)';	// y축으로 -10px이동  -->
+<!-- //             //participant.style.transition = 'all 0.3s ease';		// 변화  -->
+            
+<!-- //             //setTimeout(() => {		// 애니메이션 끝난 후 참가자 요소 제거  -->
+<!-- //                 participant.remove(); -->
+                
+<!-- //                 const participants = participant.closest('.participants');	// 가장 가까운 상위 .participants 요소 찾음 -->
+<!-- //                 if (!participants.querySelector('.participant')) { -->
+<!-- //                     participants.style.display = 'none'; -->
+<!-- //                 } -->
+<!-- //             //}, 300); -->
+<!-- //         } -->
+<!--     </script> -->
+
 <div th:insert = "common/footer.html"></div>
 </body>
 </html>

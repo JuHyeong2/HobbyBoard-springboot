@@ -9,7 +9,7 @@
 <body>
     <header id="top">
         <div class="logo">
-            <a href="/home">HAMO</a>
+            <a href="/">HAMO</a>
         </div>
     </header>
     <div class="main-container">
@@ -23,22 +23,37 @@
                     <div class="info-section">
                         <h2 class="section-title">기본 정보</h2>
                         <div class="info-grid">
+                        
+                        	<div class="profile-picture">
+                        		
+                        	</div>
+                        
+                        
                             <div class="info-item">
                                 <label for="name">이름</label>
-                                <input type="text" id="name" name="name" value="홍길동" readonly>
+                                <input type="text" id="name" name="name" th:value="${loginUser.memberName}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" value="1990-01-01" readonly>
+                                <input type="text" id="birthdate" name="birthdate" th:value="${loginUser.memberBirth}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="id">아이디</label>
-                                <input type="text" id="id" name="id" value="hong123" readonly>
+                                <input type="text" id="id" name="id" th:value="${loginUser.memberId}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="gender">성별</label>
-                                <input type="text" id="gender" name="gender" value="남성" readonly>
+                                <input type="text" id="gender" name="gender" th:value="${loginUser.memberGender == 'M' ? '남자' : '여자'}" readonly>
                             </div>
+<!--  							<div class="info-item"> -->
+<!--    							 <label for="gender">성별</label> -->
+<!-- 						    <div class="radio-group"> -->
+<!-- 						        <input type="radio" id="male" name="gender" th:checked="${session.loginUser.memberGender == 'M'}" readonly> -->
+<!-- 						        <label for="male">남자</label> -->
+<!-- 						        <input type="radio" id="female" name="gender" th:checked="${session.loginUser.memberGender == 'F'}" readonly> -->
+<!-- 						        <label for="female">여자</label> -->
+<!-- 						    </div> -->
+<!-- 						  </div> -->
                         </div>
                     </div>
 
@@ -47,15 +62,15 @@
                         <div class="info-grid">
                             <div class="info-item">
                                 <label for="email">이메일</label>
-                                <input type="email" id="email" name="email" value="hong@example.com" readonly>
+                                <input type="email" id="email" name="email" th:value="${loginUser.memberEmail}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="phone">휴대폰 번호</label>
-                                <input type="tel" id="phone" name="phone" value="010-1234-5678" readonly>
+                                <input type="tel" id="phone" name="phone" th:value="${loginUser.memberPhone}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="nickname">닉네임</label>
-                                <input type="text" id="nickname" name="nickname" value="길동이" readonly>
+                                <input type="text" id="nickname" name="nickname" th:value="${loginUser.memberNickname}" readonly>
                             </div>
                         </div>
                     </div>
@@ -71,7 +86,7 @@
                     </div>
 
                     <div class="button-container">
-                        <form action="/member/checkPwd" method="post">
+                        <form action="/member/checkPwd" method="get">
                             <button type="submit" class="edit-button">정보 수정하기</button>
                         </form>
                     </div>

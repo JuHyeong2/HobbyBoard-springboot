@@ -1,78 +1,105 @@
-@charset "UTF-8";
-
-/* 전체 레이아웃 설정 */
-body {
+/* 기본 스타일 설정 */
+* {
     margin: 0;
-    padding: 10px;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.header {
-    margin-left: 250px; /* 사이드바 너비만큼 여백 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
     padding: 20px;
-    width: calc(100% - 250px); /* 나머지 공간을 차지 */
-    overflow: auto; /* 내용이 넘칠 경우 스크롤 */
 }
 
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
+/* 헤더 및 사이드바 */
+.header {
+    margin-left: 250px; /* 사이드바 여백 */
+    padding: 20px;
+    width: calc(100% - 250px); /* 사이드바 제외한 영역 */
+    overflow: auto;
 }
 
-
-/* 공지 작성 폼 */
+/* 공지 작성 폼 스타일 */
 .notice-create {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
     margin-top: 30px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.notice-create h2 {
-    font-size: 24px;
-    color: #333;
-}
-
-.notice-create form {
-    margin-top: 10px;
+.notice-create h1 {
+    font-size: 32px;
+    color: #444;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .notice-create label {
     display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-size: 15px;
+    margin-bottom: 8px;
     color: #555;
 }
 
 .notice-create input,
 .notice-create textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.notice-create input:focus,
+.notice-create textarea:focus {
+    border-color: #28a745;
+    outline: none;
 }
 
 .notice-create textarea {
     resize: vertical;
+    min-height: 750px;
 }
 
 .notice-create button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .notice-create button:hover {
-    background-color: #2c3e50;
+    background-color: #218838;
+    transform: scale(1.05);
 }
 
-#content {
-	width: 1100px;
-	height: 500px;	
+/* 화면 크기별 반응형 디자인 */
+@media (max-width: 768px) {
+    .header {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .notice-create {
+        margin: 0 15px;
+    }
+
+    .notice-create h1 {
+        font-size: 28px;
+    }
+
+    .notice-create input,
+    .notice-create textarea {
+        font-size: 16px;
+    }
 }

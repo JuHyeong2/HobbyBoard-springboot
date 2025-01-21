@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href	="/css/admin/noticeWrite.css">
+    <meta charset="UTF-8">
+    <title>공지사항 작성</title>
+    <link rel="stylesheet" href="/css/admin/noticeWrite.css">
 </head>
 <body>
-	<div th:replace="admin/admin-main.html"></div>
-	
-	<div class="header">
-		<div id="notice-create" class="notice-create hidden">
-			<h1>공지사항 작성</h1>
-			<form action="" method="post">
-				<label for="author">작성자:</label> <input type="text" id="author"
-					name="author" readonly>
-				<label for="title">제목:</label> <input type="text" id="title"
-					name="title" required> <label for="content">내용:</label>
-				<textarea id="content" name="content" required></textarea>
-	
-				 <label for="date">게시 기간:</label> <input
-					type="date" id="date" name="date" required>
-	
-				<button type="submit">공지 작성</button>
-			</form>
-		</div>
-	</div>
+    <div th:replace="admin/admin-main.html"></div>
+    
+    <div class="header">
+        <div id="notice-create" class="notice-create">
+            <h1>공지사항 작성</h1>
+            <form action="/admin/write" method="post">
+                <label for="title">제목:</label> 
+                <input type="text" id="title" name="title" required>
+                
+                <label for="content">내용:</label>
+                <textarea id="content" name="content" required></textarea>
+                
+                <button type="submit">공지 작성</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

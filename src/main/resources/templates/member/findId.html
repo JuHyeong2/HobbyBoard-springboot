@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="/css/login/findId.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div th:insert="common/top.html"></div>
+	<main>
+	    <div class="signup-card">
+	        <h1>아이디 찾기</h1>
+	        
+	        <div class="tabs">
+	            <button class="tab active" onclick="switchTab('email')">이메일</button>
+	            <button class="tab" onclick="switchTab('phone')">휴대폰</button>
+	        </div>
+	
+	        <div id="emailTab" class="tab-content active">
+	            <form>
+	                <div class="form-group">
+	                    <label for="nameEmail">이름</label>
+	                    <input class="input-find" type="text" id="nameEmail" placeholder="이름을 입력하세요">
+	                </div>
+	                <div class="form-group">
+	                    <label for="email">이메일</label>
+	                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
+	                </div>
+	                <button class="button-find" type="button" id="emailSubmit">아이디 찾기</button>
+	            </form>
+	        </div>
+	
+	        <div id="phoneTab" class="tab-content">
+	            <form>
+	                <div class="form-group">
+	                    <label for="namePhone">이름</label>
+	                    <input class="input-find" type="text" id="namePhone" placeholder="이름을 입력하세요">
+	                </div>
+	                <div class="form-group">
+	                    <label for="phone">휴대폰 번호</label>
+	                    <div class="phone-group">
+		                    <input class="input-find" type="tel" id="phone" placeholder="휴대폰 번호를 입력하세요">
+		                    <button type="button" id="smsButton" class="button">인증번호 전송</button>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="phone">인증 번호</label>
+	                    <div class="phone-group">
+		                    <input class="input-find" type="text" id="checkphone" placeholder="인증번호를 입력하세요">
+		                    <button type="button" id="smsButton2" class="button" disabled>확인</button>
+	                    </div>
+	                </div>
+	                <p id="time"></p>
+	                <button class="button-find" type="button" id="phoneSubmit">아이디 찾기</button>
+	            </form>
+	        </div>
+	    </div>
+	</main>
+	
+	<div id="modal" class="modal">
+	    <div class="modal-content">
+	        <span class="close-button" id="closeModal">&times;</span>
+	        <h2>아이디 찾기 성공</h2>
+	        <p>회원님의 아이디는 <strong id="userId">example_id</strong> 입니다.</p>
+	        <div class="phone-group">
+		        <button type="button" id="smsButton3" class="button">로그인</button>
+		        <button type="button" id="smsButton3" class="button">비밀번호 찾기</button>
+	        </div>
+	    </div>
+	</div>
+    <script>
+        function switchTab(tabName) {
+            // 모든 탭과 컨텐츠를 비활성화
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 선택된 탭과 컨텐츠를 활성화
+            if (tabName === 'email') {
+                document.querySelector('.tab:first-child').classList.add('active');
+                document.getElementById('emailTab').classList.add('active');
+            } else {
+                document.querySelector('.tab:last-child').classList.add('active');
+                document.getElementById('phoneTab').classList.add('active');
+            }
+        }
+        let idCheck = false;
+        document.getElementById('smsButton').addEventListener('click', ()=>{
+			const phone = document.getElementById('phone').value;
+			console.log(phone);
+			if(phone != null && phone != ''){
+				$.ajax({
+					type: "POST",
+					url: "/member/sendSMS",
+					data: {phone:phone},
+					dataType: 'json',
+					success: data=>{
+						console.log(data);
+						if(data != null && data != ''){
+							document.getElementById('smsButton2').disabled = false;
+							let startMin = 1;
+							let startSec = 0;
+							const timer = setInterval(()=>{
+								document.getElementById('time').innerText = startMin + ":" + startSec;
+								if(startSec == 0){
+									if(startMin == 0){
+										crearInterval(timer);	
+										document.getElementById('smsButton2').disabled = true;
+									}
+									startMin = startMin - 1;
+									startSec = 60;
+								}
+								
+								startSec = startSec - 1;
+								
+								if(startMin == 0 && startSec == 0){
+									
+								}
+							}, 1000)	
+							
+							document.getElementById('time').innerText = 
+							document.getElementById('smsButton2').addEventListener('click', ()=>{
+								const certificationNum = document.getElementById('checkphone').value;
+								if(certificationNum == data){
+									alert('휴대폰 인증에 성공했습니다.');
+									idCheck = true;
+								}else{
+									alert('인증번호가 다릅니다.');
+								}
+							})
+						}
+					}
+				})
+			}
+		})
+		
+		document.getElementById('phoneSubmit').addEventListener('click', ()=>{
+			if(idCheck){
+				const phone = document.getElementById('phone').value;
+				$.ajax({
+					url: '/member/findId',
+					type: 'POST',
+					data: {phone: phone},
+					success: data=>{
+						console.log(data);
+						if(data != null){
+							document.getElementById('userId').innerText = data.memberId;
+							const modal = document.getElementById("modal");
+							modal.style.display = "flex";
+						}
+					},
+					error: data=>{
+						console.log(data);
+					}
+				})
+			}else alert('이름, 휴대폰번호를 확인해 주세요.');
+
+		})
+		
+		smsButton3
+    </script>
+</body>
+</html>

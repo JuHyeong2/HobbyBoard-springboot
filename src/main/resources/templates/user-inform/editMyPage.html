@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 정보 수정</title>
     <link rel="stylesheet" href="/css/user_inform/user.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <header id="top">
         <div class="logo">
-        <a href="/home">HAMO</a>
+        <a href="/">HAMO</a>
 <!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
         </div>
     </header>
@@ -23,28 +24,46 @@
         <div class="content-wrapper">
             <div class="container">
                 <div class="content">
-                    <form id="editForm" action="editMyPage" method="post" class="edit-form">
+                    <form id="editForm" th:action = "member/editMyPage" method="post" class="edit-form">
                         <h1>내 정보 수정</h1>
                         
                         <div class="info-section">
                             <h2 class="section-title">기본 정보</h2>
                             <div class="info-grid">
-                                <div class="info-item">
+                            
+                        	
+                        	<div id="profile-picture">
+                        		<div class="fileArea">
+                        			<input type="file" class="filePlus" name="file">
+                        		</div>
+                        	</div>
+                        	<button type="button" id = "profile">프로필 사진 추가</button>
+                        	
+                            <div class="info-item">
                                     <label for="name">이름</label>
-                                    <input type="text" id="name" name="name" value="${user.name}" required>
+                                    <input type="text" id="name" name="name" th:value="${m.memberName}" required>
                                 </div>
                                 <div class="info-item">
                                     <label for="birthdate">생년월일</label>
-                                    <input type="text" id="birthdate" name="birthdate" value="${user.birthdate}" required>
+                                    <input type="text" id="birthdate" name="birthdate" th:value="${m.memberBirth}" required>
                                 </div>
                                 <div class="info-item">
                                     <label for="id">아이디</label>
-                                    <input type="text" id="id" name="id" value="${user.id}" readonly>
+                                    <input type="text" id="id" name="id" th:value="${m.memberId}" readonly>
                                 </div>
-                                <div class="info-item">
-                                    <label for="gender">성별</label>
-                                    <input type="text" id="gender" name="gender" value="${user.gender}" required>
-                                </div>
+<!--                                 <div class="info-item"> -->
+<!--                                     <label for="gender">성별</label> -->
+<!--                                     <input type="text" id="gender" name="gender" value="" required> -->
+<!--                                 </div> -->
+								<div class="info-item">
+   							 		<label for="gender">성별</label>
+						   		<div class="radio-group">
+							        <input type="radio" id="male" name="gender" value= "M" th:checked="${m.memberGender == 'M'}" >
+							        <label for="male">남자</label>
+							        <input type="radio" id="female" name="gender" value="F" th:checked="${m.memberGender == 'F'}" >
+							        <label for="female">여자</label>
+							    </div>
+						  		</div>
                             </div>
                         </div>
 
@@ -53,15 +72,19 @@
                             <div class="info-grid">
                                 <div class="info-item">
                                     <label for="nickname">닉네임</label>
-                                    <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
+                                    <input type="text" id="nickname" name="nickname" th:value="${m.memberNickname}" required>
+                                
+                                	<label id="nickNameCheck"></label>
+                                
+                                
                                 </div>
                                 <div class="info-item">
                                     <label for="email">이메일</label>
-                                    <input type="email" id="email" name="email" value="${user.email}" required>
+                                    <input type="email" id="email" name="email" th:value="${m.memberEmail}" required>
                                 </div>
                                 <div class="info-item">
                                     <label for="phone">휴대폰 번호</label>
-                                    <input type="tel" id="phone" name="phone" value="${user.phone}" required>
+                                    <input type="tel" id="phone" name="phone" th:value="${m.memberPhone}" required>
                                 </div>
                             </div>
                         </div>
@@ -69,13 +92,18 @@
                         <div class="info-section">
                             <h2 class="section-title">보안 정보</h2>
                             <div class="info-grid">
+<!--                             	<div class="info-item"> -->
+<!--                                     <label for="password">현재 비밀번호</label> -->
+<!--                                     <input type="password" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호 입력"> -->
+<!--                                 </div> -->
+                            
                                 <div class="info-item">
                                     <label for="password">새 비밀번호</label>
-                                    <input type="password" id="password" name="password" placeholder="새 비밀번호 입력">
+                                    <input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호 입력">
                                 </div>
                                 <div class="info-item">
                                     <label for="password-confirm">새 비밀번호 확인</label>
-                                    <input type="password" id="password-confirm" name="password-confirm" placeholder="새 비밀번호 재입력">
+                                    <input type="password" id="password-confirm" name="password-confirm" placeholder="새 비밀번호 재입력" >
                                 </div>
                             </div>
                         </div>
@@ -87,21 +115,22 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('editForm').addEventListener('submit', function(e) {	
-            e.preventDefault();
-            
-            // 비밀번호 확인 
-            var password = document.getElementById('password').value;
-            var passwordConfirm = document.getElementById('password-confirm').value;
-            
-            if (password !== passwordConfirm) {
-                alert('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
-                return;
-            }            
-            alert('수정이 완료되었습니다.');
-            window.location.href = "/member/myPage";
-        });
+    <script th:lnline="javascript">
+
+        
+
+        	 document.getElementById('editForm').addEventListener('submit', e => {
+            	var newPassword = document.getElementById('newPassword').value;
+                var passwordConfirm = document.getElementById('password-confirm').value;
+                
+                if (newPassword != passwordConfirm) {
+                    e.preventDefault();
+                    alert('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
+                }
+            });
+
+        
+        
     </script>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
 <div th:insert = "common/footer.html"></div>

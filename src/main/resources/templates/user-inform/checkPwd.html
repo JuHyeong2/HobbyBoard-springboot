@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 확인</title>
     <link rel="stylesheet" href="/css/user_inform/user.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <header id="top">
         <div class="logo">
-        <a href="/home">HAMO</a>
+        <a href="/">HAMO</a>
 <!--             <a href="${pageContext.servletContext.contextPath}">HAMO</a> -->
         </div>
     </header>
@@ -22,7 +23,7 @@
                 
                 <div class="check-section">
                 
-                    <form id="passwordForm" action="checkPassword" method="post" class="password-form">
+                    <form id="passwordForm"  method="post" class="password-form">
                         <h1>비밀번호 확인</h1>
                         <div class="info-item">
                             <label for="password">비밀번호를 입력해주세요</label>
@@ -38,23 +39,56 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('passwordForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var password = document.getElementById('password').value;
+    <script th:inline="javascript">
+//         document.getElementById('passwordForm').addEventListener('submit', function(e) {
+//             e.preventDefault();
+//             var password = document.getElementById('password').value;
             
-            //var isCorrect = Math.random() < 0.5; 
-            var isCorrect = password === "0000";
-            if (isCorrect) {
-                alert('비밀번호가 확인되었습니다.');
-//                 window.location.href = "${pageContext.request.contextPath}/editMyPage";
-                window.location.href = "/member/editMyPage";
-            } else {
-                alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
-                document.getElementById('password').value = ''; 
-                document.getElementById('password').focus();
-            }
-        });
+//             //var isCorrect = Math.random() < 0.5; 
+//             var isCorrect = password === "0000";
+//             if (isCorrect) {
+//                 alert('비밀번호가 확인되었습니다.');
+// //                 window.location.href = "${pageContext.request.contextPath}/editMyPage";
+//                 window.location.href = "/member/editMyPage";
+//             } else {
+//                 alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+//                 document.getElementById('password').value = ''; 
+//                 document.getElementById('password').focus();
+//             }
+//         });
+
+// 		document.getElementById('passwordForm').addEventListener('submit', e => {
+//              e.preventDefault();
+// 			const password = document.getElementById('password').value;
+			
+// 			if(password.trim() == '') {
+// 				alert('비밀번호를 입력해주세요.');
+// 			}
+			
+
+      	window.onload = () => {
+            document.getElementById('passwordForm').addEventListener('submit', e => {
+                e.preventDefault();
+                const password = document.getElementById('password').value;
+                $.ajax({
+                	type : 'post',
+                    url: '/member/checkPwd',
+                    data: {password: password},
+                    success: data => {
+                        if (data == 'success') {
+                            window.location.href = '/member/editMyPage';
+                        } else if (data == 'error') {
+                            alert('비밀번호를 입력해주세요.');
+                        } else {
+                            alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+                          
+                        }
+                    }
+                });
+            });
+      	}
+
+
     </script>
     <div th:insert = "common/footer.html"></div>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
