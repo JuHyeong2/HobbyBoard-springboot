@@ -253,11 +253,7 @@ public class MemberController {
 //          }
           
 //          int result = mService.insertImage(member);
-//          if(result) {
-//        	  
-//          }else {
-//        	  
-//          }
+
      
         
       if (member.getMemberName() == null || member.getMemberName().isEmpty()) {

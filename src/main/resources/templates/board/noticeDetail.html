@@ -5,57 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 상세보기</title>
     <link rel="stylesheet" href="/css/board/noticeDetail.css">
-
+    <link rel="stylesheet" href="/css/board/summernote-lite.css">
 </head>
 <body>
 <div th:insert="common/top.html"></div>
     <div class="container">
         <div class="notice-header">
             <span class="notice-badge">공지</span>
-            <h1 class="notice-title">모임간 주의사항 안내</h1>
-            <span class="notice-date">2024.01.01</span>
+            <h1 class="notice-title">[[${a.title}]]</h1>
+
+            <!-- form으로 버튼들 감싸기 -->
+            <form method="POST" id="writer-btn" th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">
+                <button type="button" id="edit-btn">수정</button>
+                <button type="button" id="delete-btn">삭제</button>
+
+                <!-- hidden input으로 페이지와 boardId 값 추가 -->
+                <input type="hidden" name="page" th:value="${page}">
+                <input type="hidden" name="id" th:value="${a.boardNo}">
+            </form>
+            
+            <span class="notice-date">[[${a.createDate}]]</span>
         </div>
 
         <div class="character-banner">
             <h2>안내사항</h2>
         </div>
 
-        <div class="notice-content">
-            <ul>
-				<li><strong>시간 준수:</strong> 모임의 시작 시간에 맞춰 도착하는 것이 중요합니다. 늦을 경우 다른 참석자에게 불편을 줄 수 있으므로 미리 시간을 확인하고 준비하는 것이 좋습니다.</li>
-				<li><strong>배려와 존중:</strong> 다른 사람들의 의견을 존중하고, 상대방이 말할 때 끼어들지 않도록 합니다. 특히, 토론이나 회의에서는 서로의 발언을 경청하는 태도가 중요합니다. 대화 중 불쾌감을 줄 수 있는 언어나 행동을 피하는 것이 좋습니다.</li>
-				<li><strong>소통:</strong> 모임 중에는 너무 말을 많이 하지 않도록 하며, 다수의 사람들과 균형 있게 대화를 나누는 것이 좋습니다. 다른 사람들의 의견도 듣고 존중하는 자세를 갖는 것이 중요합니다.</li>
-				<li><strong>마무리 예의:</strong> 모임이 끝날 때, 감사의 인사를 전하는 것이 예의입니다. 참석자들이 모임을 마칠 때에는 정리도 도와주는 것이 좋습니다.</li>
-			</ul>
-<!--             <h3 class="section-title"></h3> -->
-<!--             <div class="info-box"> -->
-<!--                 <p></p> -->
-<!--             </div> -->
-
-            <h3 class="section-title">추가 안내</h3>
-            <div class="info-box">
-                <p>위 사항이 지켜짖 않을 시 운영진에 의해서 재재를 받을 수 있습니다. </p>
-                <p></p>
-            </div>
-
-            <table class="info-table">
-                <thead>
-                    <tr>
-                        <th>재재 사항</th>
-                        <th>회수</th>
-                        <th>기간</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>악플 및 욕설</td>
-                        <td>1</td>
-                        <td>7일</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="notice-content" th:utext="${a.content}">
+            <!-- 내용 표시 -->
         </div>
+    </div>
 
+    <footer>
         <div class="navigation">
             <a href="#" class="nav-item">
                 <span class="nav-label">이전글</span>
@@ -68,6 +49,20 @@
                 <span class="nav-date"></span>
             </a>
         </div>
-    </div>
+    </footer>
+    
+    <script>
+    	const form = document.getElementById('writer-btn');
+    	document.getElementById('edit-btn').addEventListener('click', () => {
+    		form.action = '/admin/edit';
+    		form.submit();
+    		
+    	});
+    	
+    	document.getElementById('delete-btn').addEventListener('click', () => {
+    		form.action = '/admin/delete';
+    		form.submit();
+    	});
+    </script>
 </body>
 </html>

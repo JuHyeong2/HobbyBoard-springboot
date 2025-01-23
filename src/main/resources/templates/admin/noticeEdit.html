@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>공지사항 작성</title>
     <link rel="stylesheet" href="/css/admin/noticeWrite.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="/js/summernote-lite.js"></script>
+	<script src="/js/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/css/board/summernote-lite.css">
 </head>
 <body>
     <div th:replace="admin/admin-main.html"></div>
@@ -18,12 +22,44 @@
                 <input type="text" id="title" name="title" th:value="${admin.title}" required>
                 
                 <label for="content">내용:</label>
-                <textarea id="content" name="content" required>[[${admin.content}]]</textarea>
+                <textarea id="summernote" name="content" th:utext="${admin.content}" required></textarea>
                 
                 <button type="submit" id='submit-btn'>수정</button>
             </form>
         </div>
     </div>
+      <script>
+    $(document).ready(function() {
+    	//여기 아래 부분
+//	    	$('#summernote').summernote({
+//	    		  height: 500,                 // 에디터 높이
+//	    		  minHeight: null,             // 최소 높이
+//	    		  maxHeight: null,             // 최대 높이
+//	    		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+//	    		  lang: "ko-KR",					// 한글 설정
+//	    		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+              
+//	    	});
+    	
+    	$('#summernote').summernote({
+    		height: 500,
+  			toolbar: [
+  			    // [groupName, [list of button]]
+  			    ['fontname', ['fontname']],
+  			    ['fontsize', ['fontsize']],
+  			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+  			    ['color', ['forecolor','color']],
+  			    ['table', ['table']],
+  			    ['para', ['ul', 'ol', 'paragraph']],
+  			    ['height', ['height']],
+  			    ['insert',['picture','link','video']],
+  			    ['view', ['fullscreen', 'help']]
+  			  ],
+  			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+  	  });
+    });
+    </script>
 	
 </body>
 </html>

@@ -38,6 +38,8 @@
                                     <input type="file" id="file" name="file" accept=".jpg, .png">
                                     
                              	</div>  
+                             	
+                             	
                                 <div class="info-item">
                                     <label for="name">이름</label>
                                     <input type="text" id="memberName" name="memberName" th:value="${loginUser.memberName}" required>
@@ -131,6 +133,16 @@
 //                }
        
             });
+        	 
+        	 document.getElementById('profilePreview').addEventListener('click', () => {
+        		const files = document.getElementsName('file');
+        		let isEmpty = true;
+        		for(const f of files) {
+        			if(f.value != '') {
+        				isEmpty = false;
+        			}
+        		}
+        	 });
         	 
         
         	 

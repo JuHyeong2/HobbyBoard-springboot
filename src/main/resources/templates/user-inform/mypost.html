@@ -74,13 +74,16 @@
 <script th:inline="javascript">
 const toggleParticipants = (boardNo) => {
     const participants = document.getElementById('participants-' + boardNo);
-    if (participants.style.display === 'none' || participants.style.display === '') {
+    if (participants.style.display == 'none' || participants.style.display == '') {
         participants.style.display = 'block';
     } else {
         participants.style.display = 'none';
     }
+
 }
 //     participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
+
+
 
 
 const handleParticipant = (event,action, boardNo, participantId) => {
@@ -99,7 +102,6 @@ const handleParticipant = (event,action, boardNo, participantId) => {
                 alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
                 location.reload();
 
-                		 
 // 				const participantElement = document.getElementById("participant-" + participantId)
 // 				if (participantElement) {
 // 				  participantElement.remove()
@@ -107,11 +109,11 @@ const handleParticipant = (event,action, boardNo, participantId) => {
 				
 // 				const participantsList = document.getElementById("participants-" + boardNo)
 // 				if (participantsList) {
-// 				  if (participantsList.children.length === 0) {
+// 				  if (participantsList.children.length == 0) {
 // 				    participantsList.style.display = "none"
 // 				  }
 // 				}
-
+ 		
             } else {
                 alert('처리 중 오류가 발생했습니다.');
             }

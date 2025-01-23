@@ -80,8 +80,11 @@ public class AdminController {
 	// 공지사항 작성 
 	@PostMapping("write")
 	public String write(@ModelAttribute Admin admin, HttpSession session) {
+		
 		Member m = (Member)session.getAttribute("loginUser");
 //		 System.out.println(m);
+		admin.setContent(admin.getContent());
+				
 		admin.setWriter(m.getMemberNo());
 		
 		int result = aService.writeNotice(admin);
@@ -133,7 +136,7 @@ public class AdminController {
 	    }
 	    
 	    map.put("mId", mId);
-	    map.put("isStatus", isStatus);
+	    map.put("isStatus", isStatus);		
 
 	    // 상태 변경 처리
 	    int result = aService.changeStatus(map);

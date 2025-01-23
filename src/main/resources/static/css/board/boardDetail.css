@@ -174,10 +174,11 @@ img {
 
 
 
+
+
 .reply-enroll-btn{
 /* 	여기 버튼 오른족으로 밀어야함 */
 }
-
 
 
 
@@ -216,10 +217,11 @@ img {
 }
 
 .notice-title {
+	width: 20px;
 	font-size: 14px;
     margin-bottom: 4px;
     color: #333;
-text-decoration: none;
+	text-decoration: none;
 }
 
 .notice-date {
@@ -227,6 +229,7 @@ text-decoration: none;
     font-size: 12px;
     text-align: right;
     min-width: 100px;
+    margin-left: 2000px;
 }
         
 .reply-input {
