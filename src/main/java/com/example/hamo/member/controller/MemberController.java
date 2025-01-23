@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.common.util.EmailCertificationUtil;
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
@@ -226,28 +228,61 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/editMyPage")
-    public String updateMember(@RequestParam("file") ArrayList<MultipartFile> files, @ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
+//	@Transactional
+    public String updateMember(/*@RequestParam("file") ArrayList<MultipartFile> files*/ @ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login";
         }
 
-      
-        for(int i=0; i< files.size(); i++) {
-          	MultipartFile upload = files.get(i);
-          	if(!upload.getOriginalFilename().equals("")) {
-          		String[] returnArr = saveFile(upload);
-          		if(returnArr[1] != null) {	
-          		}
-          	}
-          }
+//        ArrayList<Image> list = new ArrayList<Image>();
+//        for(int i=0; i< files.size(); i++) {
+//          	MultipartFile upload = files.get(i);
+//          	if(!upload.getOriginalFilename().equals("")) {
+//          		String[] returnArr = saveFile(upload);
+//          		if(returnArr[1] != null) {	
+//          			Image img = new Image();
+//          			img.setImgName(upload.getOriginalFilename());
+//          			img.setImgRename(returnArr[1]);
+//          			img.setImgPath(returnArr[0]);
+//          			img.setDelimiter("U");
+//          			img.setBuNo(member.getMemberNo());
+//          			list.add(img);
+//          		}
+//          	}
+//          }
           
-          int result = mService.updateImage(member);
-
-      member.setMemberId(loginUser.getMemberId());
+//          int result = mService.insertImage(member);
+//          if(result) {
+//        	  
+//          }else {
+//        	  
+//          }
+     
+        
+      if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
+  	member.setMemberName(loginUser.getMemberName());
+  }
+  if (member.getMemberBirth() == null) {
+  	member.setMemberBirth(loginUser.getMemberBirth());
+  }
+  if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
+  	member.setMemberGender(loginUser.getMemberGender());
+  }
+  if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
+  	member.setMemberNickname(loginUser.getMemberNickname());
+  }
+  if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
+  	member.setMemberEmail(loginUser.getMemberEmail());
+  }
+  if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
+  	member.setMemberPhone(loginUser.getMemberPhone());
+  }
+        
+        
         
       
-
+          member.setMemberId(loginUser.getMemberId());
         if (newPassword != null && !newPassword.isEmpty()) {
         	member.setMemberPwd(bcrypt.encode(newPassword));
         } else {
@@ -270,14 +305,9 @@ public class MemberController {
         
     
     }
-	
-	
-	
-	
-	
 	// 이미지 파일 저장
 	public String[] saveFile(MultipartFile upload) {
-		String savePath = "c:\\imgFiles";
+		String savePath = "c:\\uploadFiles";
 		File folder = new File(savePath);
 		if(!folder.exists()) {
 			folder.mkdir();
@@ -304,12 +334,18 @@ public class MemberController {
 
 	
 	
-//	//비밀번호 확인 페이지로 이동
+	//비밀번호 확인 페이지로 이동
+	
+	@GetMapping("/member/checkPwd")
+	public String checkPwdView() {
+		return "user-inform/checkPwd";
+	}
+	
+	
 	@PostMapping("/member/checkPwd")
 	@ResponseBody
 	public String checkPwd(@RequestParam("password") String password,HttpSession session){
 		if(password == null || password.isEmpty()) {
-			System.out.println(password);
 			return "error";
 		}
 		
@@ -326,10 +362,6 @@ public class MemberController {
 		
 	}
 	
-	@GetMapping("/member/checkPwd")
-	public String checkPwdView() {
-		return "user-inform/checkPwd";
-	}
 	
 	
 	

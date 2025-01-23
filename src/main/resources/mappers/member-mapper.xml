@@ -90,8 +90,11 @@
 	where member_nickname = #{nickname}
 </select>
 
-<update id="updateImage">
-
-</update>
+<insert id="insertImage">
+	insert all 
+	<foreach collection="list" item="item" separator=",">
+	into image values(,#{imgName},#{imgPath},#{imgRename},#{delimiter},#{buNo})
+	</foreach>
+</insert>
 	
 </mapper>

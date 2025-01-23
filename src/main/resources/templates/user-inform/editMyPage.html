@@ -24,21 +24,20 @@
         <div class="content-wrapper">
             <div class="container">
                 <div class="content">
-                    <form id="editForm" action = "/member/editMyPage" method="post" class="edit-form">
+                    <form id="editForm" action = "/member/editMyPage" method="post" class="edit-form" enctype="multipart/form-data">
                         <h1>내 정보 수정</h1>
                         
-                        <div class="info-section">
-                            <h2 class="section-title">기본 정보</h2>
-                            <div class="info-grid">
-                            
-                        
-                         <div class="profile-picture">
+		                        <div class="info-section">
+		                            <h2 class="section-title">기본 정보</h2>
+		                            <div class="info-grid">
+		             	
+		             			 <div class="profile-picture">
                          			<h4>프로필 사진 변경</h4>
-                                    <img id="profilePreview" src="/image/myinfo.png" alt="Profile Picture">
-                                    <input type="file" id="profilePicture" name="file">
+                                    <img id="profilePreview" src="/image/myinfo.png" alt="Profile Picture"> 
+    
+                                    <input type="file" id="file" name="file" accept=".jpg, .png">
                                     
-                                </div>
-                      
+                             	</div>  
                                 <div class="info-item">
                                     <label for="name">이름</label>
                                     <input type="text" id="memberName" name="memberName" th:value="${loginUser.memberName}" required>
@@ -100,6 +99,8 @@
                             </div>
                         </div>
                         
+                  
+                        
                         <button type="submit">수정 완료</button>
                     </form>
                 </div>
@@ -110,16 +111,29 @@
     <script th:lnline="javascript">
 
         
-
+	window.onload = () => {
+			
         	 document.getElementById('editForm').addEventListener('submit', e => {
-            	var newPassword = document.getElementById('newPassword').value;
-                var passwordConfirm = document.getElementById('password-confirm').value;
+            	const newPassword = document.getElementById('newPassword').value;
+                const passwordConfirm = document.getElementById('password-confirm').value;
                 
                 if (newPassword != passwordConfirm) {
                     e.preventDefault();
                     alert('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
                 }
+                
+//                 const files = document.getElementById('file');
+//                let isEmpty = true;
+//                for(const f of files) {
+//             	  	if(f.value != '') {
+//             	  		isEmpty = false;
+//             	  	}
+//                }
+       
             });
+        	 
+        
+        	 
 			
         	 document.getElementById('nickname').addEventListener('change',function() {
         		const nicknameResult = document.getElementById('nickNameCheck');
@@ -145,6 +159,7 @@
         	 });
         
         	
+	} 	
         	 
         
     </script>

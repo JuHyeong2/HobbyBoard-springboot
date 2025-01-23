@@ -41,6 +41,6 @@ public interface MemberMapper {
 
 	int checknickName(String nickname);
 
-	int updateImage(Member member);
+	int insertImage(Member member);
 
 }

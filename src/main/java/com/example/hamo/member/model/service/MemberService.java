@@ -83,8 +83,8 @@ public class MemberService {
 		return mMapper.checknickName(nickname);
 	}
 
-	public int updateImage(Member member) {
-		return mMapper.updateImage(member);
+	public int insertImage(Member member) {
+		return mMapper.insertImage(member);
 	}
 
 }
