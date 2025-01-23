@@ -4,7 +4,8 @@ import com.example.hamo.common.vo.PageInfo;
 
 public class Pagination {
 	public static PageInfo getPageInfo(int currentPage, int listCount, int boardLimit) {
-		int pageLimit = 10;
+		
+		int pageLimit = 5;
 		// currentPage 현재 페이지, listCount 전체 글 개수,
 		
 		// boardLimit 한 페이지에 들어갈 수 있는 글 개수

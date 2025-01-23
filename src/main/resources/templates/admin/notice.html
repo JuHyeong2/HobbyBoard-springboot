@@ -22,27 +22,25 @@
 			<div class="notice-list">
 				<div class="notice-item" th:each="a : ${list}">
 					<!-- 제목 50자 제한 -->
-					<h3>
-						제목 : <span
-							th:text="${#strings.length(a.title) > 20 ? #strings.substring(a.title, 0, 20) + '...' : a.title}"></span>
+					<h3>제목 : 	
+						<span th:text="${#strings.length(a.title) > 20 ? #strings.substring(a.title, 0, 20) + '...' : a.title}"></span>
 						<!-- plus-btn	을 제목 우측으로 배치 -->
 						<!-- plus-btn -->
-						<button class="plus-btn"
-							th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">⋮</button>
-
+<!-- 						<button class="plus-btn" -->
+<!-- 							th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">⋮</button> -->
 					</h3>
 
 					<!-- 수정 & 삭제 버튼을 위한 form -->
-					<form method="post" id="editDeleteForm">
-						<input type="hidden" name="id" th:value="${a.boardNo}" /> 
-						<input type="hidden" name="page" th:value="${pi.currentPage}" />
+					
+					<input type="hidden" name="id" th:value="${a.boardNo}" /> 
+					<input type="hidden" name="page" th:value="${pi.currentPage}" />
 
 						<!-- 옵션 메뉴 -->
-						<div class="options" style="display: none">
-							<button class="edit-btn" type="button">수정하기</button>
-							<button class="delete-btn" type="button">삭제하기</button>
-						</div>
-					</form>
+<!-- 						<div class="options" style="display: none"> -->
+<!-- 							<button class="edit-btn" type="button">수정하기</button> -->
+<!-- 							<button class="delete-btn" type="button">삭제하기</button> -->
+<!-- 						</div> -->
+					
 
 					<!-- 내용 100자 제한 -->
 					<p>
@@ -80,85 +78,21 @@
 		</ul>
 	</nav>
 	<script th:inline="javascript">
-	const plusButtons = document.querySelectorAll('.plus-btn');
 
-	for (const button of plusButtons) {
-	    button.addEventListener('click', (event) => {
-// 	        event.stopPropagation();  // 버튼 클릭 시 버블링 방지
-	        const noticeItem = button.closest('.notice-item');
-	        const options = noticeItem.querySelector('.options');
-	        
-	        // 옵션 메뉴의 표시 여부 토글
-	        if (options.style.display == "none" || options.style.display == "") {
-	            options.style.display = "block";
-	        } else {
-	            options.style.display = "none";
-	        }
-	    });
-	}
-
-	// 문서 전체에 클릭 이벤트 추가하여 다른 곳 클릭 시 메뉴 닫기
-	document.addEventListener('click', (event) => {
-	    const options = document.querySelectorAll('.options');
-	    for (const option of options) {
-	        // 클릭한 요소가 .plus-btn 또는 .options 내부가 아닐 때만 닫기
-	        if (!event.target.closest('.plus-btn') && !event.target.closest('.options')) {
-	            option.style.display = "none";
-	        }
-	    }
-	});
-
-
-		
-		
-		
-		document.querySelectorAll('.edit-btn').forEach(button => {
-		    button.addEventListener('click', function() {
-		        const form = this.closest('.notice-item').querySelector('form');  // 부모 중 .notice-item 내의 form 찾기
- 
-		        if (form) {
-		        	form.method = 'post';
-		            form.action = '/admin/edit';
-		            form.submit();
-		        } else {
-		            alert('폼을 찾을 수 없습니다!');
-		        }
-		    });
-		});
-
-		const buttons = document.querySelectorAll('.delete-btn');
-		for (const button of buttons) {
-		    button.addEventListener('click', function() {
-		        const form = button.closest('.notice-item').querySelector('form');  // .notice-item 내의 form 찾기
-				const isConfirmed = confirm('공지사항을 삭제하시겠습니까?');
-		        if(isConfirmed) {
-		        if (form) {
-		            form.action = '/admin/delete';
-		            form.submit();
-		        }
-		    }
-		});
-	}
 
 
 
 		// 상세보기
-		const mainView = document.getElementsByClassName('notice-list');
-
-			for(const list of mainView) {
-				list.addEventListener('mouseenter', () => {
-				list.style.cursor = 'pointer';
-			});
-    
-    			list.addEventListener('mouseleave', () => {
-        		list.style.backgroundColor = '';
-        		list.style.border = '';
-        		list.style.cursor = '';
-			});
-		}
-	
-	 
-	
+    			const boardNo = document.querySelector('.notice-item').children[1].value;
+// 				console.log(boardNo);
+    			const page = document.querySelector('.notice-item').children[2].value;
+    			const mainView = document.getElementsByClassName('notice-list');
+    			console.log(mainView);
+    			for(const list of mainView) {
+	    			list.addEventListener('click', () => {
+	    				location.href ='/board/' + boardNo + '/' + page;
+	    			});
+    			}
 	</script>
 
 

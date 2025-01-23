@@ -1,5 +1,6 @@
 package com.example.hamo.board.model.service;
 
+
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
