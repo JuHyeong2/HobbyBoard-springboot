@@ -58,6 +58,11 @@
     		form.submit();
     		
     	});
+    	
+    	document.getElementById('delete-btn').addEventListener('click', () => {
+    		form.action = '/admin/delete';
+    		form.submit();
+    	});
     </script>
 </body>
 </html>

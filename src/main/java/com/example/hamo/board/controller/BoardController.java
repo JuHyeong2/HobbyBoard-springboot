@@ -1,6 +1,6 @@
 package com.example.hamo.board.controller;
 
-import java.awt.Image;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,6 +23,7 @@ import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.board.model.service.BoardService;
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.board.model.vo.Reply;
 import com.example.hamo.common.Pagination;
 import com.example.hamo.common.vo.PageInfo;

@@ -68,7 +68,8 @@
 		select *
 		from reply r
 			join member m on (r.member_no = m.member_no)
-		where board_no = #{bNo}
+		where board_no = #{bNo} 
+		order by reply_no 
 	</select>
 
 </mapper>
