@@ -1,15 +1,12 @@
 package com.example.hamo.member.controller;
 
-<<<<<<< HEAD
+
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-=======
-
-import java.util.ArrayList;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import java.util.HashMap;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,14 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.hamo.board.model.vo.Board;
-=======
-
 import com.example.hamo.common.util.EmailCertificationUtil;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import com.example.hamo.common.util.SmsCertificationUtil;
 import com.example.hamo.member.model.service.MemberService;
 import com.example.hamo.member.model.vo.Member;
@@ -47,16 +40,10 @@ public class MemberController {
 	private final MemberService mService;
 	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
-<<<<<<< HEAD
-	
-	// 로그인 화면으로 가는 메서드
-	@GetMapping("/member/login")
-=======
 	private final EmailCertificationUtil emailUtil;
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")	
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	public String loginView() {
 		
 		return "member/login";
@@ -72,38 +59,11 @@ public class MemberController {
 //			session.setAttribute("loginUser", loginUser);
 			System.out.println(session.getAttribute("loginUser"));
 			System.out.println("success");
-<<<<<<< HEAD
-=======
 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 			return "success";
 		}else {
 			return "fail";
 		}
-<<<<<<< HEAD
-	}
-
-//	public String login(@ModelAttribute("Member") Member m, Model model) {
-//		Member loginUser = mService.login(m);
-//		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-//			model.addAttribute("loginUser", loginUser);
-//			return "success";
-//		}else {
-//			return "fail";
-//		}
-//	}
-
-	
-	@GetMapping("/member/logout")
-	public String logOut(SessionStatus session) {
-		session.setComplete();
-		
-		return "redirect:/";
-	}
-	
-	
-	// Home으로 가는 모든 버튼
-=======
 	}
 	
 
@@ -137,7 +97,6 @@ public class MemberController {
 		return "index";
 	}
 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 //	@GetMapping("/home")
 //	public String home() {
 //		ArrayList<Board> list = bService.selectBoardList();
@@ -147,10 +106,7 @@ public class MemberController {
 //		
 //		return "index";
 //	}
-<<<<<<< HEAD
-=======
 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/member/signUp")
@@ -177,20 +133,17 @@ public class MemberController {
 		
 		return certificationCode;
 	}
-<<<<<<< HEAD
-=======
 
 		
-	
-	@PostMapping("/member/sendEmail")
-	@ResponseBody
-	public String sendEmail(@RequestParam("email") String email) {
-		System.out.println("email : " + email);
-		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
-		emailUtil.sendEmail(email, certificationCode);
-		return certificationCode;
-	}
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
+//	
+//	@PostMapping("/member/sendEmail")
+//	@ResponseBody
+//	public String sendEmail(@RequestParam("email") String email) {
+//		System.out.println("email : " + email);
+//		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+//		emailUtil.sendEmail(email, certificationCode);
+//		return certificationCode;
+//	}
 	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
@@ -203,18 +156,12 @@ public class MemberController {
 	
 	@PostMapping("/member/findId")
 	@ResponseBody
-<<<<<<< HEAD
-	public Member findId(@RequestParam("phone") int phone) {
-//		System.out.println(userId);
-		Member m = mService.findId(phone);
-=======
 	public Member findId(@RequestParam("value") String value, @RequestParam("column") String column) {
 //		System.out.println(userId);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("column", "member_" + column);
 		map.put("value", value);
 		Member m = mService.findId(map);
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 		System.out.println(m.getMemberId());
 		return m;
 	}
@@ -233,8 +180,6 @@ public class MemberController {
 		model.addAttribute("loc", request.getRequestURI());
 		System.out.println(model.getAttribute("loc").toString());
 		return "member/findPwd";
-<<<<<<< HEAD
-=======
 	}
 	
 	// 새 비밀번호 페이지로 이동
@@ -249,90 +194,114 @@ public class MemberController {
 		m.setMemberPwd(bcrypt.encode(m.getMemberPwd()));
 		int result = mService.updatePwd(m);
 		return "member/login";
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	}
 	
+
 	// 내 정보 페이지로 이동
-	
 	@GetMapping("/member/myPage")
 	public String myPage(HttpSession session, Model model) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		if(loginUser != null) {
-			model.addAttribute("loginUser", loginUser);
-		}	
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/member/login";
+		}
+		
+		Member updatedMember = mService.selectMember(loginUser.getMemberId());
+		if (updatedMember == null) {
+			return "redirect:/error";
+		}
+		
+		model.addAttribute("m", updatedMember);
 		return "user-inform/myPage";
 	}
-
-
 	
-	
-	// 내 정보 수정 페이지로 이동 
+	// 내 정보 수정 페이지로 이동
 	@GetMapping("/member/editMyPage")
 	public String editMyPage(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser == null) {
 			return "redirect:/member/login";
 		}
-		model.addAttribute("m", loginUser);
+		model.addAttribute("loginUser", loginUser);
 		return "user-inform/editMyPage";
 	}
-<<<<<<< HEAD
-		
 	
 	@PostMapping("/member/editMyPage")
-    public String updateMember(@ModelAttribute Member member, @RequestParam(value="newPassword",required=false) String newPassword, HttpSession session,Model model) {
+    public String updateMember(@RequestParam("file") ArrayList<MultipartFile> files, @ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/login";
-        }
-        
-        if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
-        	member.setMemberName(loginUser.getMemberName());
-        }
-        if (member.getMemberBirth() == null) {
-        	member.setMemberBirth(loginUser.getMemberBirth());
-        }
-        if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
-        	member.setMemberGender(loginUser.getMemberGender());
-        }
-        if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
-        	member.setMemberNickname(loginUser.getMemberNickname());
-        }
-        if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
-        	member.setMemberEmail(loginUser.getMemberEmail());
-        }
-        if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
-        	member.setMemberPhone(loginUser.getMemberPhone());
+            return "redirect:/member/login";
         }
 
-        member.setMemberId(loginUser.getMemberId());
+      
+        for(int i=0; i< files.size(); i++) {
+          	MultipartFile upload = files.get(i);
+          	if(!upload.getOriginalFilename().equals("")) {
+          		String[] returnArr = saveFile(upload);
+          		if(returnArr[1] != null) {	
+          		}
+          	}
+          }
+          
+          int result = mService.updateImage(member);
 
+      member.setMemberId(loginUser.getMemberId());
         
-        
-        
+      
+
         if (newPassword != null && !newPassword.isEmpty()) {
-            member.setMemberPwd(bcrypt.encode(newPassword));
-        }else {
+        	member.setMemberPwd(bcrypt.encode(newPassword));
+        } else {
         	member.setMemberPwd(loginUser.getMemberPwd());
         }
 
-        int result = mService.updateMember(member);
-        if (result > 0) {
-            Member updatedMember = loginUser;
-            model.addAttribute("loginUser", updatedMember);
+        boolean updated = mService.updateMember(member);
+        if (updated) {
+            Member updatedMember = mService.selectMember(loginUser.getMemberId());
+            session.setAttribute("loginUser", updatedMember);
+            
+            System.out.println("1111111111111" + updatedMember);
+            System.out.println("22222222222222" + loginUser);
+            System.out.println("#333333333333333" + member);
+            
             return "redirect:/member/myPage";
         } else {
-            return "user-inform/editMyPage";
+            return "redirect:/member/editMyPage";
         }
-			
+        
+    
     }
+	
+	
+	
+	
+	
+	// 이미지 파일 저장
+	public String[] saveFile(MultipartFile upload) {
+		String savePath = "c:\\imgFiles";
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int)(Math.random()*100000);
+		String originalFileName = upload.getOriginalFilename();
+		String renameFileName = sdf.format(new Date()) + ranNum + originalFileName.substring(originalFileName.lastIndexOf("."));
+		
+		String renamePath = folder + "\\" + renameFileName;
+		try {
+			upload.transferTo(new File(renamePath));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		String[] returnArr = new String[2];
+		returnArr[0] = savePath;
+		returnArr[1] = renameFileName;
+		
+		return returnArr;
+	}
 
-	
-	
-//	@GetMapping("/member/checkPwd")
-//	public String checkPwd() {
-//		return "user-inform/checkPwd";
-//	}
 	
 	
 //	//비밀번호 확인 페이지로 이동
@@ -363,6 +332,7 @@ public class MemberController {
 	}
 	
 	
+	
 	//내가 참여한 활동 페이지로 이동
 	@GetMapping("/member/myactivite")
 	public String myActivite(HttpSession session,Model model) {
@@ -391,71 +361,38 @@ public class MemberController {
 		}
 		
 		ArrayList<Board> list = mService.selectMyPost(loginUser.getMemberId());
-		HashMap<Integer,ArrayList<Member>> map = new HashMap<>();
+		HashMap<Integer,ArrayList<Member>> participantsMap = new HashMap<>();
 		
 		for(Board board : list) {
 			ArrayList<Member> participants = mService.participants(board.getBoardNo());
-			map.put(board.getBoardNo(), participants);
-			
+			participantsMap.put(board.getBoardNo(), participants);
 		}
 		
+//		System.out.println("posts : " + list.size());
+//		for(Board board : list) {
+//			System.out.println("board22 : " + board);
+//		}
 		model.addAttribute("list", list);
-		model.addAttribute("map", map);
+		model.addAttribute("participantsMap", participantsMap);
 		model.addAttribute("count", list.size());
-		
-		System.out.println("list : " +list);
-		System.out.println("map : " +map);
-		System.out.println("listsize : " +list.size());
-		
 		return "user-inform/mypost";
 	}
-	
+	// 참가자 목록 수락, 거절 
 	@PostMapping("/member/handleParticipant")
 	@ResponseBody
 	public String handleParticipant(@RequestParam("action") String action,
             @RequestParam("boardNo") int boardNo,
-            @RequestParam("participantId") String participantId) {
+            @RequestParam("participantId") int participantId) {
 		
 		boolean result = mService.handleParticipant(action,boardNo,participantId);
+		
 		return result ? "success" : "fail";
 	}
 	
-	@PostMapping("")
-	public void insertProfile( HttpSession session,@RequestParam("file") ArrayList<MultipartFile> files) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-			for(int i=0; i < files.size(); i++) {
-				MultipartFile upload = files.get(i);
-				if(!upload.getOriginalFilename().equals("")) {
-					 String[] returnArr = saveFile(upload);
-					 if(returnArr[1] != null) {
-						 
-					 }
-				}
-			}
-		
+	
+	@GetMapping("/member/checknickName")
+	public void checknickName(@RequestParam("nickname") String nickname,PrintWriter out) {
+		int count = mService.checknickName(nickname);
+		out.print(count);
 	}
-	public String[] saveFile(MultipartFile upload) {
-		String savePath ="c:\\imageFiles";
-		File folder = new File(savePath);
-		if(!folder.exists()) {
-			folder.mkdir();
-		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHssSSS");
-		int ranNum = (int)(Math.random()*100000);
-		String imgName = upload.getOriginalFilename();
-		String imgRename = sdf.format(new Date()) + ranNum + imgName.substring(imgName.lastIndexOf('.'));
-		String renamePath = folder + "\\" + imgRename;
-		try {
-			upload.transferTo(new File(renamePath));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		String[] returnArr = new String[2];
-		returnArr[0] = savePath;
-		returnArr[1] = imgRename;
-		return returnArr;
-	}
-=======
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 }

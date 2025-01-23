@@ -20,9 +20,6 @@
 		where board_no = #{boardNo}
 	</select>
 	
-<<<<<<< HEAD
-	
-=======
 
 	<insert id="boardInsert">
 		insert into board
@@ -42,5 +39,4 @@
 		where board_no=#{boardNo}
 	</update>
 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 </mapper>

@@ -32,10 +32,6 @@
 	</section>
 	<main>
 		<h2>나를 기다리는 하모</h2>
-<<<<<<< HEAD
-		<form method="get" action="board/boardDetails" id="myform">
-=======
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 			<section class="board-grid">
 				<div class="board-item" th:each="b : ${list}">
 					<div class="board-img"><img alt="board-img" src="image/park.jpg"></div>
@@ -44,20 +40,11 @@
 						<p class="board-name">[[${b.title}]]</p>
 						<p class="board-details">[[${b.categoryName}]] | [[${b.locationName}]] 지역 |
 							[[${b.maxParticipants}]]/10</p>
-<<<<<<< HEAD
-						<input type="hidden" name="boardNo" value="1">
-					</div>
-				</div>
-				<!-- Repeated board-item divs -->
-			</section>
-		</form>
-=======
 						<input type="hidden" name="boardNo" th:value="${b.boardNo}">
 					</div>
 				</div>
 			</section>
 <!-- 		</form> -->
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 		<br />
 	</main>
 
@@ -71,14 +58,10 @@
 	
 			for (const div of board) {
 				div.addEventListener('click', () => {
-<<<<<<< HEAD
-					form.submit(); // 폼 제출
-=======
 					console.log(div.querySelectorAll('input'));
 					const bNo = div.querySelectorAll('input')[0].value;
 					console.log(bNo);
 					location.href = "/board/" + bNo;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 				});
 			}
 		};
@@ -86,4 +69,3 @@
 	</script>
 </body>
 </html>
-

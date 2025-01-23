@@ -15,19 +15,6 @@
 	<div class="header">
 		<h1>NOTICE</h1>
 
-<<<<<<< HEAD
-        <!-- 공지 목록 및 공지 작성 -->
-        <div class="content-wrapper">
-            <!-- 공지 목록 -->
-            <div class="notice-list">
-                <div class="notice-item" th:each="a : ${list}">
-                    <h3>제목 : [[${a.title}]]</h3>
-                    <p>내용 : [[${a.content}]]</p>
-                    <p>작성자 : [[${a.writer}]]| 작성일: [[${a.createDate}]]</p>
-                </div>
-                <!-- 추가적인 공지 항목들 -->
-            </div>
-=======
 		<!-- 공지 목록 및 공지 작성 -->
 		<div class="content-wrapper">
 			<!-- 공지 목록 -->
@@ -44,7 +31,6 @@
 							th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">⋮</button>
 
 					</h3>
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
 					<!-- 수정 & 삭제 버튼을 위한 form -->
 					<form method="post" id="editDeleteForm">

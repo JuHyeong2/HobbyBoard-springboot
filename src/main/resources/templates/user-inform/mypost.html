@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 쓴 게시글</title>
     <link rel="stylesheet" href="/css/user_inform/user.css">
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <header id="top">
@@ -25,8 +25,8 @@
                         <span class="post-count" th:text="'총 ' + ${count} + ' 건'"></span>
                     </h1>
                     
-                    <div class="post" th:each="p : ${list}">
-                        <div class="post-header" th:onclick="toggleParticipants([[${p.boardNo}]])" >
+                    <div class="post" th:each="p : ${list}"th:id="'post-' + ${p.boardNo}" th:onclick="toggleParticipants([[${p.boardNo}]])" >
+                        <div class="post-header">
                             <div>
                                 <div class="post-title" th:text="${p.title}"></div>
                                 <div class="post-description" th:text="${p.content}"></div>
@@ -39,20 +39,22 @@
                                 <span class="post-location" th:text ="${p.locationName}"></span>
                             </div>
                             <span class="post-date" th:text="${p.createDate}"></span>
-                        </div> 
+                        </div>
                        
                         
-                        <div class="participants" id = "participants" th:each="pa : ${map.get(p.boardNo)}">
-                            <div class="participant" >
+                 <div class="participants" th:id="'participants-' + ${p.boardNo}" style="display:none;">
+                            <div class="participant" th:each="pa : ${participantsMap.get(p.boardNo)}">
                                 <div class="participant-info">
-                                    <p><strong>이름</strong><span th:text="${pa.memberName}"></span></p>
-<!--                                     <p><strong>자기소개</strong></p> -->
-                                    <p><strong>성별</strong><span th:text="${pa.memberGender == 'M' ? '남자' : '여자'}"></span></p>
-                                    <p><strong>생년월일</strong><span th:text="${pa.memberBirth}"></span></p>
+                                    <p><strong>이름:</strong> <span th:text="${pa.memberName}"></span></p>
+                                    <p><strong>성별:</strong> <span th:text="${pa.memberGender == 'M' ? '남자' : '여자'}"></span></p>
+                                    <p><strong>생년월일:</strong> <span th:text="${pa.memberBirth}"></span></p>
                                 </div>
                                 <div class="participant-actions">
-                                    <button class="accept-btn" th:onclick="handleParticipant('a',[[${p.boardNo}]],[[${pa.memberNo}]])">수락</button>
-                                    <button class="reject-btn" th:onclick="handleParticipant('r',[[${p.boardNo}]],[[${pa.memberNo}]])">거절</button>
+                                <button th:onclick="handleParticipant(event, 'a', [[${p.boardNo}]], [[${pa.memberNo}]])" class="accept-btn">수락</button>
+                    			<button th:onclick="handleParticipant(event, 'r', [[${p.boardNo}]], [[${pa.memberNo}]])" class="reject-btn">거절</button>
+                                </div>
+                                
+                                
                                 </div>
                             </div>
                         </div>
@@ -66,23 +68,27 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 
 
 <script th:inline="javascript">
-const toggleParticipants = (boardNo) => {	
-    const participants = document.getElementById('participants');
-    const allParticipants = document.querySelector('.participants');
-    allParticipants.forEach( b => {
-    	b.style.display = 'none';
-    })
-    participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
+const toggleParticipants = (boardNo) => {
+    const participants = document.getElementById('participants-' + boardNo);
+    if (participants.style.display === 'none' || participants.style.display === '') {
+        participants.style.display = 'block';
+    } else {
+        participants.style.display = 'none';
+    }
 }
+//     participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
 
-const handleParticipant = (action, boardNo, participantId) => {
+
+const handleParticipant = (event,action, boardNo, participantId) => {
+	event.preventDefault();
+	event.stopPropagation();
     $.ajax({
         url: '/member/handleParticipant',
-        type:'post',
+		type : 'post',
         data: {
             action: action,
             boardNo: boardNo,
@@ -92,13 +98,26 @@ const handleParticipant = (action, boardNo, participantId) => {
             if (data == 'success') {
                 alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
                 location.reload();
-            	
+
+// 				const participantElement = document.getElementById("participant-" + participantId)
+// 				if (participantElement) {
+// 				  participantElement.remove()
+// 				}	
+				
+// 				// Check and hide the participants list if empty
+// 				const participantsList = document.getElementById("participants-" + boardNo)
+// 				if (participantsList) {
+// 				  if (participantsList.children.length === 0) {
+// 				    participantsList.style.display = "none"
+// 				  }
+// 				}
+
             } else {
                 alert('처리 중 오류가 발생했습니다.');
             }
         },
         error: data => {
-           console.log(data)
+            alert('서버 오류가 발생했습니다.');
         }
     });
 }
@@ -154,3 +173,4 @@ const handleParticipant = (action, boardNo, participantId) => {
 <div th:insert = "common/footer.html"></div>
 </body>
 </html>
+

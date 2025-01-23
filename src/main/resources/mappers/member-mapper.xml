@@ -19,32 +19,25 @@
 		where member_id = #{memberId}
 	</select>
 	
-<<<<<<< HEAD
-	<select id="findId">
+	<select id="findId" parameterType="hashMap">
 		select *
 		from member
-		where member_phone = #{phone}
-	</select>
-
-	<select id="selectMember">
-		select *
-		from member 
-		where member_id = #{memberId} and status = 'Y'
+		where ${column} = #{value}
 	</select>
 	
-<!-- 	<update id="updateMember"> -->
-<!-- 		update member  -->
-<!-- 		set member_name = #{memberName},member_pwd = #{memberPwd}, member_birth = #{memberBirth}, member_gender = #{memberGender}, -->
-<!-- 			member_phone = #{memberPhone}, member_email = #{memberEmail}, member_nickname = #{memberNickname} -->
-<!-- 			where member_id = #{memberId} -->
-			
-<!--  			<if test="password != null and password != ''"> --> 
-<!--  				,member_pwd = #{password} --> 
-<!-- 			</if> -->
-<!-- 			member_pwd = #{password} -->
-					
-<!-- 	</update> -->
+	<update id="updatePwd">
+		update member
+		set member_pwd = #{memberPwd}
+		where member_id = #{memberId}
+	</update>
 
+
+	<select id="selectMember" resultType ="Member">
+		select *
+		from member 
+		where member_id = #{id} and status = 'Y'
+	</select>
+	
 	<select id="selectMyActivite" resultType="Board">
 		select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name
 		from board b
@@ -75,38 +68,30 @@
 	<update id="accept">
 		update participant
 		set status = 'a'
-		where board_no = #{boardNo} and member_no = #{memberNo}
+		where board_no = #{boardNo} and member_no = #{participantId}
 	</update>
 	
 	<update id="reject">
 		update participant
 		set status = 'r'
-		where board_no = #{boardNo} and member_no = #{memberNo}
+		where board_no = #{boardNo} and member_no = #{participantId}
 	</update>
-
-<!-- 	<select id="memberId" resultType="Member"> -->
-<!--         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} -->
-<!--     </select> -->
-
-
+	
 	<update id="updateMember">
 	update member
 	set member_name = #{memberName}, member_birth = #{memberBirth}, member_gender = #{memberGender}, member_nickname = #{memberNickname},
 		member_email = #{memberEmail}, member_phone = #{memberPhone},member_pwd = #{memberPwd}
 	where member_id = #{memberId}	
     </update>
-=======
-	<select id="findId" parameterType="hashMap">
-		select *
-		from member
-		where ${column} = #{value}
-	</select>
-	
-	<update id="updatePwd">
-		update member
-		set member_pwd = #{memberPwd}
-		where member_id = #{memberId}
-	</update>
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 
+<select id="checknickName">
+	select count(*)
+	from member
+	where member_nickname = #{nickname}
+</select>
+
+<update id="updateImage">
+
+</update>
+	
 </mapper>

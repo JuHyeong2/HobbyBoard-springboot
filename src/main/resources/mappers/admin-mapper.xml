@@ -7,19 +7,12 @@
 		#{content}, default, default, default, default, #{writer})
 	</insert>
 	
-<<<<<<< HEAD
-	<select id="selectNoticeList" resultType="Admin">
-		select * 
-=======
 	<select id="getListCount" resultType="_int">
 		select count(*)
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 		from admin_board
 		where admin_board_status = 'Y'
 	</select>
 	
-<<<<<<< HEAD
-=======
 	<select id="selectNoticeList" resultType="Admin">
 		select board_no, title, content, a.create_date, a.update_date, views, admin_board_status, writer, member_nickname
 		from admin_board a
@@ -73,5 +66,4 @@
 			 join member m using(member_no)
 		where board_status='Y'
 	</select>
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 </mapper>

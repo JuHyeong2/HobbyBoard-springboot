@@ -35,8 +35,4 @@ public class SmsCertificationUtil {
 
         this.messageService.sendOne(new SingleMessageSendingRequest(message)); // 메시지 발송 요청
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

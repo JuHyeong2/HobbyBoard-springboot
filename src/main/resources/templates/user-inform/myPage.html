@@ -25,25 +25,33 @@
                         <div class="info-grid">
                         
                         	<div class="profile-picture">
-                        		
+                        	<h4>프로필 이미지</h4>
+                        		<img alt="profile-img" src="/image/myinfo.png">
                         	</div>
-                        
+<!--                         	<div class="info-item"> -->
+<!--                                 <label for="img">프로필 사진</label> -->
+<!--                                 <input type=image id="image" name="image" src = "/image/profile1.png"readonly> -->
+<!--                             </div> -->
                         
                             <div class="info-item">
                                 <label for="name">이름</label>
-                                <input type="text" id="name" name="name" th:value="${loginUser.memberName}" readonly>
+                                <input type="text" id="name" name="memberName" th:value="${m.memberName}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" th:value="${loginUser.memberBirth}" readonly>
+                                <input type="text" id="birthdate" name="memberBirth" th:value="${m.memberBirth}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="id">아이디</label>
-                                <input type="text" id="id" name="id" th:value="${loginUser.memberId}" readonly>
+                                <input type="text" id="id" name="memberId" th:value="${m.memberId}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="gender">성별</label>
-                                <input type="text" id="gender" name="gender" th:value="${loginUser.memberGender == 'M' ? '남자' : '여자'}" readonly>
+                                <input type="text" id="gender" name="memberGender" th:value="${m.memberGender == 'M' ? '남자' : '여자'}" readonly>
+                            </div>
+                            <div class="info-item">
+                                <label for="nickname">닉네임</label>
+                                <input type="text" id="nickname" name="memberNickname" th:value="${m.memberNickname}" readonly>
                             </div>
 <!--  							<div class="info-item"> -->
 <!--    							 <label for="gender">성별</label> -->
@@ -62,16 +70,13 @@
                         <div class="info-grid">
                             <div class="info-item">
                                 <label for="email">이메일</label>
-                                <input type="email" id="email" name="email" th:value="${loginUser.memberEmail}" readonly>
+                                <input type="email" id="email" name="memberEmail" th:value="${m.memberEmail}" readonly>
                             </div>
                             <div class="info-item">
                                 <label for="phone">휴대폰 번호</label>
-                                <input type="tel" id="phone" name="phone" th:value="${loginUser.memberPhone}" readonly>
+                                <input type="tel" id="phone" name="memberPhone" th:value="${m.memberPhone}" readonly>
                             </div>
-                            <div class="info-item">
-                                <label for="nickname">닉네임</label>
-                                <input type="text" id="nickname" name="nickname" th:value="${loginUser.memberNickname}" readonly>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -86,7 +91,7 @@
                     </div>
 
                     <div class="button-container">
-                        <form action="/member/checkPwd" method="get">
+                        <form action="/member/checkPwd" method="post">
                             <button type="submit" class="edit-button">정보 수정하기</button>
                         </form>
                     </div>

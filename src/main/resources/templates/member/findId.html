@@ -25,10 +25,6 @@
 	                    <input class="input-find" type="text" id="nameEmail" placeholder="이름을 입력하세요">
 	                </div>
 	                <div class="form-group">
-<<<<<<< HEAD
-	                    <label for="email">이메일</label>
-	                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
-=======
 	                	<label for="email">이메일</label>
 	                	<div class="phone-group">
 		                    <input class="input-find" type="email" id="email" placeholder="이메일을 입력하세요">
@@ -41,7 +37,6 @@
 	                    	<input class="input-find" type="text" id="checkemail" placeholder="인증번호를 입력하세요">
 	                    	<button type="button" id="emailButton2" class="button" disabled>확인</button>
 	                    </div>
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	                </div>
 	                <button class="button-find" type="button" id="emailSubmit">아이디 찾기</button>
 	            </form>
@@ -79,15 +74,9 @@
 	        <span class="close-button" id="closeModal">&times;</span>
 	        <h2>아이디 찾기 성공</h2>
 	        <p>회원님의 아이디는 <strong id="userId">example_id</strong> 입니다.</p>
-<<<<<<< HEAD
-	        <div class="phone-group">
-		        <button type="button" id="smsButton3" class="button">로그인</button>
-		        <button type="button" id="smsButton3" class="button">비밀번호 찾기</button>
-=======
 	        <div class="findidButton">
 		        <button type="button" class="button" onclick='location.href="/member/login"'>로그인</button>
 		        <button type="button" class="button" onclick='location.href="/member/findPwd"'>비밀번호 찾기</button>
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 	        </div>
 	    </div>
 	</div>
@@ -110,11 +99,8 @@
                 document.getElementById('phoneTab').classList.add('active');
             }
         }
-<<<<<<< HEAD
-=======
         
         // 휴대폰 인증번호 전송 버튼 클릭 시 인증번호 비동기로 전송
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
         let idCheck = false;
         document.getElementById('smsButton').addEventListener('click', ()=>{
 			const phone = document.getElementById('phone').value;
@@ -129,11 +115,7 @@
 						console.log(data);
 						if(data != null && data != ''){
 							document.getElementById('smsButton2').disabled = false;
-<<<<<<< HEAD
-							let startMin = 1;
-=======
 							let startMin = 5;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 							let startSec = 0;
 							const timer = setInterval(()=>{
 								document.getElementById('time').innerText = startMin + ":" + startSec;
@@ -153,11 +135,7 @@
 								}
 							}, 1000)	
 							
-<<<<<<< HEAD
-							document.getElementById('time').innerText = 
-=======
 							
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 							document.getElementById('smsButton2').addEventListener('click', ()=>{
 								const certificationNum = document.getElementById('checkphone').value;
 								if(certificationNum == data){
@@ -165,10 +143,7 @@
 									idCheck = true;
 								}else{
 									alert('인증번호가 다릅니다.');
-<<<<<<< HEAD
-=======
 									idCheck = false;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 								}
 							})
 						}
@@ -177,15 +152,6 @@
 			}
 		})
 		
-<<<<<<< HEAD
-		document.getElementById('phoneSubmit').addEventListener('click', ()=>{
-			if(idCheck){
-				const phone = document.getElementById('phone').value;
-				$.ajax({
-					url: '/member/findId',
-					type: 'POST',
-					data: {phone: phone},
-=======
 		// 휴대폰으로 아이디찾기 버튼 클릭 시
 		document.getElementById('phoneSubmit').addEventListener('click', (e)=>{
 			findId('phone');
@@ -204,7 +170,6 @@
 					url: '/member/findId',
 					type: 'POST',
 					data: {value: val, column: tab},
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 					success: data=>{
 						console.log(data);
 						if(data != null){
@@ -218,12 +183,6 @@
 					}
 				})
 			}else alert('이름, 휴대폰번호를 확인해 주세요.');
-<<<<<<< HEAD
-
-		})
-		
-		smsButton3
-=======
 		}
 		
 		// 이메일 인증번호 전송 버튼 클릭 시 인증번호 비동기로 전송
@@ -255,7 +214,6 @@
 				})
 			}
 		})
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
     </script>
 </body>
 </html>

@@ -1,17 +1,12 @@
 package com.example.hamo.member.model.mapper;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
-
-import org.apache.ibatis.annotations.Mapper;
-
-import com.example.hamo.board.model.vo.Board;
-=======
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
+import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.member.model.vo.Member;
 
 @Mapper
@@ -23,37 +18,29 @@ public interface MemberMapper {
 
 	Member login(Member m);
 
-<<<<<<< HEAD
-	Member findId(int phone);
+	Member findId(HashMap<String, String> map);
 
+	int updatePwd(Member m);
+
+	
 	Member selectMember(String id);
-
-//	int updateMember(Member m);
-
+	
 	ArrayList<Board> selectMyActivite(String id);
 
 	ArrayList<Board> selectMyPost(String memberId);
 
 	int updateMember(Member member);
 
-//	Member memberId(String memberId);
+	Member memberId(String memberId);
 
-	boolean accept(int boardNo, String participantId);
+	int accept(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
 
-	boolean reject(int boardNo, String participantId);
+	int reject(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
 
 	ArrayList<Member> participants(int boardNo);
 
-	
+	int checknickName(String nickname);
 
-//	String checkPwd(String memberId);
-
-
-}
-=======
-	Member findId(HashMap<String, String> map);
-
-	int updatePwd(Member m);
+	int updateImage(Member member);
 
 }
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

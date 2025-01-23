@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
-<<<<<<< HEAD
-=======
 import com.example.hamo.admin.model.vo.Admin;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 import com.example.hamo.board.model.vo.Board;
 
 @Mapper
@@ -17,9 +14,6 @@ public interface BoardMapper {
 
 	Board selectBoard(int boardNo);
 
-<<<<<<< HEAD
-}
-=======
 
 	int boardInsert(Board b);
 
@@ -29,4 +23,3 @@ public interface BoardMapper {
 
 
 }
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba

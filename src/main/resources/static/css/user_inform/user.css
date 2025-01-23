@@ -193,6 +193,35 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+           
+        }
+        .info-item1 {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+           margin-top: 30px;
+        }
+        
+        .profile-picture {
+        	display: flex;
+            flex-direction: column;
+            height : 150px;
+            width : 150px;
+/*             gap: 0.5rem; */
+        }
+        input[type="file"] {
+       		 height: 44px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+           
+            color: #495057;
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+        h4 {
+        font-size: 14px;
+            font-weight: 500;
+            color: #868e96;
         }
 
         label {

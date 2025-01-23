@@ -19,8 +19,4 @@ public class PageInfo {
 	private int startPage;
 	private int endPage;
 	private int boardLimit;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
