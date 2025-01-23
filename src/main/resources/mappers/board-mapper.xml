@@ -22,8 +22,21 @@
 	
 
 	<insert id="boardInsert">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+			select seq_board.nextval from dual
+		</selectKey>
 		insert into board
-		values(seq_board.nextval, #{title}, #{content}, default, default, default, #{maxParticipants}, default, #{memberNo}, #{locationNo}, #{categoryNo})
+		values(#{boardNo}, #{title}, #{content}, default, default, default, #{maxParticipants}, default, #{memberNo}, #{locationNo}, #{categoryNo})
+	</insert>
+	
+	
+	<insert id="imageInsert">
+		insert all
+		<foreach collection="list" item="image" separator=" " index="i"> 
+			into image
+			values(new_iid, #{image.imgName}, #{image.imgPath}, #{image.imgRename}, #{image.delimiter}, #{image.buNo})
+		</foreach>
+		select * from dual
 	</insert>
 	
 
@@ -33,10 +46,29 @@
 		where admin_board_status='Y' and
 			  board_no=#{boardNo}		  
 	</select>
+	
 	<update id="updateNoticeCount">
 		update admin_board
 		set views = views+1
 		where board_no=#{boardNo}
 	</update>
+	
+	<select id="selectImageList">
+		select *
+		from image
+		where bu_no = #{bNo}
+	</select>
+	
+	<insert id="insertReply">
+		insert into reply
+		values(seq_reply.nextval, default, #{replyContent}, default, default, #{memberNo}, #{boardNo})
+	</insert>
+	
+	<select id="selectReplyList">
+		select *
+		from reply r
+			join member m on (r.member_no = m.member_no)
+		where board_no = #{bNo}
+	</select>
 
 </mapper>

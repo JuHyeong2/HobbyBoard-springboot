@@ -14,72 +14,77 @@
 <body>
 
 	<div th:insert="common/top.html"></div>
-
+	
     <div class="editor-header">
         <h2>모임 만들기</h2>
         <div class="editor-actions">
+        	<span class="attachment-add">
+        		<label id="fileInput" class="file-upload-label">
+        			<img src="/image/addImage.png" width="50px">
+        		</label>
+        	</span>
 	        <button id="submitButton" class="submit-button">등록</button>
         </div>
     </div>
 
-	<form id="form" method="post" action="/board/boardInsert" >
+	<form id="form" method="post" action="/board/boardInsert" enctype="multipart/form-data">
+		<div id="inputDiv">
+			<input type="file" name="file">
+		</div>
 		<div class="title-section">
+			<div class="horizon">
+				<select name="categoryNo" class="category-select">
+				    <option selected>모임의 종류를 입력하세요.</option>
+				    <option value="1">스포츠/운동</option>
+				    <option value="2">공예/DIY</option>
+				    <option value="3">미술/그림</option>
+				    <option value="4">음악</option>
+				    <option value="5">요리/베이킹</option>
+				    <option value="6">게임</option>
+				    <option value="7">영화/드라마</option>
+				    <option value="8">여행</option>
+				    <option value="9">자연/식물</option>
+				    <option value="11">책/문학</option>
+				    <option value="12">심리/자기계발</option>
+				    <option value="13">IT</option>
+				    <option value="14">개발/프로그래밍</option>
+				    <option value="15">사진</option>
+				</select>
+	
 		
-			<span>카테고리</span>
-			<select name="categoryNo" class="category-select">
-			    <option selected>모임의 종류를 입력하세요.</option>
-			    <option value="1">스포츠/운동</option>
-			    <option value="2">공예/DIY</option>
-			    <option value="3">미술/그림</option>
-			    <option value="4">음악</option>
-			    <option value="5">요리/베이킹</option>
-			    <option value="6">게임</option>
-			    <option value="7">영화/드라마</option>
-			    <option value="8">여행</option>
-			    <option value="9">자연/식물</option>
-			    <option value="11">책/문학</option>
-			    <option value="12">심리/자기계발</option>
-			    <option value="13">IT</option>
-			    <option value="14">개발/프로그래밍</option>
-			    <option value="15">사진</option>
-			</select>
+	
+				<select name="locationNo" class="location-select">
+				    <option selected>지역을 입력하세요.</option>
+				    <option value="1">강남구</option>
+				    <option value="2">강동구</option>
+				    <option value="3">강북구</option>
+				    <option value="4">강서구</option>
+				    <option value="5">관악구</option>
+				    <option value="6">광진구</option>
+				    <option value="7">구로구</option>
+				    <option value="8">금천구</option>
+				    <option value="9">노원구</option>
+				    <option value="10">도봉구</option>
+				    <option value="11">동대문구</option>
+				    <option value="12">동작구</option>
+				    <option value="13">마포구</option>
+				    <option value="14">서대문구</option>
+				    <option value="15">서초구</option>
+				    <option value="16">성동구</option>
+				    <option value="17">성북구</option>
+				    <option value="18">송파구</option>
+				    <option value="19">양천구</option>
+				    <option value="20">영등포구</option>
+				    <option value="21">용산구</option>
+				    <option value="22">은평구</option>
+				    <option value="23">종로구</option>
+				    <option value="24">중구</option>
+				    <option value="25">중랑구</option>
+				</select>
 
+			    <input type="number" class="participant-input" name="maxParticipants" placeholder="참가인원은 입력하세요">
 
-			<span>지역</span>
-			<select name="locationNo" class="location-select">
-			    <option selected>지역을 입력하세요.</option>
-			    <option value="1">강남구</option>
-			    <option value="2">강동구</option>
-			    <option value="3">강북구</option>
-			    <option value="4">강서구</option>
-			    <option value="5">관악구</option>
-			    <option value="6">광진구</option>
-			    <option value="7">구로구</option>
-			    <option value="8">금천구</option>
-			    <option value="9">노원구</option>
-			    <option value="10">도봉구</option>
-			    <option value="11">동대문구</option>
-			    <option value="12">동작구</option>
-			    <option value="13">마포구</option>
-			    <option value="14">서대문구</option>
-			    <option value="15">서초구</option>
-			    <option value="16">성동구</option>
-			    <option value="17">성북구</option>
-			    <option value="18">송파구</option>
-			    <option value="19">양천구</option>
-			    <option value="20">영등포구</option>
-			    <option value="21">용산구</option>
-			    <option value="22">은평구</option>
-			    <option value="23">종로구</option>
-			    <option value="24">중구</option>
-			    <option value="25">중랑구</option>
-
-			</select>
-
-	        <span>참가인원</span>
-	        <input type="number" class="participant-input" name="maxParticipants" placeholder="참가인원은 입력하세요">
-	        
-	        <span>제목</span>
+	        </div>
 	        <input type="text" class="title-input" name="title" placeholder="제목을 입력하세요">
 	        <br><br>
 	        <textarea id="summernote" name="content"></textarea>
@@ -90,17 +95,6 @@
     
     <script>
 	    $(document).ready(function() {
-	    	//여기 아래 부분
-// 	    	$('#summernote').summernote({
-// 	    		  height: 500,                 // 에디터 높이
-// 	    		  minHeight: null,             // 최소 높이
-// 	    		  maxHeight: null,             // 최대 높이
-// 	    		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-// 	    		  lang: "ko-KR",					// 한글 설정
-// 	    		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-	              
-// 	    	});
-	    	
 	    	$('#summernote').summernote({
 	    		height: 500,
 	  			toolbar: [
@@ -112,18 +106,53 @@
 	  			    ['table', ['table']],
 	  			    ['para', ['ul', 'ol', 'paragraph']],
 	  			    ['height', ['height']],
-	  			    ['insert',['picture','link','video']],
+	  			    ['insert',['link','video']],
 	  			    ['view', ['fullscreen', 'help']]
 	  			  ],
 	  			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-	  	  });
+	  	    });
+	    	
+	    	const fileInput = document.getElementById('fileInput');
+	    	const inputDiv = document.getElementById('inputDiv');
+	    	let file = document.querySelectorAll('input[type="file"]')[0];
+	    	fileInput.addEventListener('click', e=>{
+	    		console.log(file);
+	    		file.click();
+	    		file.addEventListener('change', e2=>{
+	    			const file2 = e2.target.files[0];
+	    			console.log(file2);
+	    			if(file2){
+	    				const reader = new FileReader();
+		    			console.log(reader);
+		    			reader.onload = event =>{
+		    				const newImg = document.createElement('img');
+		    				console.log(event.target.result);
+			    			newImg.src = event.target.result;
+			    			newImg.style.width = '50px';
+			    			newImg.style.height = '50px';
+			    			fileInput.append(newImg);	
+			    			
+			    			file = document.createElement('input');
+			    			file.type = 'file';
+			    			file.name = 'file';
+			    			inputDiv.append(file);
+		    			}
+		    			
+		    			reader.readAsDataURL(file2);
+		    			
+		    		}
+	    		}, {once:true});
+	    	})
+	    	
 	    });
 	    
 	    document.getElementById('submitButton').addEventListener('click', ()=>{
 	    	const form = document.getElementById('form');
 	    	form.submit();
 	    })
+	    
+	    
     </script>
 </body>
 </html>

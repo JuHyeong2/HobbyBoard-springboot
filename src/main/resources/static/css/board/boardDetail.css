@@ -18,11 +18,49 @@
     margin-bottom: 2rem;
 }
 
+.slide-container {
+  position: relative;
+  width: auto;
+  max-width: 300px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.gathering-images {
+	display: flex;
+  	transition: transform 0.5s ease;
+}
+
+.gathering-images img{
+	width: 100%;
+  	height: auto;
+}
+
+.prev, .next {
+	position: absolute;
+	top: 50%;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 18px;
+	z-index: 10;
+}
+
+.prev {
+	left: 10px;
+  	transform: translateY(-50%);
+}
+
+.next {
+	right: 10px;
+  	transform: translateY(-50%);
+}
+
 .main-image {
-    width: 100%;
-    padding-bottom: 50%;
-    background-color: white;
-    border-radius: 8px;
+    width: 400px;
+  	height: auto;
 }
 
 .gathering-info {
@@ -63,7 +101,7 @@
     padding-bottom: 1rem;
     border-top: 1px solid #e9ecef;
     border-bottom: 1px solid #e9ecef;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
     
 }
 
@@ -97,7 +135,7 @@
 }
 
 .user-details {
-	width: 100%
+	width: 80%
 }
 
 .user-profile {
@@ -124,9 +162,10 @@ img {
 }
 
 .reply-enroll {
-	margin-bottom: 20px !important;
+/* 	margin-bottom: 5px !important; */
 }
 
+<<<<<<< HEAD
 
 
 
@@ -135,6 +174,8 @@ img {
 }
 
 
+=======
+>>>>>>> f694ee11e8662489dfbb8032c84ba3b3112c8e95
 .notice-item {
 	display: flex;
     padding: 16px;
@@ -187,9 +228,10 @@ img {
         
 .reply-input {
 	width: 100%;
-	height: 50px;
+	height: 100px;
     padding: 10px;
     margin-bottom: 10px;
+    margin-top: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 4px;	
 }        

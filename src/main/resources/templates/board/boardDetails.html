@@ -5,25 +5,35 @@
 <title>Board Details</title>
 <!-- <link rel="stylesheet" href="/css/board/boardDetails.css"> -->
 <link rel="stylesheet" href="/css/board/boardDetail.css">
-
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
 	
     <main class="main-container">
+    	<input type="hidden" name="boardNo" th:value="${board.boardNo}" id="boardNo">
         <div class="breadcrumb">
             <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span></span>
         </div>
-
+		
         <div class="gathering-detail">
-            <div class="gathering-images">
-                <div class="main-image"><img alt="board-img" src="/image/img10.png"></div>
-                <div class="image-thumbnails"></div>
+        	<div class="slide-container">
+	            <div class="gathering-images">
+	                
+		            <th:block th:each="a : ${list}">
+		            	<img th:if="${(#strings.containsIgnoreCase(a.imgRename, 'jpg') or #strings.containsIgnoreCase(a.imgRename, 'png'))}" alt="board-img" th:src="@{'/uploadFiles/'+${a.imgRename}}">
+		            </th:block>
+		                
+		            <div class="image-thumbnails"></div>
+	            </div>
+	            <button class="prev" onclick="moveSlide(-1)">❮</button>
+		        <button class="next" onclick="moveSlide(1)">❯</button>
             </div>
             <div class="gathering-info">
                 <h1 class="gathering-title">[[${board.title}]]</h1>
                 <div class="gathering-meta">
-                    <span class="upload-time">[[${board.locationName}]]/4시간 전</span>
+                    <span class="upload-time">[[${board.locationName}]]</span>
                 </div>
                 <div class="gathering-description">
                     <p th:utext="${board.content}"></p>
@@ -34,49 +44,43 @@
         
         
         <div class="reply">
-        <div class="reply-enroll">
-		<section class="rp-user-info">
-			<div class="rp-user-profile">
-				<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
-				<div class="user-details">
-					<h3>도로로 병장</h3>
-					<input type="text" name="content" class="reply-input" placeholder="댓글을 입력하세요~.">
-				</div>
+	        <div class="reply-enroll">
+				<section class="<!-- rp-user-info -->" th:if="${session.loginUser != null}">
+					<div class="rp-user-profile">
+						<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+						<div class="user-details">
+							<h3>[[${session.loginUser.memberNickname}]]</h3>
+							<textarea id="replyContent" name="content" class="reply-input" placeholder="댓글을 입력하세요~." style="resize: none"></textarea>
+						</div>
+					</div>
+					<button class="reply-enroll-btn" id="submitReply">등록</button>
+				</section>
+				<section class="rp-user-info" th:if="${session.loginUser == null}">
+					<div class="rp-user-profile">
+						<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+						<div class="user-details">
+							<h3></h3>
+							<textarea id="replyContent" name="content" class="reply-input" placeholder="로그인 후 이용 가능합니다." style="resize: none" readonly></textarea>
+						</div>
+					</div>
+					<button class="reply-enroll-btn"  disabled>등록</button>
+				</section>
 			</div>
-			<button class="reply-enroll-btn">등록</button>
-		</section>
-		</div>
-			
-        <section class="user-info">
-            <div class="user-profile">
-                <div class="profile-image"><img alt="board-img" src="/image/img1.jpg"></div>
-                <div class="user-details">
-                    <h3>케로로중사</h3>
-                    <p>이야~ 코드폭격기 ㅋㅋㅋㅋ</p>
-                </div>
-                <div class="rp-ud">2025.01.07</div>
-            </div>
-        </section>
-        <section class="user-info">
-            <div class="user-profile">
-                <div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
-                <div class="user-details">
-                    <h3>도로로 병장</h3>
-                    <p>코드좀 침??ㅋㅋ</p>
-                </div>
-                <div class="rp-ud">2025.01.07</div>
-            </div>
-        </section>
-        <section class="user-info">
-            <div class="user-profile">
-                <div class="profile-image"><img alt="board-img" src="/image/img5.jpg"></div>
-                <div class="user-details">
-                    <h3>뚜뇽</h3>
-                    <p>응 나 아기천사</p>
-                </div>
-                <div class="rp-ud">2025.01.07</div>
-            </div>
-        </section>
+				
+			<div id="replyList">
+				<th:block th:each="reply:${rlist}">
+			        <section class="user-info">
+			            <div class="user-profile">
+			                <div class="profile-image"><img alt="board-img" src="/image/img1.jpg"></div>
+				            <div class="user-details">
+				                <h3>[[${reply.memberNickname}]]</h3>
+				                <p>[[${reply.replyContent}]]</p>
+				            </div>
+			                <div class="rp-ud">[[${reply.updateDate}]]</div>
+			            </div>
+			        </section>
+		        </th:block>
+	        </div>
         </div>
         
         
@@ -113,63 +117,85 @@
                 <div class="notice-date">2023.12.31</div>
             </div>
         </div>
-
-
-<!--         <section class="user-items"> -->
-<!--             <h2>코딩 관련 모임</h2> -->
-<!--             <div class="items-grid"> -->
-<!--                 판매 물품 그리드 아이템들 -->
-<!--                 <div class="board-card"> -->
-<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
-<!--                     <h3>게시글 제목</h3> -->
-<!--                     <p>25.01.01</p> -->
-<!--                 </div> -->
-<!--                 <div class="board-card"> -->
-<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
-<!--                     <h3>게시글 제목</h3> -->
-<!--                     <p>25.01.01</p> -->
-<!--                 </div> -->
-<!--                 <div class="board-card"> -->
-<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
-<!--                     <h3>게시글 제목</h3> -->
-<!--                     <p>25.01.01</p> -->
-<!--                 </div> -->
-<!--                 <div class="board-card"> -->
-<!--                     <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div> -->
-<!--                     <h3>게시글 제목</h3> -->
-<!--                     <p>25.01.01</p> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </section> -->
-
-        <!-- <section class="related-items">
-            <h2>인기 게시글</h2>
-            <div class="items-grid">
-                인기 매물 그리드 아이템들
-                                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-                <div class="board-card">
-                    <div class="board-img" ><img alt="board-img" src="image/park.jpg"></div>
-                    <h3>게시글 제목</h3>
-                    <p>25.01.01</p>
-                </div>
-            </div>
-        </section> -->
     </main>
 	
 	<div th:insert="common/footer.html"></div>
+	
+	<script th:inline="javascript">
+		let currentSlide = 0;
+	
+	    function moveSlide(step) {
+	      const slides = document.querySelectorAll(".gathering-images img");
+	      currentSlide += step;
+	      if (currentSlide < 0) {
+	        currentSlide = slides.length - 1;
+	      } else if (currentSlide >= slides.length) {
+	        currentSlide = 0;
+	      }
+	      const slider = document.querySelector(".gathering-images");
+	      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+	    }
+	    
+	    document.getElementById('submitReply').addEventListener('click', ()=>{
+	    	console.log(document.getElementById('replyContent').value);
+	    	console.log(document.getElementById('boardNo').value);
+	    	console.log(/*[[${session.loginUser != null ? session.loginUser.memberId : ''}]]*/);
+	    	$.ajax({
+	    		url: '/board/insertReply',
+	    		data: {replyContent:document.getElementById('replyContent').value,
+	    				boardNo:document.getElementById('boardNo').value,
+	    				memberNo:/*[[${session.loginUser != null ? session.loginUser.memberNo : ''}]]*/''
+	    		},
+	    		datatype: 'json',
+	    		success: data=>{
+	    			console.log(data);
+	    			const replyList = document.getElementById('replyList');
+	    			replyList.innerHTML = '';
+	    			for(r of data){
+	    				const section = document.createElement('section');
+		    			const divUser = document.createElement('div');
+		    			const divImage = document.createElement('div');
+		    			const divUserDetail = document.createElement('div');
+		    			const img = document.createElement('img');
+		    			const h3 = document.createElement('h3');
+		    			const p = document.createElement('p');
+		    			const divUpdate = document.createElement('div')
+		    			
+		    			const nickName = document.createTextNode(r.memberNickname);
+		    			const content = document.createTextNode(r.replyContent);
+		    			const update = document.createTextNode(r.updateDate);
+		    			
+		    			section.setAttribute('class', 'user-info');
+		    			divUser.setAttribute('class', 'user-profile');
+		    			divImage.setAttribute('class', 'profile-image');
+		    			divUserDetail.setAttribute('class', 'user-details');
+		    			divUpdate.setAttribute('class', 'rp-ud');
+		    			img.setAttribute('src', '/image/img1.jpg'); // 프로필사진 나중에 동적으로 바꿔야함
+		    			img.setAttribute('alt', 'board-img');
+		    			
+		    			h3.appendChild(nickName);
+		    			p.appendChild(content);
+		    			divUpdate.appendChild(update);
+		    			
+		    			divUserDetail.append(h3);
+		    			divUserDetail.append(p);
+		    			divImage.append(img);
+		    			divUser.append(divImage);
+		    			divUser.append(divUserDetail);
+		    			divUser.append(divUpdate);
+		    			section.append(divUser);
+		    			replyList.append(section);
+	    			}
+	    			document.getElementById('replyContent').value = '';
+	    		},
+	    		error: data=>{
+	    			console.log(data);
+	    		}
+	    		
+	    	});
+	    })
+	</script>
 </body>
+
+
 </html>
