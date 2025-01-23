@@ -15,16 +15,11 @@ import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.board.model.service.BoardService;
 import com.example.hamo.board.model.vo.Board;
-
-import com.example.hamo.member.model.vo.Member;
-
-
 import com.example.hamo.common.Pagination;
 import com.example.hamo.common.vo.PageInfo;
 import com.example.hamo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -63,7 +58,7 @@ public class BoardController {
 		b.setMemberNo(m.getMemberNo());
 		int result = bService.boardInsert(b);
 		
-		return "redirect:/" ;
+		return "redirect:/";
 	}
 	
 	@GetMapping("boardUpdate")
@@ -75,7 +70,7 @@ public class BoardController {
 	@GetMapping("noticeView")
 	public String noticeView(Model model, @RequestParam(value="page", defaultValue="1")int currentPage,HttpServletRequest request) {
 		int listCount =  aService.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 7);
 		ArrayList<Admin> list = aService.selectNoticeList(pi);
 		model.addAttribute("aList", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
 		

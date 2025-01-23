@@ -83,7 +83,7 @@ public class AdminController {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 //		 System.out.println(m);
-		admin.setContent(admin.getContent().replace("\n", "<br>"));
+		admin.setContent(admin.getContent());
 				
 		admin.setWriter(m.getMemberNo());
 		

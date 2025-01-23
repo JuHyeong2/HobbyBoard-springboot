@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 상세보기</title>
     <link rel="stylesheet" href="/css/board/noticeDetail.css">
-
+    <link rel="stylesheet" href="/css/board/summernote-lite.css">
 </head>
 <body>
 <div th:insert="common/top.html"></div>
@@ -13,6 +13,17 @@
         <div class="notice-header">
             <span class="notice-badge">공지</span>
             <h1 class="notice-title">[[${a.title}]]</h1>
+
+            <!-- form으로 버튼들 감싸기 -->
+            <form method="POST" id="writer-btn" th:if="${session.loginUser != null && session.loginUser.memberNo == a.writer}">
+                <button type="button" id="edit-btn">수정</button>
+                <button type="button" id="delete-btn">삭제</button>
+
+                <!-- hidden input으로 페이지와 boardId 값 추가 -->
+                <input type="hidden" name="page" th:value="${page}">
+                <input type="hidden" name="id" th:value="${a.boardNo}">
+            </form>
+            
             <span class="notice-date">[[${a.createDate}]]</span>
         </div>
 
@@ -21,10 +32,11 @@
         </div>
 
         <div class="notice-content" th:utext="${a.content}">
-<!--         <textarea class="notice-content"  rows="20" style="resize: none;" readonly>[[${a.content}]]</textarea> -->
-        	
+            <!-- 내용 표시 -->
         </div>
+    </div>
 
+    <footer>
         <div class="navigation">
             <a href="#" class="nav-item">
                 <span class="nav-label">이전글</span>
@@ -37,6 +49,15 @@
                 <span class="nav-date"></span>
             </a>
         </div>
-    </div>
+    </footer>
+    
+    <script>
+    	const form = document.getElementById('writer-btn');
+    	document.getElementById('edit-btn').addEventListener('click', () => {
+    		form.action = '/admin/edit';
+    		form.submit();
+    		
+    	});
+    </script>
 </body>
 </html>

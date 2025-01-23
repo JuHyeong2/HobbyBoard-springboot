@@ -1481,6 +1481,25 @@ html .note-fullscreen-body, body .note-fullscreen-body {
     margin: 0;
 }
 
+/* 서머노트 테이블 스타일 강제 적용 */
+.notice-content table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #dee2e6 !important;
+}
+
+.notice-content th, .notice-content td {
+    border: 1px solid #dee2e6 !important;
+    padding: 8px;
+    text-align: left;
+}
+
+.notice-content th {
+    background-color: #f8f9fa !important;
+    font-weight: bold;
+}
+
+
 /* Dialog
  ------------------------------------------*/
 .note-modal .note-modal-body label {

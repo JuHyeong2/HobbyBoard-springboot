@@ -127,13 +127,13 @@ img {
 	margin-bottom: 20px !important;
 }
 
-<<<<<<< HEAD
 
-=======
+
+
 .reply-enroll-btn{
 /* 	여기 버튼 오른족으로 밀어야함 */
 }
->>>>>>> 716ae0eebd6d166c0f59019e26ffb8460901cc95
+
 
 .notice-item {
 	display: flex;
@@ -170,10 +170,11 @@ img {
 }
 
 .notice-title {
+	width: 20px;
 	font-size: 14px;
     margin-bottom: 4px;
     color: #333;
-text-decoration: none;
+	text-decoration: none;
 }
 
 .notice-date {
@@ -181,6 +182,7 @@ text-decoration: none;
     font-size: 12px;
     text-align: right;
     min-width: 100px;
+    margin-left: 2000px;
 }
         
 .reply-input {
