@@ -22,7 +22,7 @@
 	            <div class="gathering-images">
 	                
 		            <th:block th:each="a : ${list}">
-		            	<img th:if="${(#strings.containsIgnoreCase(a.imgRename, 'jpg') or #strings.containsIgnoreCase(a.imgRename, 'png'))}" alt="board-img" th:src="@{'/uploadFiles/'+${a.imgRename}}">
+		            	<img th:if="${(#strings.containsIgnoreCase(a.imgRename, 'jpg') or #strings.containsIgnoreCase(a.imgRename, 'png'))}" alt="board-img" th:src="${a.url}">
 		            </th:block>
 		                
 		            <div class="image-thumbnails"></div>

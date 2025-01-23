@@ -20,4 +20,5 @@ public class Image {
 	private String imgRename;
 	private String delimiter;
 	private int buNo;
+	private String url;
 }
