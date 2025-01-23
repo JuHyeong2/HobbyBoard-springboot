@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.board.model.mapper.BoardMapper;
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Image;
+import com.example.hamo.board.model.vo.Reply;
 import com.example.hamo.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -38,5 +40,25 @@ public class BoardService {
 		}
 		return a;
 
+	}
+
+	public int imageInsert(ArrayList<Image> list) {
+		
+		return mapper.imageInsert(list);
+	}
+
+	public ArrayList<Image> selectImageList(int bNo) {
+		
+		return mapper.selectImageList(bNo);
+	}
+
+	public int insertReply(Reply r) {
+		
+		return mapper.insertReply(r);
+	}
+
+	public ArrayList<Reply> selectReplyList(int bNo) {
+		
+		return mapper.selectReplyList(bNo);
 	}
 }
