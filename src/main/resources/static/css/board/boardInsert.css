@@ -45,10 +45,9 @@ form {
     align-items: center;
 }
 
-.attachment-count {
-    color: #666;
-    font-size: 14px;
-}
+/* .attachment-add { */
+/*     cursor: pointer; */
+/* } */
 
 .submit-button {
     background-color: #0066cc;
@@ -189,3 +188,19 @@ span{
         width: 100%;
     }
 }
+
+.horizon {
+	display: flex;
+	gap: 1rem;
+}
+
+input[type="file"]{
+	display: none;
+}
+
+/* 이미지 스타일링 */
+.file-upload-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
