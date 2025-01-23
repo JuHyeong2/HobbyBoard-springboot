@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.board.model.service.BoardService;
@@ -45,9 +50,12 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	private final BoardService bService;
 	private final AdminService aService;
+	private final AmazonS3Client amazonS3;
 	
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
 	/*
-	 *  게시판 부분
+	 *  게시판 부분 
 	 * 
 	 * */
 	@GetMapping("/{id}")
@@ -57,6 +65,11 @@ public class BoardController {
 		Board board = bService.selectBoard(bNo);
 		ArrayList<Reply> replyArr = bService.selectReplyList(bNo);
 		ArrayList<Image> imageArr = bService.selectImageList(bNo);
+//		ArrayList<String> strArr = new ArrayList<String>();
+		for(Image img : imageArr) {
+//			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+		}
 		
 		System.out.println(board); 					//테스트
 		model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
@@ -87,9 +100,9 @@ public class BoardController {
 			ArrayList<Image> list = new ArrayList<Image>();
 			for(MultipartFile file : files) {
 				if(!file.getOriginalFilename().equals("")) {
-					String[] returnArr = saveFile(file); // 첨부파일 폴더에 파일저장
+					String[] returnArr = saveFiles(file); // 첨부파일 폴더에 파일저장
 					if(returnArr[1] != null) {
-						Image img = new Image();
+						Image img = new Image(); // vo에 있는 Image객체임!!!
 						img.setImgName(file.getOriginalFilename());
 						img.setImgRename(returnArr[1]);
 						img.setImgPath(returnArr[0]);
@@ -108,35 +121,58 @@ public class BoardController {
 		return "redirect:/" ;
 	}
 	
-	public String[] saveFile(MultipartFile upload) {
-		String savePath = "c:\\uploadFiles";
-		File folder = new File(savePath);
-		if(!folder.exists()) {
-			folder.mkdirs();
-		}
-		
-		// 같은 폴더에 같은 이름의 파일이 저장되지 않도록 rename -> 년월일시분초밀리랜덤수.확장자
+//	public String[] saveFile(MultipartFile upload) {
+//		String savePath = "c:\\uploadFiles";
+//		File folder = new File(savePath);
+//		if(!folder.exists()) {
+//			folder.mkdirs();
+//		}
+//		
+//		// 같은 폴더에 같은 이름의 파일이 저장되지 않도록 rename -> 년월일시분초밀리랜덤수.확장자
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+//		int ranNum = (int)(Math.random()*100000);
+//		String originFileName = upload.getOriginalFilename();
+////		System.out.println(originFileName);
+////		System.out.println(originFileName.lastIndexOf("."));
+//		String renameFileName = sdf.format(new Date()) + ranNum + originFileName.substring(originFileName.lastIndexOf("."));
+////		System.out.println("renameFileName : " + renameFileName);
+//		
+//		String renamePath = folder + "\\" + renameFileName;
+//		try {
+//			upload.transferTo(new File(renamePath));
+//		} catch (IllegalStateException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		String[] returnArr = new String[2];
+//		returnArr[0] = savePath;
+//		returnArr[1] = renameFileName;
+//		return returnArr;
+//	}
+	
+	public String[] saveFiles(MultipartFile upload) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		int ranNum = (int)(Math.random()*100000);
 		String originFileName = upload.getOriginalFilename();
-//		System.out.println(originFileName);
-//		System.out.println(originFileName.lastIndexOf("."));
 		String renameFileName = sdf.format(new Date()) + ranNum + originFileName.substring(originFileName.lastIndexOf("."));
-//		System.out.println("renameFileName : " + renameFileName);
 		
-		String renamePath = folder + "\\" + renameFileName;
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(upload.getSize());
+		metadata.setContentType(upload.getContentType());
+		
 		try {
-			upload.transferTo(new File(renamePath));
-		} catch (IllegalStateException | IOException e) {
+			amazonS3.putObject(bucket, renameFileName, upload.getInputStream(), metadata);
+		} catch (SdkClientException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		String[] returnArr = new String[2];
-		returnArr[0] = savePath;
+		returnArr[0] = amazonS3.getUrl(bucket, renameFileName).toString();
 		returnArr[1] = renameFileName;
+		
 		return returnArr;
 	}
-	
 
 	
 	@GetMapping("boardUpdate")
