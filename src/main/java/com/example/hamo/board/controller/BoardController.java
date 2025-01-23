@@ -1,6 +1,6 @@
 package com.example.hamo.board.controller;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.SdkClientException;
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hamo.admin.model.service.AdminService;
@@ -29,9 +28,6 @@ import com.example.hamo.board.model.service.BoardService;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.board.model.vo.Reply;
-import com.example.hamo.member.model.vo.Member;
-
-
 import com.example.hamo.common.Pagination;
 import com.example.hamo.common.vo.PageInfo;
 import com.example.hamo.member.model.vo.Member;
@@ -118,7 +114,7 @@ public class BoardController {
 		}
 
 		
-		return "redirect:/" ;
+		return "redirect:/";
 	}
 	
 //	public String[] saveFile(MultipartFile upload) {
@@ -202,7 +198,7 @@ public class BoardController {
 	@GetMapping("noticeView")
 	public String noticeView(Model model, @RequestParam(value="page", defaultValue="1")int currentPage,HttpServletRequest request) {
 		int listCount =  aService.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 7);
 		ArrayList<Admin> list = aService.selectNoticeList(pi);
 		model.addAttribute("aList", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
 		

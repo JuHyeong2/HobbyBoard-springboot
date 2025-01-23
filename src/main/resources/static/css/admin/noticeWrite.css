@@ -22,6 +22,17 @@ body {
     overflow: auto;
 }
 
+.content {
+    word-wrap: break-word; /* 긴 단어가 줄을 넘지 않도록 처리 */
+    min-height: 900px; /* 기본 최소 높이 설정 (필요에 따라 조정) */
+    height: auto;
+}
+
+.note-editable{
+	height: auto !important;
+	min-height: 900px;
+}
+
 /* 공지 작성 폼 스타일 */
 .notice-create {
     background-color: #fff;
@@ -69,7 +80,18 @@ body {
     min-height: 750px;
 }
 
-.notice-create button {
+#notice-write {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#submit-btn {
     padding: 12px 20px;
     background-color: #28a745;
     color: white;
@@ -85,11 +107,13 @@ body {
     transform: scale(1.05);
 }
 
+	
+
 /* 화면 크기별 반응형 디자인 */
 @media (max-width: 768px) {
     .header {
         margin-left: 0;
-        width: 100%;
+        width: 100
     }
 
     .notice-create {

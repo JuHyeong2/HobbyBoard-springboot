@@ -97,14 +97,12 @@ body {
     align-items: center;
     padding: 16px;
     border-bottom: 1px solid #eee;
-    transition: background-color 0.3s, transform 0.3s;
     cursor: pointer; 
 }
 
 
 .notice-item:hover {
-    background-color: #f0f0f0;  /* 배경색 변경 */
-    transform: scale(1.02);      /* 살짝 확대 */
+    background-color: #f0f0ff;  /* 배경색 변경 */
 }
 
 .notice-date-header {
@@ -153,7 +151,7 @@ body {
 .pagination {
     display: flex;
     position: fixed;
-    bottom: 40px; /* 화면 하단에서 20px */
+    bottom: 23px; /* 화면 하단에서 20px */
     left:50%;   /* 화면 중앙 기준 */
     transform: translateX(-50%); /* 정확히 중앙에 맞춤 */
     list-style: none;

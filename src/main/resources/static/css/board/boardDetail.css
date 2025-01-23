@@ -165,6 +165,17 @@ img {
 /* 	margin-bottom: 5px !important; */
 }
 
+<<<<<<< HEAD
+
+
+
+.reply-enroll-btn{
+/* 	여기 버튼 오른족으로 밀어야함 */
+}
+
+
+=======
+>>>>>>> f694ee11e8662489dfbb8032c84ba3b3112c8e95
 .notice-item {
 	display: flex;
     padding: 16px;
@@ -200,10 +211,11 @@ img {
 }
 
 .notice-title {
+	width: 20px;
 	font-size: 14px;
     margin-bottom: 4px;
     color: #333;
-text-decoration: none;
+	text-decoration: none;
 }
 
 .notice-date {
@@ -211,6 +223,7 @@ text-decoration: none;
     font-size: 12px;
     text-align: right;
     min-width: 100px;
+    margin-left: 2000px;
 }
         
 .reply-input {
