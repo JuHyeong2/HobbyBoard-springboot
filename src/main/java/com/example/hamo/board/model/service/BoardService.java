@@ -71,5 +71,10 @@ public class BoardService {
 		
 		return mapper.participantsByBoard();
 	}
+
+	public ArrayList<Image> selectUserImageList() {
+		
+		return mapper.selectUserImageList();
+	}
 }
 
