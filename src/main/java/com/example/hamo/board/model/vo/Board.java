@@ -30,3 +30,4 @@ public class Board {
 	private String memberNickName;
 	private int participants;
 }
+

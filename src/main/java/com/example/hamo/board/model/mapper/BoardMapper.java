@@ -34,4 +34,6 @@ public interface BoardMapper {
 	ArrayList<Reply> selectReplyList(int bNo);
 
 	ArrayList<Board> participantsByBoard();
+
 }
+

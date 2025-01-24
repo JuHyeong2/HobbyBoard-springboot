@@ -193,12 +193,39 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+           
+        }
+        .info-item1 {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+           margin-top: 30px;
+        }
+        
+        .profile-picture {
+        	display: flex;
+            flex-direction: column;
+            height : 150px;
+            width : 150px;
+            margin-bottom: 10px;
+/*             gap: 0.5rem; */
+          
+        }
+        
+      
+        h4 {
+        font-size: 14px;
+            font-weight: 500;
+            color: #868e96;
+            margin-top: 5px;
         }
 
+		
         label {
             font-size: 14px;
             font-weight: 500;
             color: #868e96;
+            margin-top: 5px;
         }
 
         input[type="text"],
@@ -318,7 +345,7 @@
         .edit-form input[readonly] {
             background-color: #f8f9fa;
             color: #868e96;
-            cursor: not-allowed;
+/*             cursor: not-allowed; */
         }
 
         .edit-form input:focus {
@@ -541,8 +568,8 @@
         }
 
         .activity:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+/*             transform: translateY(-2px); */
+/*             box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
             border-color: #dee2e6;
         }
 
