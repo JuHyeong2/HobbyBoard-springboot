@@ -78,5 +78,11 @@
 		where status = 'a'
 		group by board_no
 	</select>
+	
+	<select id="selectUserImageList">
+		select *
+		from image
+		where delimiter = 'U'
+	</select>
 
 </mapper>
