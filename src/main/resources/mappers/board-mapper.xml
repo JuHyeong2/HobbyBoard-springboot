@@ -90,5 +90,15 @@
 		from image
 		where delimiter = 'B'
 	</select>
+	
+	<update id="updateBoardCount">
+		update board
+		set views = #{views} + 1
+		where board_no = #{boardNo}
+	</update>
 
+	<insert id="insertParticipant">
+		insert into participant
+		values(#{memberNo}, #{boardNo}, 'a')
+	</insert>
 </mapper>

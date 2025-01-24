@@ -39,5 +39,9 @@ public interface BoardMapper {
 
 	ArrayList<Image> selectImageListBoard();
 
+	int updateBoardCount(Board board);
+
+	int insertParticipant(HashMap<String, Integer> map);
+
 }
 

@@ -31,14 +31,32 @@
 		        <button class="next" onclick="moveSlide(1)">❯</button>
             </div>
             <div class="gathering-info">
-                <h1 class="gathering-title">[[${board.title}]]</h1>
+                
                 <div class="gathering-meta">
-                    <span class="upload-time">[[${board.locationName}]]</span>
+                	<div class="user-profile">
+				        <div class="profile-image" th:if="${board.profileUrl != null}">
+				        	<img alt="board-img" th:src="${board.profileUrl}">
+				        </div>
+				        <div class="profile-image" th:if="${board.profileUrl == null}">
+				        	<img alt="board-img" src="/image/myinfo.png">
+				        </div>
+					    <div class="user-details">
+					        <h3>[[${board.memberNickName}]]</h3>
+					        <p>[[${board.locationName}]]</p>
+					    </div>
+				        <div class="rp-ud">
+				        	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-4 w-4 shrink-0" width="20px" height="20px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path></svg>
+				        	[[${board.views}]]
+				        </div>
+			        </div>
                 </div>
+                <h1 class="gathering-title">[[${board.title}]]</h1>
                 <div class="gathering-description">
                     <p th:utext="${board.content}"></p>
                 </div>
-                <button class="purchase-btn">참가하기</button>
+                
+                <button th:if="${session.loginUser != null}" id="participation-btn" class="purchase-btn">참가하기</button>
+
             </div>
         </div>
         
@@ -60,7 +78,7 @@
 				<section class="rp-user-info" th:if="${session.loginUser == null}">
 					<div class="rp-user-profile">
 						<div class="profile-image">
-							<img alt="board-img" src="'/image/myinfo.png'">
+							<img alt="board-img" src="/image/myinfo.png">
 						</div>
 						<div class="user-details">
 							<h3></h3>
@@ -130,6 +148,7 @@
 	<script th:inline="javascript">
 		let currentSlide = 0;
 	
+		// 게시글 이미지 슬라이드
 	    function moveSlide(step) {
 	      const slides = document.querySelectorAll(".gathering-images img");
 	      currentSlide += step;
@@ -142,6 +161,7 @@
 	      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 	    }
 	    
+		// 게시글 댓글 등록 버튼
 	    document.getElementById('submitReply').addEventListener('click', ()=>{
 	    	console.log(document.getElementById('replyContent').value);
 	    	console.log(document.getElementById('boardNo').value);
@@ -200,6 +220,21 @@
 	    		
 	    	});
 	    })
+	    
+	    document.getElementById('participation-btn').addEventListener('click', ()=>{
+	    	$.ajax({
+	    		type: 'post',
+	    		url: '/member/participant',
+	    		data: {memberNo:/*session.loginUser.memberNo*/0,
+	    				boardNo:document.getElementById('boardNo').value},
+	    		success: data=>{
+	    			alert('참가신청 완료됐습니다.\n 신청 내역은 내정보 MyActivity에서 보실 수 있습니다.')
+	    		},
+	    		error: data=>{
+	    			
+	    		}
+	    	})
+	    });
 	</script>
 </body>
 

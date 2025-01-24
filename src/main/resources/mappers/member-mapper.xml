@@ -126,4 +126,6 @@
 		from image
 		where bu_no = ${memberNo} and delimiter = 'U'
 	</select>
+	
+	
 </mapper>
