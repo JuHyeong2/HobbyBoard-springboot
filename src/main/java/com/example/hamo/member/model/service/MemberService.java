@@ -74,11 +74,11 @@ public Member findId(HashMap<String, String> map) {
 		return mMapper.memberId(memberId);
 	}
 
-	public boolean handleParticipant(String action, int boardNo, int participantId) {
+	public boolean handleParticipant(String action, int boardNo, int memberNo) {
 		if("a".equals(action)) {
-			return mMapper.accept(boardNo,participantId) >0;
+			return mMapper.accept(boardNo,memberNo) >0;
 		}else if("r".equals(action)){
-			return mMapper.reject(boardNo,participantId) >0;
+			return mMapper.reject(boardNo,memberNo) >0;
 			
 		}
 		return false;

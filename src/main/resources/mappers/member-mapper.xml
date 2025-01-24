@@ -68,13 +68,13 @@
 	<update id="accept">
 		update participant
 		set status = 'a'
-		where board_no = #{boardNo} and member_no = #{participantId}
+		where board_no = #{boardNo} and member_no = #{memberNo}
 	</update>
 	
 	<update id="reject">
 		update participant
 		set status = 'r'
-		where board_no = #{boardNo} and member_no = #{participantId}
+		where board_no = #{boardNo} and member_no = #{memberNo}
 	</update>
 	
 	<update id="updateMember">

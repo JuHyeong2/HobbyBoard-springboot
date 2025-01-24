@@ -38,9 +38,9 @@ public interface MemberMapper {
 
 	Member memberId(String memberId);
 
-	int accept(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
+	int accept(@Param("boardNo")int boardNo, @Param("memberNo")int memberNo);
 
-	int reject(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
+	int reject(@Param("boardNo")int boardNo, @Param("memberNo")int memberNo);
 
 	ArrayList<Member> participants(int boardNo);
 

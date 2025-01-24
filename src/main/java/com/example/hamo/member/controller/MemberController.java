@@ -409,9 +409,9 @@ public class MemberController {
 	@ResponseBody
 	public String handleParticipant(@RequestParam("action") String action,
             @RequestParam("boardNo") int boardNo,
-            @RequestParam("participantId") int participantId) {
+            @RequestParam("memberNo") int memberNo) {
 		
-		boolean result = mService.handleParticipant(action,boardNo,participantId);
+		boolean result = mService.handleParticipant(action,boardNo,memberNo);
 		
 		return result ? "success" : "fail";
 	}
