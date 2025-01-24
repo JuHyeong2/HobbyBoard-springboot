@@ -112,7 +112,6 @@ label {
     min-width: 130px;
 }
 
-<<<<<<< HEAD
 #smsButton2 {
 	background-color: #1a73e8;
     color: white;
@@ -132,9 +131,8 @@ label {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-=======
+
 #smsButton2, #emailButton2 {
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
     min-width: 100px;
 }
 
@@ -164,11 +162,8 @@ button:disabled:hover {
 
 /* 모달 배경 스타일 */
 .modal {
-<<<<<<< HEAD
 /*     display: none;  */
-=======
     display: none; 
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
     position: fixed;
     top: 0;
     left: 0;
@@ -223,8 +218,6 @@ button:disabled:hover {
 .modal-content strong {
     color: #007bff;
     font-weight: bold;
-<<<<<<< HEAD
-=======
 }
 
 .findidButton {
@@ -232,5 +225,4 @@ button:disabled:hover {
 	gap: 20px;
 	justify-content: center;
 	margin-top: 30px;
->>>>>>> 00f091061b9b4a441d7267fae366aa68c70a08ba
 }

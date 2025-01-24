@@ -48,6 +48,7 @@ public class BoardController {
 	private final AdminService aService;
 	private final AmazonS3Client amazonS3;
 	
+	// aws S3 버켓 이름
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 	/*

@@ -1,6 +1,7 @@
 package com.example.hamo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,16 @@ public class HomeController {
 		
 		ArrayList<Board> list = bService.selectBoardList();
 		System.out.println("list : " + list);
+		
+		ArrayList<Board> participants = bService.participantsByBoard();
+		System.out.println(participants);
+		for(Board b : list) {
+			for(Board b2 : participants) {
+				if(b.getBoardNo() == b2.getBoardNo()) {
+					b.setParticipants(b2.getParticipants());
+				}
+			}
+		}
 		
 		model.addAttribute("list", list);
 		

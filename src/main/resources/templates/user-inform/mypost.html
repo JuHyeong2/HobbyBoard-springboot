@@ -44,7 +44,7 @@
                         
                  <div class="participants" th:id="'participants' + ${p.boardNo}" style="display:none;">
                             <div class="participant" id="participant" th:each="pa : ${participantsMap.get(p.boardNo)}">
-                                <div class="participant-info" >
+                                <div class="participant-info">
                                     <p><strong>이름:</strong> <span th:text="${pa.memberName}"></span></p>
                                     <p><strong>성별:</strong> <span th:text="${pa.memberGender.trim() == 'M' ? '남자' : '여자'}"></span></p>
                                     <p><strong>생년월일:</strong> <span th:text="${pa.memberBirth}"></span></p>
@@ -101,20 +101,20 @@ const handleParticipant = (event,action, boardNo, memberNo) => {
         success: data => {
             if (data == 'success') {
                 alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
-//            	     location.reload();
-              
-					
+           	     location.reload();
+  					
+           	     if(action == 'a') {
+           	    	 
+           	     }else if(action == 'r'){
+           	    	 
+           	     }
+           	     	
 					const participant = document.getElementById('participant');
 					console.log(participant);
 					if(participant) {
 						participant.remove();
 					}
 
-// 				const participantElement = document.getElementById("participant" + memberNo)
-// 				if (participantElement) {
-// 				  participantElement.remove();
-// 				}	
-				
             } else {
                 alert('처리 중 오류가 발생했습니다.');
             }

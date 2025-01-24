@@ -125,6 +125,11 @@ public Member findId(HashMap<String, String> map) {
 	    public Image getProfileImage(int memberNo) {
 	        return mMapper.getProfileImage(memberNo);
 	    }
+
+		public Image selectImage(int memberNo) {
+
+			return mMapper.selectImage(memberNo);
+		}
 	   
 
 

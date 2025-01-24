@@ -145,10 +145,14 @@
         			});
         		}
         	 });
+        	 
+        	 document.getElementById('profilePreview').addEventListener('click', ()=>{
+        		 document.getElementById('profilePicture').click();
+        	 });
         
         	 document.getElementById('profilePicture').addEventListener('change', function(e) {
-                 var file = e.target.files[0];
-                 var reader = new FileReader();
+                 let file = e.target.files[0];
+                 let reader = new FileReader();
                  reader.onload = function(e) {
                      document.getElementById('profilePreview').src = e.target.result;
                  }
