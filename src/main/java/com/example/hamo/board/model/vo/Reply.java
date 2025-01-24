@@ -22,4 +22,5 @@ public class Reply {
 	private int memberNo;
 	private int boardNo;
 	private String memberNickname;
+	private String imageUrl;
 }

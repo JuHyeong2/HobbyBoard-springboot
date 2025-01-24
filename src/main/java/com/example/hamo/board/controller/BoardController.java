@@ -62,6 +62,21 @@ public class BoardController {
 		Board board = bService.selectBoard(bNo);
 		ArrayList<Reply> replyArr = bService.selectReplyList(bNo);
 		ArrayList<Image> imageArr = bService.selectImageList(bNo);
+		// 댓글 프로필 사진
+		ArrayList<Image> imageArr2 = bService.selectUserImageList();
+		for(Image img : imageArr2) {
+//			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+		}
+		
+		for(Reply r : replyArr) {
+			for(Image img : imageArr2) {
+				if(r.getMemberNo() == img.getBuNo()) {
+					r.setImageUrl(img.getUrl());
+				}
+			}
+		}
+		
 //		ArrayList<String> strArr = new ArrayList<String>();
 		for(Image img : imageArr) {
 //			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());

@@ -35,5 +35,7 @@ public interface BoardMapper {
 
 	ArrayList<Board> participantsByBoard();
 
+	ArrayList<Image> selectUserImageList();
+
 }
 
