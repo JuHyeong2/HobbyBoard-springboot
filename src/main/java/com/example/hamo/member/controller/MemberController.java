@@ -12,7 +12,6 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,7 +66,10 @@ public class MemberController {
 		Member loginUser = mService.login(m);
 		// 프로필 이미지도 세션에 저장하는게 좋을 듯
 		Image userImage = mService.selectImage(loginUser.getMemberNo());
-		loginUser.setImageUrl(amazonS3.getUrl(bucket, userImage.getImgRename()).toString());
+		if(userImage != null) {
+			loginUser.setImageUrl(amazonS3.getUrl(bucket, userImage.getImgRename()).toString());
+		}
+		
 		if(loginUser != null && bcrypt.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			model.addAttribute("loginUser", loginUser);
 //			session.setAttribute("loginUser", loginUser);
@@ -224,9 +226,17 @@ public class MemberController {
         }
         
         Image image = mService.selectImage(loginUser.getMemberNo());
+        
+//		for(Image img : imageArr) {
+////			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+//			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+//		}
+//		String profileImage = image.getUrl(amazonS3.getUrl(bucket, image.getImgRename()).toString();
+        if(image != null) {
+        	image.setUrl(amazonS3.getUrl(bucket, image.getImgRename()).toString());
+        }
+        
 
-        image.setUrl(amazonS3.getUrl(bucket, image.getImgRename()).toString());
-        System.out.println(image.toString());
 
         model.addAttribute("m", updatedMember);
         model.addAttribute("profileImage", image);
@@ -256,6 +266,7 @@ public class MemberController {
 	    
 	    if (file != null && !file.isEmpty()) {
 	        String fileName = file.getOriginalFilename();
+	        
 	        String[] files = saveFiles(file);
 	        if (files[1] != null) {
 	            Image profileImage = new Image();

@@ -52,7 +52,6 @@ main {
     gap: 1.5rem;
 }
 
-
 .board-item:hover {
     transform: translateY(-10px);
     transition-duration: 0.3s;
@@ -63,6 +62,7 @@ main {
     border-radius: 8px;
     transition-duration: 0.3s;
     box-shadow: 5px 5px 20px #f3f3f3;
+    cursor: pointer;
 }
 
 .board-info h3 {
