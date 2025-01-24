@@ -172,7 +172,12 @@ img {
 /* 	margin-bottom: 5px !important; */
 }
 
-
+button[disabled] {
+	background-color: #ccc; /* 비활성화 상태의 배경색 */
+    color: #666;           /* 텍스트 색상 */
+    cursor: not-allowed;   /* 금지 커서 */
+    opacity: 0.6;   
+}
 
 
 

@@ -25,10 +25,14 @@
 		            	<img th:if="${(#strings.containsIgnoreCase(a.imgRename, 'jpg') or #strings.containsIgnoreCase(a.imgRename, 'png'))}" alt="board-img" th:src="${a.url}">
 		            </th:block>
 		                
-		            <div class="image-thumbnails"></div>
+		            <div th:if="${list == null || list.isEmpty()}" class="image-thumbnails">
+		            	<img src="/image/HAMO_Thumbnail.png">
+		            </div>
 	            </div>
-	            <button class="prev" onclick="moveSlide(-1)">❮</button>
-		        <button class="next" onclick="moveSlide(1)">❯</button>
+	            <th:block th:if="${list.size > 1}">
+		            <button class="prev" onclick="moveSlide(-1)">❮</button>
+			        <button class="next" onclick="moveSlide(1)">❯</button>
+		        </th:block>
             </div>
             <div class="gathering-info">
                 
@@ -55,7 +59,8 @@
                     <p th:utext="${board.content}"></p>
                 </div>
                 
-                <button th:if="${session.loginUser != null}" id="participation-btn" class="purchase-btn">참가하기</button>
+                <button th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 1}" id="btn" class="purchase-btn" disabled>참가신청 완료</button>
+                <button th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 0}" id="participation-btn" class="purchase-btn">참가하기</button>
 
             </div>
         </div>
@@ -224,14 +229,21 @@
 	    document.getElementById('participation-btn').addEventListener('click', ()=>{
 	    	$.ajax({
 	    		type: 'post',
-	    		url: '/member/participant',
-	    		data: {memberNo:/*session.loginUser.memberNo*/0,
+	    		url: '/board/participant',
+	    		data: {memberNo:/*[[${session.loginUser != null ? session.loginUser.memberNo : ''}]]*/0,
 	    				boardNo:document.getElementById('boardNo').value},
 	    		success: data=>{
-	    			alert('참가신청 완료됐습니다.\n 신청 내역은 내정보 MyActivity에서 보실 수 있습니다.')
+	    			if(data > 0){
+	    				alert('참가신청 완료됐습니다.\n 신청 내역은 내정보 MyActivity에서 보실 수 있습니다.')
+		    			document.getElementById('participation-btn').innerText = '참가신청 완료';
+		    			document.getElementById('participation-btn').disabled = true;	    				
+	    			}else{
+	    				alert('참가신청 실패, 다시 시도해주세요.')
+	    			}
+	    			
 	    		},
 	    		error: data=>{
-	    			
+	    			console.log(data);
 	    		}
 	    	})
 	    });

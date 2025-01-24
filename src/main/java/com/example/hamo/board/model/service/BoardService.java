@@ -91,5 +91,10 @@ public class BoardService {
 		
 		return mapper.insertParticipant(map);
 	}
+
+	public int selectParticipant(HashMap<String, Integer> map) {
+		
+		return mapper.selectParticipant(map);
+	}
 }
 

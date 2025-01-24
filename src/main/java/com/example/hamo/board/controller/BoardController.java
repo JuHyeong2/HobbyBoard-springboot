@@ -57,9 +57,7 @@ public class BoardController {
 	 * 
 	 * */
 	@GetMapping("/{id}")
-	public String boarDetails(@PathVariable("id") int bNo, Model model) {
-		System.out.println("boardNo : " + bNo); //테스트
-		
+	public String boarDetails(@PathVariable("id") int bNo, Model model, HttpSession session) {
 		Board board = bService.selectBoard(bNo);
 		ArrayList<Reply> replyArr = bService.selectReplyList(bNo);
 		ArrayList<Image> imageArr = bService.selectImageList(bNo);
@@ -87,13 +85,27 @@ public class BoardController {
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		System.out.println(m);
+		if(m != null) {
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("memberNo", m.getMemberNo());
+			map.put("boardNo", bNo);
+			int participantResult = bService.selectParticipant(map);
+			System.out.println("participantResult : " + participantResult);
+			model.addAttribute("participantResult", participantResult);
+		}else {
+			model.addAttribute("participantResult", 0);
+		}
+	
 		
-		
+		// 조회수 +1
 		int result = bService.updateBoardCount(board);
 		System.out.println(board); 					//테스트
 		if(result > 0) {
 			model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
 		}
+		
 		
 		
 		return "board/boardDetails";
@@ -253,16 +265,20 @@ public class BoardController {
 		return "board/project";
 	}
 	
-	@PostMapping("/member/participant")
-	public String applyForParticipantion(@RequestParam("memberNo") int memberNo, @RequestParam("boardNo") int boardNo) {
+	@PostMapping("participant")
+	@ResponseBody
+	public int applyForParticipantion(@RequestParam("memberNo") int memberNo, @RequestParam("boardNo") int boardNo) {
+		System.out.println("memberNo : " + memberNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("memberNo", memberNo);
 		map.put("boardNo", boardNo);
 		int result = bService.insertParticipant(map);
 		if(result > 0) {
-			return "redirect:/" + boardNo;
+			return result;
+		}else {
+			return result;
 		}
-		return "redirect:/" + boardNo;
+		
 	}
 
 }
