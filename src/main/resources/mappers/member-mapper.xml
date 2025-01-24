@@ -45,12 +45,12 @@
 
 	<select id="selectMyActivite" resultType="Board">
 
-<!-- 	  select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name,p.status -->
-<!-- 		from board b -->
-<!-- 			join participant p on b.board_no = p.board_no -->
-<!-- 			join member m on p.member_no = m.member_no -->
-<!-- 			join category c on b.category_no = c.category_no -->
-<!-- 			where m.member_id = #{id} -->
+	  select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name,p.status
+		from board b
+			join participant p on b.board_no = p.board_no
+			join member m on p.member_no = m.member_no
+			join category c on b.category_no = c.category_no
+			where m.member_id = #{id}
 	
 	
   select b.board_no, b.title, to_char(b.content), b.create_date, b.board_status, c.category_name,p.status
