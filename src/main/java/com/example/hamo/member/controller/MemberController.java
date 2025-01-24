@@ -137,15 +137,15 @@ public class MemberController {
 	}
 
 		
-//	
-//	@PostMapping("/member/sendEmail")
-//	@ResponseBody
-//	public String sendEmail(@RequestParam("email") String email) {
-//		System.out.println("email : " + email);
-//		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
-//		emailUtil.sendEmail(email, certificationCode);
-//		return certificationCode;
-//	}
+	
+	@PostMapping("/member/sendEmail")
+	@ResponseBody
+	public String sendEmail(@RequestParam("email") String email) {
+		System.out.println("email : " + email);
+		String certificationCode = Integer.toString((int)(Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 인증 코드를 랜덤으로 생성
+		emailUtil.sendEmail(email, certificationCode);
+		return certificationCode;
+	}
 	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
