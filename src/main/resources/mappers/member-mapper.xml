@@ -1,109 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.hamo.member.model.mapper.MemberMapper">
+<mapper
+	namespace="com.example.hamo.member.model.mapper.MemberMapper">
 
 	<insert id="insertMember" parameterType="Member">
 		insert into member
-		values(seq_member.nextval, #{memberName}, #{memberId}, #{memberPwd}, #{memberBirth}, #{memberGender}, #{memberPhone}, #{memberEmail}, #{memberNickname}, default, default, default)
+		values(seq_member.nextval, #{memberName}, #{memberId}, #{memberPwd},
+		#{memberBirth}, #{memberGender}, #{memberPhone}, #{memberEmail},
+		#{memberNickname}, default, default, default)
 	</insert>
 
 	<select id="idCheck">
 		select count(*)
 		from member
-		where member_id = #{userId} 
+		where member_id = #{userId}
 	</select>
-	
+
 	<select id="login">
 		select *
 		from member
 		where member_id = #{memberId}
 	</select>
-	
+
 	<select id="findId" parameterType="hashMap">
 		select *
 		from member
-		where ${column} = #{value}
+		where
+		${column} = #{value}
 	</select>
-	
+
 	<update id="updatePwd">
 		update member
 		set member_pwd = #{memberPwd}
-		where member_id = #{memberId}
+		where
+		member_id = #{memberId}
 	</update>
 
 
-	<select id="selectMember" resultType ="Member">
+	<select id="selectMember" resultType="Member">
 		select *
-		from member 
+		from member
 		where member_id = #{id} and status = 'Y'
 	</select>
-	
+
 	<select id="selectMyActivite" resultType="Board">
-		select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name
+		select b.board_no,
+		b.title, b.content, b.create_date, b.board_status, c.category_name
 		from board b
-			join participant p on b.board_no = p.board_no
-			join member m on p.member_no = m.member_no
-			join category c on b.category_no = c.category_no
-			where m.member_id = #{memberId}
-			order by b.create_date desc 
-	</select>
-	
-	<select id="selectMyPost">
-		select b.*, c.category_name, l.location_name
-		from board b
-			join category c on b.category_no = c.category_no
-			join location l on b.location_no = l.location_no
-			where b.member_no = (select member_no from member where member_id = #{memberId})
+		join participant p on b.board_no = p.board_no
+		join member m on p.member_no = m.member_no
+		join category c on b.category_no = c.category_no
+		where m.member_id = #{memberId}
 		order by b.create_date desc
 	</select>
-	
+
+	<select id="selectMyPost">
+		select b.*, c.category_name, l.location_name
+		from
+		board b
+		join category c on b.category_no = c.category_no
+		join location l on b.location_no = l.location_no
+		where b.member_no = (select member_no from member where member_id =
+		#{memberId})
+		order by b.create_date desc
+	</select>
+
 	<select id="participants">
 		select m.*
 		from member m
-			join participant p on m.member_no = p.member_no
-		where p.board_no = #{boardNo}
+		join participant p on m.member_no = p.member_no
+		where p.board_no =
+		#{boardNo}
 	</select>
-	
-	
+
+
 	<update id="accept">
 		update participant
 		set status = 'a'
-		where board_no = #{boardNo} and member_no = #{participantId}
+		where board_no =
+		#{boardNo} and member_no = #{participantId}
 	</update>
-	
+
 	<update id="reject">
 		update participant
 		set status = 'r'
-		where board_no = #{boardNo} and member_no = #{participantId}
+		where board_no =
+		#{boardNo} and member_no = #{participantId}
 	</update>
-	
+
 	<update id="updateMember">
-	update member
-	set member_name = #{memberName}, member_birth = #{memberBirth}, member_gender = #{memberGender}, member_nickname = #{memberNickname},
-		member_email = #{memberEmail}, member_phone = #{memberPhone},member_pwd = #{memberPwd}
-	where member_id = #{memberId}	
-    </update>
+		update member
+		set member_name = #{memberName}, member_birth = #{memberBirth},
+		member_gender = #{memberGender}, member_nickname = #{memberNickname},
+		member_email = #{memberEmail}, member_phone =
+		#{memberPhone},member_pwd = #{memberPwd}
+		where member_id = #{memberId}
+	</update>
 
-<select id="checknickName">
-	select count(*)
-	from member
-	where member_nickname = #{nickname}
-</select>
+	<select id="checknickName">
+		select count(*)
+		from member
+		where member_nickname = #{nickname}
+	</select>
 
-<insert id="insertProfileImage" parameterType="Image">
-insert into image(img_no,img_name,img_path,img_rename,delimiter,bu_no)
-	values(seq_image.nextval,#{imgName},#{imgPath},#{imgRename},#{delimiter},#{buNo})
-</insert>
+	<insert id="insertProfileImage" parameterType="Image">
+		insert into image(img_no,img_name,img_path,img_rename,delimiter,bu_no)
+		values(seq_image.nextval,#{imgName},#{imgPath},#{imgRename},#{delimiter},#{buNo})
+	</insert>
 
-<update id="updateProfileImage" parameterType="Image">
-update image
-set img_name = #{imgName},img_path = #{imgPath}, img_rename = #{imgRename}
-where img_no = #{imgNo}
-</update>
+	<update id="updateProfileImage" parameterType="Image">
+		update image
+		set img_name = #{imgName},img_path = #{imgPath}, img_rename =
+		#{imgRename}
+		where img_no = #{imgNo}
+	</update>
 
-<select id="getProfileImage" resultType="Image">
-select *
-from image
-where bu_no = #{memberNo} and delimiter = 'U'
-</select>
+	<select id="getProfileImage" resultType="Image">
+		select *
+		from image
+		where bu_no = #{memberNo} and delimiter = 'U'
+	</select>
+	
+	<select id="selectImage">
+		select *
+		from image
+		where bu_no = ${memberNo} and delimiter = 'U'
+	</select>
 </mapper>

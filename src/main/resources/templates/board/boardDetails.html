@@ -71,7 +71,9 @@
 				<th:block th:each="reply:${rlist}">
 			        <section class="user-info">
 			            <div class="user-profile">
-			                <div class="profile-image"><img alt="board-img" src="/image/img1.jpg"></div>
+			                <div class="profile-image">
+			                	<img alt="board-img" src="/image/img1.jpg">
+			                </div>
 				            <div class="user-details">
 				                <h3>[[${reply.memberNickname}]]</h3>
 				                <p>[[${reply.replyContent}]]</p>

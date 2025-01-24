@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.common.util.EmailCertificationUtil;
@@ -43,6 +47,11 @@ public class MemberController {
 	private final BCryptPasswordEncoder bcrypt;
 	private final SmsCertificationUtil smsUtil;
 	private final EmailCertificationUtil emailUtil;
+	private final AmazonS3Client amazonS3;
+	
+	// aws S3 버켓 이름
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
 	
 	// 로그인 화면으로 가는 메서드
 	@GetMapping("/member/login")	
@@ -211,9 +220,17 @@ public class MemberController {
             return "redirect:/error";
         }
         
-        Image profileImage = mService.getProfileImage(updatedMember.getMemberNo());
+        Image image = mService.selectImage(loginUser.getMemberNo());
+//		for(Image img : imageArr) {
+////			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+//			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+//		}
+//		String profileImage = image.getUrl(amazonS3.getUrl(bucket, image.getImgRename()).toString();
+        image.setUrl(amazonS3.getUrl(bucket, image.getImgRename()).toString());
+        System.out.println(image.toString());
+//        Image profileImage = mService.getProfileImage(updatedMember.getMemberNo());
         model.addAttribute("m", updatedMember);
-        model.addAttribute("profileImage", profileImage);
+        model.addAttribute("profileImage", image);
         return "user-inform/myPage";
     }
 
@@ -240,12 +257,12 @@ public class MemberController {
 	    
 	    if (file != null && !file.isEmpty()) {
 	        String fileName = file.getOriginalFilename();
-	        String filePath = saveFile(file);
-	        if (filePath != null) {
+	        String[] files = saveFiles(file);
+	        if (files[1] != null) {
 	            Image profileImage = new Image();
 	            profileImage.setImgName(fileName);
-	            profileImage.setImgPath(filePath);
-	            profileImage.setImgRename(generateRenamedFileName(fileName));
+	            profileImage.setImgPath(files[0]);
+	            profileImage.setImgRename(files[1]);
 	            profileImage.setDelimiter("U");
 	            profileImage.setBuNo(loginUser.getMemberNo());
 	            
@@ -300,7 +317,7 @@ public class MemberController {
 	    }
 	}
 
-		private String saveFile(MultipartFile file) {
+	private String saveFile(MultipartFile file) {
 		String savePath = "C:\\uploadFiles";
 		File folder = new File(savePath);
 		if (!folder.exists()) {
@@ -317,14 +334,38 @@ public class MemberController {
 		    e.printStackTrace();
 		    return null;
 		}
+	}
+	
+	public String[] saveFiles(MultipartFile upload) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int)(Math.random()*100000);
+		String originFileName = upload.getOriginalFilename();
+		String renameFileName = sdf.format(new Date()) + ranNum + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(upload.getSize());
+		metadata.setContentType(upload.getContentType());
+		
+		try {
+			amazonS3.putObject(bucket, renameFileName, upload.getInputStream(), metadata);
+		} catch (SdkClientException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		private String generateRenamedFileName(String originalFileName) {
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		    int ranNum = (int) (Math.random() * 100000);
-		    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-		    return sdf.format(new Date()) + ranNum + extension;
-		}
+		String[] returnArr = new String[2];
+		returnArr[0] = amazonS3.getUrl(bucket, renameFileName).toString();
+		returnArr[1] = renameFileName;
+		
+		return returnArr;
+	}
+	
+	private String generateRenamedFileName(String originalFileName) {
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	    int ranNum = (int) (Math.random() * 100000);
+	    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	    return sdf.format(new Date()) + ranNum + extension;
+	}
 
 
 	

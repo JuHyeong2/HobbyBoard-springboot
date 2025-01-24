@@ -52,6 +52,8 @@ public interface MemberMapper {
 
 	int updateProfileImage(Image image);
 
+	Image selectImage(int memberNo);
+
 
 
 
