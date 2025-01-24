@@ -112,6 +112,26 @@ label {
     min-width: 130px;
 }
 
+#smsButton2 {
+	background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+#smsButton3 {
+	background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+
 #smsButton2, #emailButton2 {
     min-width: 100px;
 }
@@ -142,6 +162,7 @@ button:disabled:hover {
 
 /* 모달 배경 스타일 */
 .modal {
+/*     display: none;  */
     display: none; 
     position: fixed;
     top: 0;

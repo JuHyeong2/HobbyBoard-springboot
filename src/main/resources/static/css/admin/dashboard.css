@@ -197,6 +197,8 @@ table tbody tr:hover {
     font-size: 8px;  /* 버튼 텍스트 크기 줄이기 */
     padding: 4px 8px;  /* 버튼 크기 줄이기 */
 }
+
+}
 /* 그래프 크기 변경 */
 .echart {
     margin-bottom: -36px !important;
@@ -211,3 +213,4 @@ table tbody tr:hover {
     margin-top: 10px !important;  /* 레이블과 그래프 간의 간격 */
     margin-left: 10px !important;
 }
+

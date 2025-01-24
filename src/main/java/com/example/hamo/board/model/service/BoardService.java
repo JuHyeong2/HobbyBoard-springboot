@@ -43,6 +43,9 @@ public class BoardService {
 
 	}
 
+
+
+
 	public int imageInsert(ArrayList<Image> list) {
 		
 		return mapper.imageInsert(list);
@@ -63,3 +66,4 @@ public class BoardService {
 		return mapper.selectReplyList(bNo);
 	}
 }
+
