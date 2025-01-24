@@ -28,4 +28,5 @@ public class Board {
 	private int categoryNo;
 	private String categoryName;
 	private String memberNickName;
+	private int participants;
 }

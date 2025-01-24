@@ -2,6 +2,7 @@ package com.example.hamo.board.model.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -61,5 +62,10 @@ public class BoardService {
 	public ArrayList<Reply> selectReplyList(int bNo) {
 		
 		return mapper.selectReplyList(bNo);
+	}
+
+	public ArrayList<Board> participantsByBoard() {
+		
+		return mapper.participantsByBoard();
 	}
 }
