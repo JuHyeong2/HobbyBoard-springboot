@@ -47,7 +47,9 @@
 	        <div class="reply-enroll">
 				<section class="<!-- rp-user-info -->" th:if="${session.loginUser != null}">
 					<div class="rp-user-profile">
-						<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+						<div class="profile-image">
+							<img alt="board-img" th:src="${session.loginUser.imageUrl != null ? session.loginUser.imageUrl : '/image/myinfo.png'}">
+						</div>
 						<div class="user-details">
 							<h3>[[${session.loginUser.memberNickname}]]</h3>
 							<textarea id="replyContent" name="content" class="reply-input" placeholder="댓글을 입력하세요~." style="resize: none"></textarea>
@@ -57,7 +59,9 @@
 				</section>
 				<section class="rp-user-info" th:if="${session.loginUser == null}">
 					<div class="rp-user-profile">
-						<div class="profile-image"><img alt="board-img" src="/image/img2.jpg"></div>
+						<div class="profile-image">
+							<img alt="board-img" src="'/image/myinfo.png'">
+						</div>
 						<div class="user-details">
 							<h3></h3>
 							<textarea id="replyContent" name="content" class="reply-input" placeholder="로그인 후 이용 가능합니다." style="resize: none" readonly></textarea>
@@ -72,7 +76,7 @@
 			        <section class="user-info">
 			            <div class="user-profile">
 			                <div class="profile-image">
-			                	<img alt="board-img" src="/image/img1.jpg">
+			                	<img alt="board-img" th:src="${reply.imageUrl != null ? reply.imageUrl : '/image/myinfo.png'}">
 			                </div>
 				            <div class="user-details">
 				                <h3>[[${reply.memberNickname}]]</h3>

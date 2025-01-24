@@ -25,11 +25,12 @@
                     </h1>
    
                     <div class="activity" th:each="a: ${list}">
-                        <div class="activity-status completed" th:text="${a.boardStatus == 'Y' ? '활동 완료' : '진행 중'}"></div>
+                        <div class="activity-status completed" th:text="${a.boardStatus.trim() == 'Y' ? '활동 완료' : '진행 중'}"></div>
+				
                         <div class="activity-title" th:text="${a.title}"></div>
-                        <div class="activity-description"th:text="${a.content}"></div>
+                        <div class="activity-description"th:utext="${a.content}"></div>
                         <div class="activity-meta">
-                            <div class="activity-info">
+                            <div class="activity-info" >
                                 <span class="activity-category"th:text="${a.categoryName}"></span>
                                 <span class="activity-date" th:text="${a.createDate}"></span>
                             </div>
@@ -46,5 +47,20 @@
     </div>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
 	<div th:insert = "common/footer.html"></div>
+	
+	<script th:inline="javascript">
+	
+	
+	$.ajax ({
+		url : '/member/change',
+		type : 'post',
+		data : {boardNo : boardNo,
+				boardStatus : boardStatus},
+		success : data => {
+			
+		},
+		error : data => console.log(data)
+	});
+	</script>
 </body>
 </html>    

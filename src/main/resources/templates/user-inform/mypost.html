@@ -31,7 +31,8 @@
                                 <div class="post-title" th:text="${p.title}"></div>
                                 <div class="post-description" th:text="${p.content}"></div>
                             </div>
-                            <span class="post-status" th:text="${p.boardStatus == 'Y' ? '모집중' : '모집완료'}"></span>
+                            <span class="post-status" th:text="${p.boardStatus.trim() == 'Y' ? '모집중' : '모집완료'}"></span>
+								
                         </div>
                         <div class="post-meta">
                             <div class="post-info">
@@ -85,7 +86,7 @@ const toggleParticipants = (boardNo) => {
 
 
 
-
+const postStatus = document.getElementById('post-status');
 const handleParticipant = (event,action, boardNo, memberNo) => {
 	event.preventDefault();
 	event.stopPropagation();
@@ -100,21 +101,28 @@ const handleParticipant = (event,action, boardNo, memberNo) => {
         },
         success: data => {
             if (data == 'success') {
-                alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
-           	     location.reload();
-  					
-           	     if(action == 'a') {
-           	    	 
-           	     }else if(action == 'r'){
-           	    	 
-           	     }
-           	     	
+//                 alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
+
+  				
+// 					const participant = document.getElementById('participant');
+				
+// 					console.log(participant);
+// 					if(participant) {
+// 						participant.remove();
+// 					}
+					
 					const participant = document.getElementById('participant');
-					console.log(participant);
-					if(participant) {
+					
+					if(action == 'a') {
+						alert('참가자가 수락되었습니다.')
+						participant.remove();
+						
+						
+					}else if(action ='r') {
+						alert('참가자가 거절되었습니다.')
 						participant.remove();
 					}
-
+					
             } else {
                 alert('처리 중 오류가 발생했습니다.');
             }

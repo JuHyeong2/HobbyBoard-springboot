@@ -44,14 +44,23 @@
 	</select>
 
 	<select id="selectMyActivite" resultType="Board">
-		select b.board_no,
-		b.title, b.content, b.create_date, b.board_status, c.category_name
+
+	select  b.*, c.category_name, l.location_name
 		from board b
 		join participant p on b.board_no = p.board_no
 		join member m on p.member_no = m.member_no
 		join category c on b.category_no = c.category_no
+        join location l on b.location_no = l.location_no
 		where m.member_id = #{memberId}
-		order by b.create_date desc
+        union all 
+        select b.*, c.category_name, l.location_name
+		from
+		board b
+		join category c on b.category_no = c.category_no
+		join location l on b.location_no = l.location_no
+		where b.member_no = (select member_no from member where member_id =
+		#{memberId})
+
 	</select>
 
 	<select id="selectMyPost">
@@ -126,5 +135,11 @@
 		select *
 		from image
 		where bu_no = ${memberNo} and delimiter = 'U'
+	</select>
+	
+	<select id = "maxParticipants">
+	select board_no, max_participants
+	from board
+	where board_no = #{board_no}
 	</select>
 </mapper>
