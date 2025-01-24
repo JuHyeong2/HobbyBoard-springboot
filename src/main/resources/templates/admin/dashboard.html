@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
         // ECharts 차트 설정
         // ECharts 차트 설정
 		function drawChart(chartId, labels, values) {
@@ -197,6 +197,10 @@
             calendar1.render();
             calendar2.render();
         });
+        
+     // isAdmin 값을 Thymeleaf로 주입
+    	
+		
     </script>
 </body>
 </html>

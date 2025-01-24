@@ -225,6 +225,9 @@ header {
 						    <a href="/member/myPage">MY PAGE</a>
 						    <a href="/member/myactivite">MY ACTIVITY</a>
 						    <a href="/member/mypost">MY POST</a>
+						    <th:block th:if="${session.loginUser.isAdmin == 'Y'}">
+						    <a href="/admin/dashboard">ADMIN</a>
+						    </th:block>
 						    <a href="/member/logout">로그아웃</a>
 			        	</div>
 					</li>

@@ -52,6 +52,7 @@ body {
 }
 
 .notice-title {
+	width: 73%;
     font-size: 20px;
     font-weight: bold;
 }
@@ -77,9 +78,11 @@ body {
 }
 
 .notice-date {
+	
     color: #666;
     font-size: 14px;
-    margin-left: auto; /* 날짜를 오른쪽으로 밀기 */
+    margin-left: 73rem	; /* 날짜를 오른쪽으로 밀기 */
+    position: absolute
 }
 
 .character-banner {
