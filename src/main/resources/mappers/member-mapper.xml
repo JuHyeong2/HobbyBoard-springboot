@@ -45,21 +45,31 @@
 
 	<select id="selectMyActivite" resultType="Board">
 
-	select  b.*, c.category_name, l.location_name
+<!-- 	  select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name,p.status -->
+<!-- 		from board b -->
+<!-- 			join participant p on b.board_no = p.board_no -->
+<!-- 			join member m on p.member_no = m.member_no -->
+<!-- 			join category c on b.category_no = c.category_no -->
+<!-- 			where m.member_id = #{id} -->
+	
+	
+  select b.board_no, b.title, to_char(b.content), b.create_date, b.board_status, c.category_name,p.status
 		from board b
-		join participant p on b.board_no = p.board_no
-		join member m on p.member_no = m.member_no
-		join category c on b.category_no = c.category_no
-        join location l on b.location_no = l.location_no
-		where m.member_id = #{memberId}
-        union all 
-        select b.*, c.category_name, l.location_name
+			join participant p on b.board_no = p.board_no
+			join member m on p.member_no = m.member_no
+			join category c on b.category_no = c.category_no
+			where m.member_id = #{id}
+        union
+
+        select b.board_no, b.title, to_char(b.content), b.create_date, b.board_status, c.category_name,p.status
 		from
 		board b
-		join category c on b.category_no = c.category_no
-		join location l on b.location_no = l.location_no
+		join participant p on b.board_no = p.board_no
+			join member m on p.member_no = m.member_no
+			join category c on b.category_no = c.category_no
 		where b.member_no = (select member_no from member where member_id =
-		#{memberId})
+		#{id})
+		
 
 	</select>
 
@@ -142,4 +152,25 @@
 	from board
 	where board_no = #{board_no}
 	</select>
+	
+	<select id="changeAccept">
+		select b.board_no
+        from board b 
+            join participant p on p.board_no = b.board_no
+            join member m on m.member_no = b.member_no
+       where p.status = 'a' and member_id = #{id};
+	</select>
+	
+	<select id="changeReject">
+	select b.board_no
+    from board b 
+            join participant p on p.board_no = b.board_no
+             join member m on m.member_no = b.member_no
+    where p.status = 'r' and member_id = #{id};
+	
+	</select>
+	
+	
+	
+	
 </mapper>

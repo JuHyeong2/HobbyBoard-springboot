@@ -56,6 +56,10 @@ public interface MemberMapper {
 
 	Board maxParticipants(int i);
 
+	int changeAccept(int boardNo, String id, String status);
+
+	int changeReject(int boardNo, String id, String status);
+
 
 
 

@@ -462,8 +462,9 @@ public class MemberController {
 	
 	@PostMapping("/member/change")
 	@ResponseBody
-	public void change(@RequestParam("boardNo") int boardNo, @RequestParam("boardStatus") String boardStatus) {
-//		mService.change(boardNo,boardStatus);
+	public String change(@RequestParam("status") String status,@RequestParam("boardNo") int boardNo,@ModelAttribute Member m) {
+		boolean result = mService.change(boardNo,m.getMemberId(),status);
+		return result ? "success" : "fail";
 	}
 	
 	@GetMapping("/member/checknickName")

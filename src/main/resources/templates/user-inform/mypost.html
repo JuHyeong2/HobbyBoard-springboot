@@ -101,16 +101,7 @@ const handleParticipant = (event,action, boardNo, memberNo) => {
         },
         success: data => {
             if (data == 'success') {
-//                 alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
 
-  				
-// 					const participant = document.getElementById('participant');
-				
-// 					console.log(participant);
-// 					if(participant) {
-// 						participant.remove();
-// 					}
-					
 					const participant = document.getElementById('participant');
 					
 					if(action == 'a') {

@@ -134,6 +134,15 @@ public Member findId(HashMap<String, String> map) {
 		public Board maxParticipants(int i) {
 			return mMapper.maxParticipants(i);
 		}
+
+		public boolean change(int boardNo, String id, String status) {
+			if(status.equals("a")) {
+				return mMapper.changeAccept(boardNo,id, status) >0;
+			} else if(status.equals("r")) {
+				return mMapper.changeReject(boardNo,id,status) >0;
+			}
+			return false;
+		}
 	   
 
 
