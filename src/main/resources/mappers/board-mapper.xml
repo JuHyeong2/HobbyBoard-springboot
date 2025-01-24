@@ -71,5 +71,12 @@
 		where board_no = #{bNo} 
 		order by reply_no 
 	</select>
+	
+	<select id="participantsByBoard">
+		select board_no, count(status) as participants
+		from participant
+		where status = 'a'
+		group by board_no
+	</select>
 
 </mapper>

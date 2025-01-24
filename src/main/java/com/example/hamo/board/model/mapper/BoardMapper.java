@@ -2,6 +2,7 @@ package com.example.hamo.board.model.mapper;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,5 +33,7 @@ public interface BoardMapper {
 
 	ArrayList<Reply> selectReplyList(int bNo);
 
+	ArrayList<Board> participantsByBoard();
 
 }
+

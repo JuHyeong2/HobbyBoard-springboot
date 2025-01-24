@@ -27,7 +27,7 @@
 
                           <div class="profile-picture">
                                 <h4>프로필 이미지</h4>
-                                <img alt="profile-img" th:src="${profileImage != null ? profileImage.imgPath : '/image/myinfo.png'}">
+                                <img alt="profile-img" th:src="${profileImage.url != null ? profileImage.url : '/image/myinfo.png'}">
                             </div>
                         	
                             <div class="info-item">
