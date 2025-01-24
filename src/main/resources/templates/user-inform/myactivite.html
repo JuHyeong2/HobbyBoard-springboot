@@ -25,7 +25,7 @@
                         <span class="activity-count" th:text="' 총 ' + ${count} + ' 건'"></span>
                     </h1>
    
-                    <div class="activity" th:each="a: ${list}" >
+                    <div class="activity" th:each="a: ${list}"  >
                         <div class="activity-status completed" th:text="${a.boardStatus.trim() == 'Y' ? '활동 완료' : '진행 중'}"></div>
 				
                         <div class="activity-title" th:text="${a.title}"></div>
@@ -51,16 +51,20 @@
 	
 	<script th:inline="javascript">
 	
-	const change = document.getElementsByClassName('activity-status completed');
+	const change = document.getElementById('activity' + boardNo);
 	console.log(change);
 	$.ajax ({
 		url : '/member/change',
 		type : 'post',
-		data : {boardNo : boardNo,
+// 		
+			data : {
+				change : change,
+				boardNo : boardNo,
 				status : status
 				},
 		success : data => {
 			if(status =='a') {
+				change.innerText = '';
 				
 			}else if(status =='r'){
 				

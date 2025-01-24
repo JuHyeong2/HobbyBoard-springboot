@@ -44,7 +44,7 @@
                        
                         
                  <div class="participants" th:id="'participants' + ${p.boardNo}" style="display:none;">
-                            <div class="participant" id="participant" th:each="pa : ${participantsMap.get(p.boardNo)}">
+                            <div class="participant" th:id="'participant' + ${pa.memberNo}" th:each="pa : ${participantsMap.get(p.boardNo)}">
                                 <div class="participant-info">
                                     <p><strong>이름:</strong> <span th:text="${pa.memberName}"></span></p>
                                     <p><strong>성별:</strong> <span th:text="${pa.memberGender.trim() == 'M' ? '남자' : '여자'}"></span></p>
@@ -75,6 +75,7 @@
 <script th:inline="javascript">
 const toggleParticipants = (boardNo) => {
     const participants = document.getElementById('participants' + boardNo);
+    console.log(participants);
     if (participants.style.display == 'none' || participants.style.display == '') {
         participants.style.display = 'block';
     } else {
@@ -82,6 +83,7 @@ const toggleParticipants = (boardNo) => {
     }
 
 }
+
 //     participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
 
 
@@ -101,18 +103,30 @@ const handleParticipant = (event,action, boardNo, memberNo) => {
         },
         success: data => {
             if (data == 'success') {
-
-					const participant = document.getElementById('participant');
+                alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
+//                 location.reload();
+        
+                const participant = document.getElementById('participant'+memberNo);
+                console.log(participant);
+                if(participant) {
+                	participant.remove();
+                }
+                
+//         success: data => {
+//             if (data == 'success') {
+				
+            	
+// 					const participant = document.getElementById('participant');
 					
-					if(action == 'a') {
-						alert('참가자가 수락되었습니다.')
-						participant.remove();
+// 					if(action == 'a') {
+// 						alert('참가자가 수락되었습니다.')
+// 						participant.remove();
 						
 						
-					}else if(action ='r') {
-						alert('참가자가 거절되었습니다.')
-						participant.remove();
-					}
+// 					}else if(action ='r') {
+// 						alert('참가자가 거절되었습니다.')
+// 						participant.remove();
+// 					}
 					
             } else {
                 alert('처리 중 오류가 발생했습니다.');
