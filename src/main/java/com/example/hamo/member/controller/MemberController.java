@@ -473,4 +473,5 @@ public class MemberController {
 		int count = mService.checknickName(nickname);
 		out.print(count);
 	}
+	
 }

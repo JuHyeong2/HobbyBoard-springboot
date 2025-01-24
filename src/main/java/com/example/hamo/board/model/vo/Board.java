@@ -30,5 +30,6 @@ public class Board {
 	private String memberNickName;
 	private int participants;
 	private String thumbnailUrl;
+	private String profileUrl;
 }
 
