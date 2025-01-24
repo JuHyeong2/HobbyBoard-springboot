@@ -199,134 +199,133 @@ public class MemberController {
 	}
 	
 
-	// 내 정보 페이지로 이동
 	@GetMapping("/member/myPage")
-	public String myPage(HttpSession session, Model model) {
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		if (loginUser == null) {
-			return "redirect:/member/login";
-		}
-		
-		Member updatedMember = mService.selectMember(loginUser.getMemberId());
-		if (updatedMember == null) {
-			return "redirect:/error";
-		}
-		
-		model.addAttribute("m", updatedMember);
-		return "user-inform/myPage";
-	}
-	
-	// 내 정보 수정 페이지로 이동
+    public String myPage(HttpSession session, Model model) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/member/login";
+        }
+        
+        Member updatedMember = mService.selectMember(loginUser.getMemberId());
+        if (updatedMember == null) {
+            return "redirect:/error";
+        }
+        
+        Image profileImage = mService.getProfileImage(updatedMember.getMemberNo());
+        model.addAttribute("m", updatedMember);
+        model.addAttribute("profileImage", profileImage);
+        return "user-inform/myPage";
+    }
+
+
+
 	@GetMapping("/member/editMyPage")
 	public String editMyPage(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser == null) {
 			return "redirect:/member/login";
 		}
-		model.addAttribute("loginUser", loginUser);
-		return "user-inform/editMyPage";
+		Image profileImage = mService.getProfileImage(loginUser.getMemberNo());
+	    model.addAttribute("loginUser", loginUser);
+	    model.addAttribute("profileImage", profileImage);
+	    return "user-inform/editMyPage";
 	}
 	
 	@PostMapping("/member/editMyPage")
-//	@Transactional
-    public String updateMember(/*@RequestParam("file") ArrayList<MultipartFile> files*/ @ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
-        Member loginUser = (Member) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/member/login";
-        }
-
-//        ArrayList<Image> list = new ArrayList<Image>();
-//        for(int i=0; i< files.size(); i++) {
-//          	MultipartFile upload = files.get(i);
-//          	if(!upload.getOriginalFilename().equals("")) {
-//          		String[] returnArr = saveFile(upload);
-//          		if(returnArr[1] != null) {	
-//          			Image img = new Image();
-//          			img.setImgName(upload.getOriginalFilename());
-//          			img.setImgRename(returnArr[1]);
-//          			img.setImgPath(returnArr[0]);
-//          			img.setDelimiter("U");
-//          			img.setBuNo(member.getMemberNo());
-//          			list.add(img);
-//          		}
-//          	}
-//          }
-          
-//          int result = mService.insertImage(member);
-
-     
-        
-      if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
-  	member.setMemberName(loginUser.getMemberName());
-  }
-  if (member.getMemberBirth() == null) {
-  	member.setMemberBirth(loginUser.getMemberBirth());
-  }
-  if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
-  	member.setMemberGender(loginUser.getMemberGender());
-  }
-  if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
-  	member.setMemberNickname(loginUser.getMemberNickname());
-  }
-  if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
-  	member.setMemberEmail(loginUser.getMemberEmail());
-  }
-  if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
-  	member.setMemberPhone(loginUser.getMemberPhone());
-  }
-        
-        
-        
-      
-          member.setMemberId(loginUser.getMemberId());
-        if (newPassword != null && !newPassword.isEmpty()) {
-        	member.setMemberPwd(bcrypt.encode(newPassword));
-        } else {
-        	member.setMemberPwd(loginUser.getMemberPwd());
-        }
-
-        boolean updated = mService.updateMember(member);
-        if (updated) {
-            Member updatedMember = mService.selectMember(loginUser.getMemberId());
-            session.setAttribute("loginUser", updatedMember);
-            
-            System.out.println("1111111111111" + updatedMember);
-            System.out.println("22222222222222" + loginUser);
-            System.out.println("#333333333333333" + member);
-            
-            return "redirect:/member/myPage";
-        } else {
-            return "redirect:/member/editMyPage";
-        }
-        
+	public String updateMember(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        return "redirect:/member/login";
+	    }
+	    
+	    if (file != null && !file.isEmpty()) {
+	        String fileName = file.getOriginalFilename();
+	        String filePath = saveFile(file);
+	        if (filePath != null) {
+	            Image profileImage = new Image();
+	            profileImage.setImgName(fileName);
+	            profileImage.setImgPath(filePath);
+	            profileImage.setImgRename(generateRenamedFileName(fileName));
+	            profileImage.setDelimiter("U");
+	            profileImage.setBuNo(loginUser.getMemberNo());
+	            
+	            mService.saveOrUpdateProfileImage(profileImage);
+	        }
+	    }
+	    
     
-    }
-	// 이미지 파일 저장
-	public String[] saveFile(MultipartFile upload) {
-		String savePath = "c:\\uploadFiles";
-		File folder = new File(savePath);
-		if(!folder.exists()) {
-			folder.mkdir();
-		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		int ranNum = (int)(Math.random()*100000);
-		String originalFileName = upload.getOriginalFilename();
-		String renameFileName = sdf.format(new Date()) + ranNum + originalFileName.substring(originalFileName.lastIndexOf("."));
-		
-		String renamePath = folder + "\\" + renameFileName;
-		try {
-			upload.transferTo(new File(renamePath));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		String[] returnArr = new String[2];
-		returnArr[0] = savePath;
-		returnArr[1] = renameFileName;
-		
-		return returnArr;
+	
+	    
+	  if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
+	  	member.setMemberName(loginUser.getMemberName());
+	  }
+	  if (member.getMemberBirth() == null) {
+	  	member.setMemberBirth(loginUser.getMemberBirth());
+	  }
+	  if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
+	  	member.setMemberGender(loginUser.getMemberGender());
+	  }
+	  if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
+	  	member.setMemberNickname(loginUser.getMemberNickname());
+	  }
+	  if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
+	  	member.setMemberEmail(loginUser.getMemberEmail());
+	  }
+	  if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
+	  	member.setMemberPhone(loginUser.getMemberPhone());
+	  }
+	
+	  member.setMemberId(loginUser.getMemberId());
+	    
+	  
+	
+	    if (newPassword != null && !newPassword.isEmpty()) {
+	    	member.setMemberPwd(bcrypt.encode(newPassword));
+	    } else {
+	    	member.setMemberPwd(loginUser.getMemberPwd());
+	    }
+	
+	    boolean updated = mService.updateMember(member);
+	    if (updated) {
+	        Member updatedMember = mService.selectMember(loginUser.getMemberId());
+	        session.setAttribute("loginUser", updatedMember);
+	        
+	        System.out.println("1111111111111" + updatedMember);
+	        System.out.println("22222222222222" + loginUser);
+	        System.out.println("#333333333333333" + member);
+	        
+	        return "redirect:/member/myPage";
+	    } else {
+	        return "redirect:/member/editMyPage";
+	    }
 	}
+
+		private String saveFile(MultipartFile file) {
+		String savePath = "C:\\uploadFiles";
+		File folder = new File(savePath);
+		if (!folder.exists()) {
+		    folder.mkdirs();
+		}
+		
+		String originalFileName = file.getOriginalFilename();
+		String renameFileName = generateRenamedFileName(originalFileName);
+		
+		try {
+		    file.transferTo(new File(savePath + "\\" + renameFileName));
+		    return "/uploadFiles/" + renameFileName; 
+		} catch (IOException e) {
+		    e.printStackTrace();
+		    return null;
+		}
+		}
+		
+		private String generateRenamedFileName(String originalFileName) {
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		    int ranNum = (int) (Math.random() * 100000);
+		    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		    return sdf.format(new Date()) + ranNum + extension;
+		}
+
 
 	
 	

@@ -46,7 +46,7 @@
                             <div class="participant" th:each="pa : ${participantsMap.get(p.boardNo)}">
                                 <div class="participant-info">
                                     <p><strong>이름:</strong> <span th:text="${pa.memberName}"></span></p>
-                                    <p><strong>성별:</strong> <span th:text="${pa.memberGender == 'M' ? '남자' : '여자'}"></span></p>
+                                    <p><strong>성별:</strong> <span th:text="${pa.memberGender.trim() == 'M' ? '남자' : '여자'}"></span></p>
                                     <p><strong>생년월일:</strong> <span th:text="${pa.memberBirth}"></span></p>
                                 </div>
                                 <div class="participant-actions">

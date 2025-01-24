@@ -24,15 +24,12 @@
                         <h2 class="section-title">기본 정보</h2>
                         <div class="info-grid">
                         
-                        	<div class="profile-picture">
-                        	<h4>프로필 이미지</h4>
-                        		<img alt="profile-img" src="/image/myinfo.png">
-                        	</div>
-<!--                         	<div class="info-item"> -->
-<!--                                 <label for="img">프로필 사진</label> -->
-<!--                                 <input type=image id="image" name="image" src = "/image/profile1.png"readonly> -->
-<!--                             </div> -->
-                        
+
+                          <div class="profile-picture">
+                                <h4>프로필 이미지</h4>
+                                <img alt="profile-img" th:src="${profileImage != null ? profileImage.imgPath : '/image/myinfo.png'}">
+                            </div>
+                        	
                             <div class="info-item">
                                 <label for="name">이름</label>
                                 <input type="text" id="name" name="memberName" th:value="${m.memberName}" readonly>
@@ -47,7 +44,7 @@
                             </div>
                             <div class="info-item">
                                 <label for="gender">성별</label>
-                                <input type="text" id="gender" name="memberGender" th:value="${m.memberGender == 'M' ? '남자' : '여자'}" readonly>
+                                <input type="text" id="gender" name="memberGender" th:value='${m.memberGender.trim() eq "M" ? "남자" : "여자"}' readonly>
                             </div>
                             <div class="info-item">
                                 <label for="nickname">닉네임</label>
@@ -91,7 +88,7 @@
                     </div>
 
                     <div class="button-container">
-                        <form action="/member/checkPwd" method="post">
+                        <form action="/member/checkPwd" method="get">
                             <button type="submit" class="edit-button">정보 수정하기</button>
                         </form>
                     </div>

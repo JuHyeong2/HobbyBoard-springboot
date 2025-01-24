@@ -27,28 +27,29 @@
                     <form id="editForm" action = "/member/editMyPage" method="post" class="edit-form" enctype="multipart/form-data">
                         <h1>내 정보 수정</h1>
                         
-		                        <div class="info-section">
-		                            <h2 class="section-title">기본 정보</h2>
-		                            <div class="info-grid">
-		             	
-		             			 <div class="profile-picture">
-                         			<h4>프로필 사진 변경</h4>
-                                    <img id="profilePreview" src="/image/myinfo.png" alt="Profile Picture"> 
-    
-                                    <input type="file" id="file" name="file" accept=".jpg, .png">
-                                    
-                             	</div>  
-                             	
-                             	
+                        <div class="info-section">
+                            <h2 class="section-title">기본 정보</h2>
+                            <div class="info-grid">
+                            
+                        
+                           <div class="profile-picture">
+                                    <h4>프로필 사진 변경</h4>
+                                    <img id="profilePreview" th:src="${profileImage != null ? profileImage.imgPath : '/image/myinfo.png'}" alt="Profile Picture">
+                                    <input type="file" id="profilePicture" name="file" accept="image/*">
+                                </div>
+                        	
+                            
+                            
+                            
                                 <div class="info-item">
                                     <label for="name">이름</label>
                                     <input type="text" id="memberName" name="memberName" th:value="${loginUser.memberName}" required>
                                 </div>
-                                <div class="info-item1">
+                                <div class="info-item">
                                     <label for="birthdate">생년월일</label>
                                     <input type="text" id="memberBirth" name="memberBirth" th:value="${loginUser.memberBirth}" required>
                                 </div>
-                                <div class="info-item1">
+                                <div class="info-item">
                                     <label for="id">아이디</label>
                                     <input type="text" id="memberId" name="memberId" th:value="${loginUser.memberId}" readonly>
                                 </div>
@@ -56,9 +57,9 @@
 								<div class="info-item">
    							 		<label for="gender">성별</label>
 						   		<div class="radio-group">
-							        <input type="radio" id="male" name="memberGender" value= "M" th:checked="${loginUser.memberGender == 'M'}">
+							        <input type="radio" id="male" name="memberGender" value= "M" th:checked='${loginUser.memberGender.trim() == "M"}'>
 							        <label for="male">남자</label>
-							        <input type="radio" id="female" name="memberGender" value="F" th:checked="${loginUser.memberGender == 'F'}">
+							        <input type="radio" id="female" name="memberGender" value="F" th:checked='${loginUser.memberGender.trim() == "F"}'>
 							        <label for="female">여자</label>
 							    </div>
 							     
@@ -101,8 +102,6 @@
                             </div>
                         </div>
                         
-                  
-                        
                         <button type="submit">수정 완료</button>
                     </form>
                 </div>
@@ -113,39 +112,16 @@
     <script th:lnline="javascript">
 
         
-	window.onload = () => {
-			
+
         	 document.getElementById('editForm').addEventListener('submit', e => {
-            	const newPassword = document.getElementById('newPassword').value;
-                const passwordConfirm = document.getElementById('password-confirm').value;
+            	var newPassword = document.getElementById('newPassword').value;
+                var passwordConfirm = document.getElementById('password-confirm').value;
                 
                 if (newPassword != passwordConfirm) {
                     e.preventDefault();
                     alert('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
                 }
-                
-//                 const files = document.getElementById('file');
-//                let isEmpty = true;
-//                for(const f of files) {
-//             	  	if(f.value != '') {
-//             	  		isEmpty = false;
-//             	  	}
-//                }
-       
             });
-        	 
-        	 document.getElementById('profilePreview').addEventListener('click', () => {
-        		const files = document.getElementsName('file');
-        		let isEmpty = true;
-        		for(const f of files) {
-        			if(f.value != '') {
-        				isEmpty = false;
-        			}
-        		}
-        	 });
-        	 
-        
-        	 
 			
         	 document.getElementById('nickname').addEventListener('change',function() {
         		const nicknameResult = document.getElementById('nickNameCheck');
@@ -170,8 +146,14 @@
         		}
         	 });
         
-        	
-	} 	
+        	 document.getElementById('profilePicture').addEventListener('change', function(e) {
+                 var file = e.target.files[0];
+                 var reader = new FileReader();
+                 reader.onload = function(e) {
+                     document.getElementById('profilePreview').src = e.target.result;
+                 }
+                 reader.readAsDataURL(file);
+             });
         	 
         
     </script>
@@ -179,4 +161,3 @@
 <div th:insert = "common/footer.html"></div>
 </body>
 </html>
-

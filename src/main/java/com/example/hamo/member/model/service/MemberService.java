@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.member.model.mapper.MemberMapper;
 import com.example.hamo.member.model.vo.Member;
 
@@ -13,8 +15,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 	private final MemberMapper mMapper;
+	
 	
 	public int insertMember(Member member) {
 		
@@ -31,7 +35,11 @@ public class MemberService {
 		return mMapper.login(m);
 	}
 
-	public Member findId(HashMap<String, String> map) {
+	public Member findId(int phone) {
+		
+		return mMapper.findId(phone);
+	}
+public Member findId(HashMap<String, String> map) {
 		
 		return mMapper.findId(map);
 	}
@@ -41,6 +49,7 @@ public class MemberService {
 		return mMapper.updatePwd(m);
 	}
 	
+
 	public Member selectMember(String id) {
 		return mMapper.selectMember(id);
 	}
@@ -83,8 +92,40 @@ public class MemberService {
 		return mMapper.checknickName(nickname);
 	}
 
-	public int insertImage(Member member) {
-		return mMapper.insertImage(member);
-	}
+	
+	 @Transactional
+	    public boolean updateProfileImage(int memberNo, Image image) {
+	        Member member = mMapper.selectMember(String.valueOf(memberNo));
+	        if (member == null) {
+	            return false;
+	        }
+
+	        image.setBuNo(member.getMemberNo());
+	        image.setDelimiter("U");
+
+	        Image existingImage = mMapper.getProfileImage(memberNo);
+	        if (existingImage == null) {
+	            return mMapper.insertProfileImage(image) > 0;
+	        } else {
+	            image.setImgNo(existingImage.getImgNo());
+	            return mMapper.updateProfileImage(image) > 0;
+	        }
+	    }
+	 @Transactional
+	    public boolean saveOrUpdateProfileImage(Image image) {
+	        Image existingImage = mMapper.getProfileImage(image.getBuNo());
+	        if (existingImage == null) {
+	            return mMapper.insertProfileImage(image) > 0;
+	        } else {
+	            image.setImgNo(existingImage.getImgNo());
+	            return mMapper.updateProfileImage(image) > 0;
+	        }
+	    }
+
+	    public Image getProfileImage(int memberNo) {
+	        return mMapper.getProfileImage(memberNo);
+	    }
+	   
+
 
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.member.model.vo.Member;
 
 @Mapper
@@ -18,13 +19,17 @@ public interface MemberMapper {
 
 	Member login(Member m);
 
+	Member findId(int phone);
+
+	Member selectMember(String id);
+
+//	int updateMember(Member m);
+	
 	Member findId(HashMap<String, String> map);
 
 	int updatePwd(Member m);
 
-	
-	Member selectMember(String id);
-	
+
 	ArrayList<Board> selectMyActivite(String id);
 
 	ArrayList<Board> selectMyPost(String memberId);
@@ -41,6 +46,13 @@ public interface MemberMapper {
 
 	int checknickName(String nickname);
 
-	int insertImage(Member member);
+	Image getProfileImage(int memberNo);
+
+	int insertProfileImage(Image image);
+
+	int updateProfileImage(Image image);
+
+
+
 
 }
