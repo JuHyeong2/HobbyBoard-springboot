@@ -34,7 +34,12 @@
 		<h2>나를 기다리는 하모</h2>
 			<section class="board-grid">
 				<div class="board-item" th:each="b : ${list}">
-					<div class="board-img"><img alt="board-img" src="image/park.jpg"></div>
+					<div class="board-img" th:if="${b.thumbnailUrl != null}">
+						<img alt="board-img" th:src="${b.thumbnailUrl}">
+					</div>
+					<div class="board-img" th:if="${b.thumbnailUrl == null}">
+						<img alt="board-img" src="/image/HAMO_Thumbnail.png">
+					</div>
 					<div class="board-info">
 						<h3>[[${b.title}]]</h3>
 						<p class="board-name">[[${b.title}]]</p>

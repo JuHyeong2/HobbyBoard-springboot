@@ -84,5 +84,11 @@
 		from image
 		where delimiter = 'U'
 	</select>
+	
+	<select id="selectImageListBoard">
+		select *
+		from image
+		where delimiter = 'B'
+	</select>
 
 </mapper>
