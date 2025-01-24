@@ -47,4 +47,14 @@
     
     </main>
 </body>
+	<script th:inline="javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+		// isAdmin이 'N'이라면 경고 후 페이지 이동
+		if (/*[[${(session.loginUser == null) || (session.loginUser.isAdmin == 'N')}]]*/true) {
+			alert('관리자만 이용할 수 있습니다.');
+			location.href = '/home';
+		}
+	});
+	</script>
+
 </html>
