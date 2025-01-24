@@ -221,6 +221,7 @@ public class MemberController {
         }
         
         Image image = mService.selectImage(loginUser.getMemberNo());
+        
 //		for(Image img : imageArr) {
 ////			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 //			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
@@ -257,6 +258,7 @@ public class MemberController {
 	    
 	    if (file != null && !file.isEmpty()) {
 	        String fileName = file.getOriginalFilename();
+	        
 	        String[] files = saveFiles(file);
 	        if (files[1] != null) {
 	            Image profileImage = new Image();

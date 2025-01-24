@@ -32,7 +32,7 @@ dependencies {
 
 
  
-	implementation 'org.springframeworkt6.boot:spring-boot-starter-mail:3.2.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.0'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
