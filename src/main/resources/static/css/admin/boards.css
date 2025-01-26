@@ -3,6 +3,7 @@
 
 .header {
     margin-left: 250px; /* 사이드바 너비만큼 여백 */
+    
     padding: 20px;
     width: calc(100% - 250px); /* 나머지 공간을 차지 */
     overflow: auto; /* 내용이 넘칠 경우 스크롤 */
@@ -11,7 +12,7 @@
 .content-wrapper {
     padding: 20px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto;	
     margin-left: 250px; /* 여기 수정 (오른쪽 여백 제거, 사이드바만큼만 왼쪽으로 이동) */
 }
 
@@ -21,20 +22,36 @@
     margin-bottom: 20px;
 }
 
-/* 검색 입력창 스타일 */
 .search-bar {
-    margin-right: 350px; /* 사이드바 크기만큼 왼쪽 여백 설정 */
+    display: flex;
+    align-items: center;
+    margin-left: 28rem; /* 사이드바 크기만큼 왼쪽 여백 설정 */
     margin-top: 10px;
     margin-bottom: 20px;
     text-align: center;
 }
+
+.search-select {	
+    padding: 9.3px 9.5px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px; /* 왼쪽 끝만 둥글게 */
+    margin-right: -1px; /* 인풋과 자연스럽게 이어지게 */
+    outline: none;
+    text-align: center;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+
 
 .search-bar input {
     width: 50%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-left: none; /* 왼쪽 테두리 제거 */
+    border-right: none; /* 오른쪽 테두리 제거 */
     box-sizing: border-box;
 }
 
@@ -43,6 +60,28 @@
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+
+.search-btn {
+    padding: 7px 9px;
+    border: 1px solid #ddd; /* 버튼 테두리를 인풋과 일치 */
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0; /* 오른쪽 끝만 둥글게 */
+}
+
+.search-btn i {
+    font-size: 18px;
+    color: #555;
+    padding: 3px 3px;
+}
+
+.search-btn:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
 
 /* 게시글 목록을 flex로 한 행에 4개씩 정렬 */
 .board-list {
@@ -71,7 +110,7 @@
     font-size: 14px;
     font-weight: bold;
     color: #333;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(249, 249, 249, 0.7);
     padding: 3px 6px;
     border-radius: 5px;
 }
@@ -112,10 +151,10 @@
 }
 
 /* 토글 버튼 */
-.toggle-btn {
+.delete-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
     background: none;
     border: none;
     font-size: 20px;
@@ -123,6 +162,6 @@
     cursor: pointer;
 }
 
-.toggle-btn:hover {
+.delete-btn:hover {
     color: #007bff;
 }

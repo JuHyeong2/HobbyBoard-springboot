@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>전체 게시글 페이지</title>
 <link rel="stylesheet" href="/css/admin/boards.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>   <!-- 제이쿼리 -->
 </head>
 <body>
 	<div th:replace="admin/admin-main.html"></div>
@@ -13,28 +15,121 @@
 	</div>
 
     <!-- 검색 입력창 추가 -->
-    <div class="search-bar">
-        <input type="text" placeholder="검색어를 입력하세요..." id="searchInput">
-    </div>
-
-    <div class="content-wrapper">
-       <div class="board-list">
-    <!-- 게시글 1 -->
-    <div class="board-card"  th:each="b : ${bList}">
-        <div class="board-item">
-        	<span class="boardNo">No.[[${b.boardNo}]]</span>
-            <span class="author">작성자: [[${b.memberNickName}]]</span>
-            <span class="title" th:inline="text">제목 : [[${b.title.length() > 10 ? b.title.substring(0, 10) + '...' : b.title}]]</span>
-
-
-            
-            <!-- 토글 버튼 -->
-            <button class="toggle-btn">...</button>
-        </div>
-    </div>
-    <!-- 나머지 게시글들 생략 -->
-</div>
-    </div>
-
+    <form id="boardForm">
+	    <div class="search-bar">
+		    <select id="searchCategory" name="searchCategory" class="search-select">
+		        <option value="-" disabled selected>-</option>
+		        <option value="title">제목</option>
+		        <option value="content">내용</option>
+		        <option value="author">작성자</option>
+		        <option value="title_content">제목+내용</option>
+		    </select>
+		    <input type="text" placeholder="검색어를 입력하세요..." id="searchInput" name="boardSearch">
+		    <button type="button" class="search-btn" id="search-btn">
+		        <i class="fa fa-search"></i> <!-- 돋보기 아이콘 -->
+		    </button>
+		</div>
+	
+	    <div class="content-wrapper">
+	       <div class="board-list">
+	    <!-- 게시글 1 -->
+			    <div class="board-card"  th:each="b : ${bList}">
+			        <div class="board-item">
+			        	<input type="hidden" id="boardNo" name="boardNo" th:value="${b.boardNo}">
+			        	<span class="boardNo">No.[[${b.boardNo}]]</span>
+			            <span class="author">작성자: [[${b.memberNickName}]]</span>
+			            <span class="title" th:inline="text">제목 : [[${b.title.length() > 10 ? b.title.substring(0, 10) + '...' : b.title}]]</span>
+			          <!-- 토글 버튼 -->
+			            <button class="delete-btn" type="button">
+			            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></svg>
+			            </button>
+			        </div>
+	    		</div>
+	    <!-- 나머지 게시글들 생략 -->
+			</div>
+	    </div>
+    </form>
+<script th:inline="javascript">
+	const deleteBtns = document.getElementsByClassName('delete-btn');
+	const form = document.getElementById('boardForm');
+	for(const deleteBtn of deleteBtns) {
+		deleteBtn.addEventListener('click', function(e) {
+			const boardNo = document.getElementById('boardNo').value;
+			const isChecked = confirm(boardNo + '번 글을 삭제하시겠습니까?');
+			if(isChecked) {
+				form.action='/admin/deleteBoard';
+				form.submit();
+			} else {
+				alert('게시글 삭제를 취소합니다.');
+			}
+		});
+	}
+	const searchBtn = document.getElementById('search-btn');
+	
+	searchBtn.addEventListener('click', () => {
+	    const searchCategory = document.getElementById('searchCategory').value;
+	    const searchValue = document.getElementById('searchInput').value;
+	    
+		if(searchCategory!='-') {
+			if(searchValue.trim() != '') {
+			    $.ajax({
+			        url: '/admin/searchBoard',
+			        type: 'post',
+			        data: {
+			            searchCategory: searchCategory,
+			            searchValue: searchValue
+			        },
+			        success: data => {
+			            console.log(data);  // 받은 데이터 확인
+			            const boardListContainer = document.querySelector('.board-list');  // 게시글 리스트 컨테이너
+			            boardListContainer.innerHTML = '';  // 기존 게시글 내용 지우기
+		
+			            // 받은 데이터를 통해 새로운 게시글 카드 생성
+			            for (const board of data) {  // forEach 대신 for...of 사용
+			                const boardCard = document.createElement('div');
+			                boardCard.classList.add('board-card');
+			                boardCard.innerHTML = `
+			                    <div class="board-item">
+			                        <input type="hidden" id="boardNo" name="boardNo" value="${board.boardNo}">
+			                        <span class="boardNo">No.${board.boardNo}</span>
+			                        <span class="author">작성자: ${board.memberNickName}</span>
+			                        <span class="title">제목: ${board.title.length > 10 ? board.title.substring(0, 10) + '...' : board.title}</span>
+			                        <button class="delete-btn" type="button">
+			                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+			                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+			                            </svg>
+			                        </button>
+			                    </div>
+			                `;
+			                // 새로 만든 게시글 카드 추가
+			                boardListContainer.appendChild(boardCard);
+			            }
+		
+			            // 삭제 버튼 이벤트 리스너 추가
+			            const deleteBtns = document.getElementsByClassName('delete-btn');
+			            for (const deleteBtn of deleteBtns) {
+			                deleteBtn.addEventListener('click', function(e) {
+			                    const boardNo = this.closest('.board-item').querySelector('#boardNo').value;
+			                    const isChecked = confirm(boardNo + '번 글을 삭제하시겠습니까?');
+			                    if (isChecked) {
+			                        form.action = '/admin/deleteBoard';
+			                        form.submit();
+			                    } else {
+			                        alert('게시글 삭제를 취소합니다.');
+			                    }
+			                });
+			            }
+			        },
+			        error: data => console.log(data)
+			    });
+			}else {
+				alert('검색어를 입력해주세요.');
+			}
+		} else {
+			alert('검색 카테고리를 선택해주세요.');
+		}
+	});
+	
+</script>
 </body>
 </html>
