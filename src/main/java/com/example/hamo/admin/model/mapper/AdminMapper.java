@@ -34,4 +34,8 @@ public interface AdminMapper {
 	int changeStatus(HashMap<String, String> map);
 
 	ArrayList<Member> searchUserList(String searchValue);
+
+	int deleteBoard(int boardNo);
+
+	ArrayList<Board> searchBoardList(HashMap<String, String> map);
 }

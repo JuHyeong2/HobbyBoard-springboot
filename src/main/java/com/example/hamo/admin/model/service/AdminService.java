@@ -63,4 +63,14 @@ public class AdminService {
 		return mapper.searchUserList(searchValue);
 	}
 
+	public int deleteBoard(int boardNo) {
+		return mapper.deleteBoard(boardNo);
+	}
+
+	public ArrayList<Board> searchBoardList(HashMap<String, String> map) {	
+		return mapper.searchBoardList(map);
+	}
+
+	
+
 }

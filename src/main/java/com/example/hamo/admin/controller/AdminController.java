@@ -36,6 +36,11 @@ public class AdminController {
 		return "admin/dashboard";
 	}
 	
+	@GetMapping("home")
+	public String home() {
+		return "redirect:/";
+	}
+	
 	// 
 	@GetMapping("users")
 	public String users(Model model) {
@@ -160,6 +165,30 @@ public class AdminController {
 		} else {
 		searchList = aService.selectAllMember();
 		}
+		return searchList;
+	}
+	
+	@GetMapping("deleteBoard")
+	public String deleteBoard(@RequestParam("boardNo") int boardNo){
+		int result = aService.deleteBoard(boardNo);
+		if(result > 0) {
+			return "redirect:/admin/boards";
+		} else {
+			return "";
+		}
+	}
+	
+	@PostMapping("searchBoard") 
+	@ResponseBody
+	public ArrayList<Board> searchBoard(@RequestParam("searchCategory")String searchCategory, @RequestParam("searchValue")String searchValue) {
+//		System.out.println("카테고리 : " + searchCategory);
+//		System.out.println("검색어 : " + searchValue);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("searchCategory", searchCategory);
+		map.put("searchValue", searchValue);
+		ArrayList<Board> searchList = aService.searchBoardList(map);
+//		System.out.println(searchList);
+		
 		return searchList;
 	}
 }
