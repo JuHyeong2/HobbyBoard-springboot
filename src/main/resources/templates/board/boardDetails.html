@@ -12,7 +12,7 @@
 	<div th:insert="common/top.html"></div>
 	
     <main class="main-container">
-    	<form id="detailForm" action="/board/boardUpdate" method="POST">
+    	<form id="detailForm" action="/board/boardUpdate" method="GET">
 	    	<input type="hidden" name="boardNo" th:value="${board.boardNo}" id="boardNo">
 	    	<input type="hidden" name="categoryNo" th:value="${board.categoryNo}" id="categoryNo">
 	    	<input type="hidden" name="locationNo" th:value="${board.locationNo}" id="locationNo">
@@ -22,7 +22,7 @@
 	    </form>
 	    <div class="breadcrumb">
 
-	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span id="updateBtn">수정</span>
+	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span id="updateBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">수정</span>
 	    </div>
 			
 	    <div class="gathering-detail">
