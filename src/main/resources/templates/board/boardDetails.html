@@ -148,16 +148,18 @@
             </div>
         </div>
         <!-- 모달창 HTML 추가 -->
-		<div id="report-modal" class="modal">
-		    <div class="modal-content">
-		        <span class="close-btn" id="close-modal">&times;</span>
-		        <h2>신고하기</h2>
-				<p>신고 사유를 작성해주세요.</p>
-		        <textarea id="report-reason" placeholder="신고 사유를 입력하세요..." style="resize: none; height: 200px; width:25rem;"></textarea>
-		        <button id="submit-report">신고하기</button>
-		    </div>
-		</div>
-        
+        <form id="report-form" method="get">
+        	<input type="hidden" th:value="${}">
+			<div id="report-modal" class="modal">
+			    <div class="modal-content">
+			        <span class="close-btn" id="close-modal">&times;</span>
+			        <h2>REPORT</h2>
+	<!-- 				<p>신고 사유를 작성해주세요.</p> -->
+			        <textarea id="report-reason" placeholder="신고 사유를 입력하세요..." style="resize: none; height: 200px; width:25rem;"></textarea>
+			        <button type="button" id="submit-report">신고하기</button>
+			    </div>
+			</div>
+        </form>
     </main>
 	
 	<div th:insert="common/footer.html"></div>
@@ -289,7 +291,12 @@
 	            }
 	        });
 	    }
-	
+		const form = document.getElementById('report-form');
+		const submitBtn = document.getElementById('submit-report');
+		submitBtn.addEventListener('click', () => {
+			
+		});
+	    
 	</script>
 </body>
 
