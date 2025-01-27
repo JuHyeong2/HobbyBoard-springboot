@@ -19,8 +19,8 @@
         <h2>모임 만들기</h2>
         <div class="editor-actions">
         	<span class="attachment-add">
-        		<label id="fileInput" class="file-upload-label">
-        			<img src="/image/addImage.png" width="50px">
+        		<label class="file-upload-label" id="imgLabel">
+        			<img src="/image/addImage.png" width="50px" id="addImage">
         		</label>
         	</span>
 	        <button id="submitButton" class="submit-button">등록</button>
@@ -113,10 +113,11 @@
 	  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	  	    });
 	    	
-	    	const fileInput = document.getElementById('fileInput');
+// 	    	const fileInput = document.getElementById('fileInput');
 	    	const inputDiv = document.getElementById('inputDiv');
+	    	const imgLabel = document.getElementById('imgLabel');
 	    	let file = document.querySelectorAll('input[type="file"]')[0];
-	    	fileInput.addEventListener('click', e=>{
+	    	document.getElementById('addImage').addEventListener('click', e=>{
 	    		console.log(file);
 	    		file.click();
 	    		file.addEventListener('change', e2=>{
@@ -126,12 +127,71 @@
 	    				const reader = new FileReader();
 		    			console.log(reader);
 		    			reader.onload = event =>{
+		    				const fileInput = document.createElement('div');
+		    				fileInput.id='fileInput';
 		    				const newImg = document.createElement('img');
+		    				console.log('event.target.result');
 		    				console.log(event.target.result);
+		    				console.log(event);
 			    			newImg.src = event.target.result;
 			    			newImg.style.width = '50px';
 			    			newImg.style.height = '50px';
 			    			fileInput.append(newImg);	
+			    			
+			    			const newButton = document.createElement('button');
+			    			
+			    			
+			    			const deleteImg = document.createElement('img');
+			    			deleteImg.src = '/image/image-delete.png';
+			    			deleteImg.width = '20';
+			    			deleteImg.height = '20';
+			    			
+			    			newButton.className = 'deleteImageButton';
+			    			const fileInputRect = fileInput.getBoundingClientRect();
+// 			    			const topPercent = ((fileInputRect.top - parentRect.top) / parentRect.height) * 100;
+// 			    			const leftPercent = ((fileInputRect.left - parentRect.left) / parentRect.width) * 100;
+
+// 			    			console.log(fileInputRect.width / 2);
+// 			    			newButton.style.top = (fileInputRect.height+'rem' + -41.5) + 'rem';
+// 			    			newButton.style.left = (fileInputRect.width+'rem' +70) + 'rem';
+			    			
+// 			    			deleteImg.style.top = newButton
+			    			newButton.append(deleteImg);
+			    			fileInput.append(newButton)
+			    			imgLabel.append(fileInput);
+			    			
+			    			
+			    			deleteImg.addEventListener('click', (e)=>{
+			    				const base64Data = e.target.parentNode.previousSibling.src.split(',')[1];
+// 			    				console.log(e.target.parentNode.previousSibling.src);
+			    				const byteCharacters = atob(base64Data);
+			    				const byteArrays = [];
+			    				for (let offset = 0; offset < byteCharacters.length; offset++) {
+			    				    const byte = byteCharacters.charCodeAt(offset);
+			    				    byteArrays.push(byte);
+			    				}
+			    				
+			    				// Blob으로 이미지 파일을 생성
+			    				const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/png' });
+
+			    				// Blob을 URL로 변환
+			    				const imageURL = URL.createObjectURL(blob);
+			    				
+// 			    				console.log(blob);
+// 			    				console.log(imageURL);
+			    				fileInput.remove();
+			    				const inputfiles = document.querySelectorAll('input[type="file"]');
+			    				console.log(inputfiles);
+			    				console.log(file2.name);
+			    				for(const i in inputfiles){
+			    					console.log(inputfiles[i].value);
+									if(inputfiles[i].value.includes(file2.name)){
+										inputfiles[i].remove();
+									}			    					
+			    				}
+			    				
+			    				
+			    			})
 			    			
 			    			file = document.createElement('input');
 			    			file.type = 'file';
