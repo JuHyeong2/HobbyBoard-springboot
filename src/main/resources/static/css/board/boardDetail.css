@@ -38,7 +38,7 @@
 
 .prev, .next {
 	position: absolute;
-	bottom: 0%;
+	bottom: 40%;
 	padding: 10px;
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
@@ -336,4 +336,9 @@ button[disabled] {
     box-shadow: 0 0 5px rgba(217, 83, 79, 0.5); /* 빨간빛 외곽선 */
 }
   
+#updateBtn {
+	float:right;
+	color: black;
+	cursor:pointer;
+}
  
