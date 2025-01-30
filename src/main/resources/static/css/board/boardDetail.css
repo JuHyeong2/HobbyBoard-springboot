@@ -13,7 +13,7 @@
 
 .gathering-detail {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -88,6 +88,7 @@
     font-size: 1.125rem;
     cursor: pointer;
     margin-top: auto;
+    margin-left: 30rem;
 }
 
 .reply {
@@ -152,7 +153,13 @@
 }
 
 .rp-ud {
+	display: flex;
 	margin-top: 2.1rem;
+	gap: 0.1rem;
+}
+
+.rp-ud svg{
+	margin-top: 2px;
 }
 
 img {
@@ -165,7 +172,12 @@ img {
 /* 	margin-bottom: 5px !important; */
 }
 
-
+button[disabled] {
+	background-color: #ccc; /* 비활성화 상태의 배경색 */
+    color: #666;           /* 텍스트 색상 */
+    cursor: not-allowed;   /* 금지 커서 */
+    opacity: 0.6;   
+}
 
 
 

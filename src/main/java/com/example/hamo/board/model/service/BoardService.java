@@ -81,5 +81,20 @@ public class BoardService {
 
 		return mapper.selectImageListBoard();
 	}
+
+	public int updateBoardCount(Board board) {
+		
+		return mapper.updateBoardCount(board);
+	}
+
+	public int insertParticipant(HashMap<String, Integer> map) {
+		
+		return mapper.insertParticipant(map);
+	}
+
+	public int selectParticipant(HashMap<String, Integer> map) {
+		
+		return mapper.selectParticipant(map);
+	}
 }
 

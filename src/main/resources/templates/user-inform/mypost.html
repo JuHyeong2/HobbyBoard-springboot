@@ -29,7 +29,7 @@
                         <div class="post-header">
                             <div>
                                 <div class="post-title" th:text="${p.title}"></div>
-                                <div class="post-description" th:text="${p.content}"></div>
+                                <div class="post-description" th:utext="${p.content}"></div>
                             </div>
                             <span class="post-status" th:text="${p.boardStatus.trim() == 'Y' ? '모집중' : '모집완료'}"></span>
 								

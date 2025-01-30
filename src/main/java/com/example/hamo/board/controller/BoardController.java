@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -56,19 +57,21 @@ public class BoardController {
 	 * 
 	 * */
 	@GetMapping("/{id}")
-	public String boarDetails(@PathVariable("id") int bNo, Model model) {
-		System.out.println("boardNo : " + bNo); //테스트
-		
+	public String boarDetails(@PathVariable("id") int bNo, Model model, HttpSession session) {
 		Board board = bService.selectBoard(bNo);
 		ArrayList<Reply> replyArr = bService.selectReplyList(bNo);
 		ArrayList<Image> imageArr = bService.selectImageList(bNo);
 		// 댓글 프로필 사진
 		ArrayList<Image> imageArr2 = bService.selectUserImageList();
 		for(Image img : imageArr2) {
-//			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			if(board.getMemberNo() == img.getBuNo()) {
+				board.setProfileUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+				System.out.println(board.getProfileUrl());
+			}
 		}
 		
+		// Reply에 프로필사진 url넣기
 		for(Reply r : replyArr) {
 			for(Image img : imageArr2) {
 				if(r.getMemberNo() == img.getBuNo()) {
@@ -77,14 +80,33 @@ public class BoardController {
 			}
 		}
 		
-//		ArrayList<String> strArr = new ArrayList<String>();
+		// 게시글 이미지 url가져오기
 		for(Image img : imageArr) {
-//			strArr.add(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		System.out.println(m);
+		if(m != null) {
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("memberNo", m.getMemberNo());
+			map.put("boardNo", bNo);
+			int participantResult = bService.selectParticipant(map);
+			System.out.println("participantResult : " + participantResult);
+			model.addAttribute("participantResult", participantResult);
+		}else {
+			model.addAttribute("participantResult", 0);
+		}
+	
+		
+		// 조회수 +1
+		int result = bService.updateBoardCount(board);
 		System.out.println(board); 					//테스트
-		model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
+		if(result > 0) {
+			model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
+		}
+		
+		
 		
 		return "board/boardDetails";
 	}
@@ -243,6 +265,20 @@ public class BoardController {
 		return "board/project";
 	}
 	
-	
+	@PostMapping("participant")
+	@ResponseBody
+	public int applyForParticipantion(@RequestParam("memberNo") int memberNo, @RequestParam("boardNo") int boardNo) {
+		System.out.println("memberNo : " + memberNo);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("memberNo", memberNo);
+		map.put("boardNo", boardNo);
+		int result = bService.insertParticipant(map);
+		if(result > 0) {
+			return result;
+		}else {
+			return result;
+		}
+		
+	}
 
 }

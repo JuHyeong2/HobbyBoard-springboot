@@ -131,6 +131,7 @@ public Member findId(HashMap<String, String> map) {
 			return mMapper.selectImage(memberNo);
 		}
 
+
 		public Board maxParticipants(int i) {
 			return mMapper.maxParticipants(i);
 		}
@@ -143,6 +144,7 @@ public Member findId(HashMap<String, String> map) {
 			}
 			return false;
 		}
+
 	   
 
 
