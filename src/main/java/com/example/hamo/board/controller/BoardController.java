@@ -214,8 +214,8 @@ public class BoardController {
 	}
 
 	// 게시글 수정 뷰로 이동하는 메소드
-	@PostMapping("boardUpdate")
-	public String boardUpdate(@ModelAttribute("Board") Board b, Model model) {
+	@GetMapping("boardUpdate")
+	public String boardUpdateView(@ModelAttribute("Board") Board b, Model model) {
 		
 		ArrayList<Image> imgArr = bService.selectImageList(b.getBoardNo());
 		for(Image img : imgArr) {
@@ -225,6 +225,12 @@ public class BoardController {
 		model.addAttribute("board", b).addAttribute("imgs", imgArr);
 		
 		return "board/boardUpdate";
+	}
+	
+	@PostMapping("boardUpdate")
+	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("file") ArrayList<MultipartFile> files) {
+		
+		return "";
 	}
 	
 	/*
