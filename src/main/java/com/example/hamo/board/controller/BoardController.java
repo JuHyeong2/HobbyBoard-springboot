@@ -67,7 +67,7 @@ public class BoardController {
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 			if(board.getMemberNo() == img.getBuNo()) {
 				board.setProfileUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
-				System.out.println(board.getProfileUrl());
+				System.out.println("board.getProfileUrl() : " + board.getProfileUrl());
 			}
 		}
 		
@@ -83,6 +83,7 @@ public class BoardController {
 		// 게시글 이미지 url가져오기
 		for(Image img : imageArr) {
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			System.out.println("img : " + img);
 		}
 		
 		Member m = (Member)session.getAttribute("loginUser");
@@ -208,10 +209,24 @@ public class BoardController {
 		return returnArr;
 	}
 
-	
+	// 게시글 수정 뷰로 이동하는 메소드
 	@GetMapping("boardUpdate")
-	public String boardUpdate() {
+	public String boardUpdateView(@ModelAttribute("Board") Board b, Model model) {
+		
+		ArrayList<Image> imgArr = bService.selectImageList(b.getBoardNo());
+		for(Image img : imgArr) {
+			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+		}
+		
+		model.addAttribute("board", b).addAttribute("imgs", imgArr);
+		
 		return "board/boardUpdate";
+	}
+	
+	@PostMapping("boardUpdate")
+	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("file") ArrayList<MultipartFile> files) {
+		
+		return "";
 	}
 	
 	/*

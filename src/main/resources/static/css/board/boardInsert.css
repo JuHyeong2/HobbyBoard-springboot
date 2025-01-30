@@ -195,12 +195,39 @@ span{
 }
 
 input[type="file"]{
-	display: none;
+/* 	display: none; */
 }
 
 /* 이미지 스타일링 */
 .file-upload-label {
   display: inline-block;
-  cursor: pointer;
+}
+
+#addImage {
+	cursor: relative;
+}
+
+#fileInput {
+	position: relative;
+	display: inline-block;
+}
+
+img {
+	position: relative;
+}
+
+
+.deleteImageButton {
+	position: absolute;
+	border: none;
+	border-radius: 30px;
+	width: 20px;
+	height: 20px;
+	background: none;
+	color: none;
+	cursor: pointer;
+	top: 0;
+	right: 0;
+	background: white;
 }
 

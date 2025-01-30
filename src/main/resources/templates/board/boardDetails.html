@@ -12,58 +12,68 @@
 	<div th:insert="common/top.html"></div>
 	
     <main class="main-container">
-    	<input type="hidden" name="boardNo" th:value="${board.boardNo}" id="boardNo">
-        <div class="breadcrumb">
-            <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span></span>
-        </div>
-		
-        <div class="gathering-detail">
-        	<div class="slide-container">
-	            <div class="gathering-images">
-	                
-		            <th:block th:each="a : ${list}">
-		            	<img th:if="${(#strings.containsIgnoreCase(a.imgRename, 'jpg') or #strings.containsIgnoreCase(a.imgRename, 'png'))}" alt="board-img" th:src="${a.url}">
-		            </th:block>
-		                
-		            <div th:if="${list == null || list.isEmpty()}" class="image-thumbnails">
-		            	<img src="/image/HAMO_Thumbnail.png">
-		            </div>
-	            </div>
-	            <th:block th:if="${list.size > 1}">
-		            <button class="prev" onclick="moveSlide(-1)">❮</button>
-			        <button class="next" onclick="moveSlide(1)">❯</button>
-		        </th:block>
-            </div>
-            <div class="gathering-info">
-                
-                <div class="gathering-meta">
-                	<div class="user-profile">
-				        <div class="profile-image" th:if="${board.profileUrl != null}">
-				        	<img alt="board-img" th:src="${board.profileUrl}">
-				        </div>
-				        <div class="profile-image" th:if="${board.profileUrl == null}">
-				        	<img alt="board-img" src="/image/myinfo.png">
-				        </div>
-					    <div class="user-details">
-					        <h3>[[${board.memberNickName}]]</h3>
-					        <p>[[${board.locationName}]]</p>
-					    </div>
-				        <div class="rp-ud">
-				        	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-4 w-4 shrink-0" width="20px" height="20px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path></svg>
-				        	[[${board.views}]]
-				        </div>
-			        </div>
-                </div>
-                <h1 class="gathering-title">[[${board.title}]]</h1>
-                <div class="gathering-description">
-                    <p th:utext="${board.content}"></p>
-                </div>
-                
-                <button th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 1}" id="btn" class="purchase-btn" disabled>참가신청 완료</button>
-                <button th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 0}" id="participation-btn" class="purchase-btn">참가하기</button>
+    	<form id="detailForm" action="/board/boardUpdate" method="GET">
+	    	<input type="hidden" name="boardNo" th:value="${board.boardNo}" id="boardNo">
+	    	<input type="hidden" name="categoryNo" th:value="${board.categoryNo}" id="categoryNo">
+	    	<input type="hidden" name="locationNo" th:value="${board.locationNo}" id="locationNo">
+	    	<input type="hidden" name="title" th:value="${board.title}" id="title">
+	    	<input type="hidden" name="content" th:value="${board.content}" id="content">
+	    	<input type="hidden" name="maxParticipants" th:value="${board.maxParticipants}" id="maxParticipants">
+	    </form>
+	    <div class="breadcrumb">
 
-            </div>
-        </div>
+	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span id="updateBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">수정</span>
+	    </div>
+			
+	    <div class="gathering-detail">
+	    	<div class="slide-container">
+	        	<div class="gathering-images">
+	             
+	          		<th:block th:each="a : ${list}">
+	          			<img alt="board-img" th:src="${a.url}">
+	          		</th:block>
+	              
+	          		<div th:if="${list == null || list.isEmpty()}" class="image-thumbnails">
+	          			<img src="/image/HAMO_Thumbnail.png">
+	          		</div>
+	         	</div>
+	        <th:block th:if="${list.size > 1}">
+	         	<button type="button" class="prev" onclick="moveSlide(-1)">❮</button>
+	         	<button type="button" class="next" onclick="moveSlide(1)">❯</button>
+	      	</th:block>
+	        </div>
+	        <div class="gathering-info">
+	            
+	            <div class="gathering-meta">
+	            	<div class="user-profile">
+	 	        		<div class="profile-image" th:if="${board.profileUrl != null}">
+	 	        			<img alt="board-img" th:src="${board.profileUrl}">
+	 	        		</div>
+	 	        		<div class="profile-image" th:if="${board.profileUrl == null}">
+	 	        			<img alt="board-img" src="/image/myinfo.png">
+	 	        		</div>
+	 		    		<div class="user-details">
+	 		        		<h3>[[${board.memberNickName}]]</h3>
+	 		        		<p>[[${board.locationName}]]</p>
+	 		    		</div>
+	 	        		<div class="rp-ud">
+	 	        			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-4 w-4 shrink-0" width="20px" height="20px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path></svg>
+	 	        			[[${board.views}]]
+	 	        		</div>
+	         		</div>
+	         	</div>
+	            <h1 class="gathering-title">[[${board.title}]]</h1>
+	            <div class="gathering-description">
+	                <p th:utext="${board.content}"></p>
+	            </div>
+	            
+	            <button type="button" th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 1}" id="btn" class="purchase-btn" disabled>참가신청 완료</button>
+	            <button type="button" th:if="${session.loginUser != null && !(session.loginUser.memberNickname eq board.memberNickName) && participantResult == 0}" id="participation-btn" class="purchase-btn">참가하기</button>
+	 			<button type="button" th:if="${session.loginUser != null && session.loginUser.memberNickname != board.memberNickName}" id="report-btn" class="report-btn">신고하기</button>
+	    
+	        </div>
+	    </div>
+        
         
         
         <div class="reply">
@@ -146,6 +156,17 @@
                 <div class="notice-date">2023.12.31</div>
             </div>
         </div>
+        <!-- 모달창 HTML 추가 -->
+		<div id="report-modal" class="modal">
+		    <div class="modal-content">
+		        <span class="close-btn" id="close-modal">&times;</span>
+		        <h2>신고하기</h2>
+				<p>신고 사유를 작성해주세요.</p>
+		        <textarea id="report-reason" placeholder="신고 사유를 입력하세요..." style="resize: none; height: 200px; width:25rem;"></textarea>
+		        <button id="submit-report">신고하기</button>
+		    </div>
+		</div>
+        
     </main>
 	
 	<div th:insert="common/footer.html"></div>
@@ -226,27 +247,62 @@
 	    	});
 	    })
 	    
-	    document.getElementById('participation-btn').addEventListener('click', ()=>{
-	    	$.ajax({
-	    		type: 'post',
-	    		url: '/board/participant',
-	    		data: {memberNo:/*[[${session.loginUser != null ? session.loginUser.memberNo : ''}]]*/0,
-	    				boardNo:document.getElementById('boardNo').value},
-	    		success: data=>{
-	    			if(data > 0){
-	    				alert('참가신청 완료됐습니다.\n 신청 내역은 내정보 MyActivity에서 보실 수 있습니다.')
-		    			document.getElementById('participation-btn').innerText = '참가신청 완료';
-		    			document.getElementById('participation-btn').disabled = true;	    				
-	    			}else{
-	    				alert('참가신청 실패, 다시 시도해주세요.')
-	    			}
-	    			
-	    		},
-	    		error: data=>{
-	    			console.log(data);
-	    		}
-	    	})
+
+    	document.addEventListener('DOMContentLoaded', () => { 
+    		const participationBtn = document.getElementById('participation-btn');
+    		if (participationBtn && !participationBtn.disabled) {
+    			participationBtn.addEventListener('click', () => {
+			    	$.ajax({
+			    		type: 'post',
+			    		url: '/board/participant',
+			    		data: {memberNo:/*[[${session.loginUser != null ? session.loginUser.memberNo : ''}]]*/0,
+			    				boardNo:document.getElementById('boardNo').value},
+			    		success: data=>{
+			    			if(data > 0){
+			    				alert('참가신청 완료됐습니다.\n 신청 내역은 내정보 MyActivity에서 보실 수 있습니다.')
+				    			document.getElementById('participation-btn').innerText = '참가신청 완료';
+				    			document.getElementById('participation-btn').disabled = true;	    				
+			    			}else{
+			    				alert('참가신청 실패, 다시 시도해주세요.')
+			    			}
+			    			
+			    		},
+			    		error: data=>{
+			    			console.log(data);
+			    		}
+			    	});
+    			});
+    		}
 	    });
+	
+	 // 신고하기 버튼 처리 (참가신청 상태와 관계없이 항상 등록)
+	    const reportBtn = document.getElementById('report-btn');
+	    const modal = document.getElementById('report-modal');
+	    const closeModal = document.getElementById('close-modal');
+
+	    if (reportBtn) {
+	        // 신고하기 버튼 클릭 시 모달창 열기
+	        reportBtn.addEventListener('click', () => {
+	            modal.style.display = 'block'; // 모달창 보이기
+	        });
+
+	        // 모달창 닫기 버튼 클릭 이벤트
+	        closeModal.addEventListener('click', () => {
+	            modal.style.display = 'none'; // 모달창 닫기
+	        });
+
+	        // 모달창 바깥 영역 클릭 시 닫기
+	        window.addEventListener('click', (event) => {
+	            if (event.target == modal) {
+	                modal.style.display = 'none'; // 모달창 닫기
+	            }
+	        });
+	    }
+	    
+	    document.getElementById('updateBtn').addEventListener('click', ()=>{
+	    	document.getElementById("detailForm").submit();
+	    })
+	
 	</script>
 </body>
 

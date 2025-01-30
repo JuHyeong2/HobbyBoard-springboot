@@ -66,4 +66,31 @@
 			 join member m using(member_no)
 		where board_status='Y'
 	</select>
+	
+	<update id="deleteBoard">
+		update board
+		set board_status='N'
+		where board_no=#{boardNo}
+	</update>
+	
+	<select id="searchBoardList" resultType="Board">
+	    select *
+	    from board b
+	    	 join member m on(b.member_no = m.member_no)
+	    where board_status='Y'
+	    <if test="searchCategory=='title'">
+	        and title like '%' || #{searchValue} || '%'
+	    </if>
+	    <if test="searchCategory=='content'">
+	        and content like '%' || #{searchValue} || '%'
+	    </if>
+	    <if test="searchCategory=='author'">
+	        and member_nickname like '%' || #{searchValue} || '%'
+	    </if>
+	    <if test="searchCategory=='title_content'">
+	        and (title like '%' || #{searchValue} || '%' 
+	        or content like '%' || #{searchValue} || '%')
+	    </if>
+	</select>
+
 </mapper>
