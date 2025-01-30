@@ -3,80 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="/js/summernote-lite.js"></script>
+<script src="/js/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/css/board/summernote-lite.css">
+<link rel="stylesheet" href="/css/board/boardInsert.css">
 <link rel="stylesheet" href="/css/board/boardInsert.css">
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
-	    <main class="editor-container">
-        <div class="post-editor">
-            <div class="editor-header">
-                <h2>모임 만들기</h2>
-                <div class="editor-actions">
-                    <span class="attachment-count">첨부파일 0</span>
-                    <button class="submit-button">수정</button>
-                </div>
-            </div>
-
-            <div class="title-section">
-                <span>카테고리</span>
-                <select class="category-select">
-                    <option>카테고리</option>
-                </select>
-                
-                <span>지역</span>
-                <select class="location-select">
-                	<option>지역을 입력하세요</option>
-                </select>
-                
-                <span>참가인원</span>
-                <input type="number" class="participant-input" placeholder="참가인원은 입력하세요">
-                
-                <span>제목</span>
-                <input type="text" class="title-input" placeholder="제목을 입력하세요">
-            </div>
-
-            <div class="editor-toolbar">
-                <div class="toolbar-group">
-                    <button class="toolbar-button"><span class="icon">📷</span></button>
-                    <button class="toolbar-button"><span class="icon">📁</span></button>
-                    <button class="toolbar-button"><span class="icon">🔗</span></button>
-                    <button class="toolbar-button"><span class="icon">📺</span></button>
-                </div>
-                <div class="toolbar-group">
-                    <button class="toolbar-button">굵게</button>
-                    <button class="toolbar-button">기울임</button>
-                    <button class="toolbar-button">밑줄</button>
-                    <button class="toolbar-button">취소선</button>
-                </div>
-                <div class="toolbar-group">
-                    <button class="toolbar-button">왼쪽</button>
-                    <button class="toolbar-button">가운데</button>
-                    <button class="toolbar-button">오른쪽</button>
-                </div>
-            </div>
-
-            <div class="content-area">
-                <textarea placeholder="내용을 입력하세요"></textarea>
-            </div>
+	
+    <div class="editor-header">
+        <h2>모임 만들기</h2>
+        <div class="editor-actions">
+        	<span class="attachment-add">
+        		<label id="fileInput" class="file-upload-label">
+        			<img src="/image/addImage.png" width="50px">
+        			<th:block th:each="img:${imgs}">
+        				<img th:src="${img.url}" width="50px" height="50px">
+        			</th:block>
+        		</label>
+        	</span>
+	        <button id="submitButton" class="submit-button">등록</button>
         </div>
+    </div>
 
-        <aside class="sidebar">
-            <div class="sidebar-section">
-                <h3>공개 설정</h3>
-                <ul>
-                    <li>전체공개</li>
-                    <li>깐부공개</li>
-                </ul>
-            </div>
-            <div class="sidebar-section">
-                <h3>추가 설정</h3>
-                <ul>
-                    <li>댓글 허용</li>
-                    <li>스크랩 허용</li>
-                </ul>
-            </div>
-        </aside>
-    </main>
+	<form id="form" method="post" action="/board/boardInsert" enctype="multipart/form-data">
+		<div id="inputDiv">
+			<input type="file" name="file">
+		</div>
+		<div class="title-section">
+			<div class="horizon">
+				<select name="categoryNo" class="category-select">
+				    <option>모임의 종류를 입력하세요.</option>
+				    <option value="1" th:selected="${board.categoryNo == 1}">스포츠/운동</option>
+				    <option value="2" th:selected="${board.categoryNo == 2}">공예/DIY</option>
+				    <option value="3" th:selected="${board.categoryNo == 3}">미술/그림</option>
+				    <option value="4" th:selected="${board.categoryNo == 4}">음악</option>
+				    <option value="5" th:selected="${board.categoryNo == 5}">요리/베이킹</option>
+				    <option value="6" th:selected="${board.categoryNo == 6}">게임</option>
+				    <option value="7" th:selected="${board.categoryNo == 7}">영화/드라마</option>
+				    <option value="8" th:selected="${board.categoryNo == 8}">여행</option>
+				    <option value="9" th:selected="${board.categoryNo == 9}">자연/식물</option>
+				    <option value="10" th:selected="${board.categoryNo == 10}">책/문학</option>
+				    <option value="11" th:selected="${board.categoryNo == 11}">심리/자기계발</option>
+				    <option value="12" th:selected="${board.categoryNo == 12}">IT</option>
+				    <option value="13" th:selected="${board.categoryNo == 13}">개발/프로그래밍</option>
+				    <option value="14" th:selected="${board.categoryNo == 14}">사진</option>
+				</select>
+	
+		
+	
+				<select name="locationNo" class="location-select">
+				
+				    <option >지역을 입력하세요.</option>
+				    <option value="1" th:selected="${board.categoryNo == 1}">강남구</option>
+				    <option value="2" th:selected="${board.categoryNo == 2}">강동구</option>
+				    <option value="3" th:selected="${board.categoryNo == 3}">강북구</option>
+				    <option value="4" th:selected="${board.categoryNo == 4}">강서구</option>
+				    <option value="5" th:selected="${board.categoryNo == 5}">관악구</option>
+				    <option value="6" th:selected="${board.categoryNo == 6}">광진구</option>
+				    <option value="7" th:selected="${board.categoryNo == 7}">구로구</option>
+				    <option value="8" th:selected="${board.categoryNo == 8}">금천구</option>
+				    <option value="9" th:selected="${board.categoryNo == 9}">노원구</option>
+				    <option value="10" th:selected="${board.categoryNo == 10}">도봉구</option>
+				    <option value="11" th:selected="${board.categoryNo == 11}">동대문구</option>
+				    <option value="12" th:selected="${board.categoryNo == 12}">동작구</option>
+				    <option value="13" th:selected="${board.categoryNo == 13}">마포구</option>
+				    <option value="14" th:selected="${board.categoryNo == 14}">서대문구</option>
+				    <option value="15" th:selected="${board.categoryNo == 15}">서초구</option>
+				    <option value="16" th:selected="${board.categoryNo == 16}">성동구</option>
+				    <option value="17" th:selected="${board.categoryNo == 17}">성북구</option>
+				    <option value="18" th:selected="${board.categoryNo == 18}">송파구</option>
+				    <option value="19" th:selected="${board.categoryNo == 19}">양천구</option>
+				    <option value="20" th:selected="${board.categoryNo == 20}">영등포구</option>
+				    <option value="21" th:selected="${board.categoryNo == 21}">용산구</option>
+				    <option value="22" th:selected="${board.categoryNo == 22}">은평구</option>
+				    <option value="23" th:selected="${board.categoryNo == 23}">종로구</option>
+				    <option value="24" th:selected="${board.categoryNo == 24}">중구</option>
+				    <option value="25" th:selected="${board.categoryNo == 25}">중랑구</option>
+				</select>
+
+			    <input type="number" class="participant-input" name="maxParticipants" placeholder="참가인원은 입력하세요" th:value="${board.maxParticipants}">
+
+	        </div>
+	        <input type="text" class="title-input" name="title" placeholder="제목을 입력하세요" th:value="${board.title}">
+	        <br><br>
+	        <textarea id="summernote" name="content">[[${board.content}]]</textarea>
+        </div>
+	</form>
+	
+	<script>
+		$(document).ready(function() {
+	    	$('#summernote').summernote({
+	    		height: 500,
+	  			toolbar: [
+	  			    // [groupName, [list of button]]
+	  			    ['fontname', ['fontname']],
+	  			    ['fontsize', ['fontsize']],
+	  			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+	  			    ['color', ['forecolor','color']],
+	  			    ['table', ['table']],
+	  			    ['para', ['paragraph']],
+	  			    ['height', ['height']],
+	  			    ['insert',['link','video']],
+	  			    ['view', ['fullscreen', 'help']]
+	  			  ],
+	  			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+	  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	  	    });
+	    	
+	    	const fileInput = document.getElementById('fileInput');
+	    	const inputDiv = document.getElementById('inputDiv');
+	    	let file = document.querySelectorAll('input[type="file"]')[0];
+	    	fileInput.addEventListener('click', e=>{
+	    		console.log(file);
+	    		file.click();
+	    		file.addEventListener('change', e2=>{
+	    			const file2 = e2.target.files[0];
+	    			console.log(file2);
+	    			if(file2){
+	    				const reader = new FileReader();
+		    			console.log(reader);
+		    			reader.onload = event =>{
+		    				const newImg = document.createElement('img');
+		    				console.log(event.target.result);
+			    			newImg.src = event.target.result;
+			    			newImg.style.width = '50px';
+			    			newImg.style.height = '50px';
+			    			fileInput.append(newImg);	
+			    			
+			    			file = document.createElement('input');
+			    			file.type = 'file';
+			    			file.name = 'file';
+			    			inputDiv.append(file);
+		    			}
+		    			
+		    			reader.readAsDataURL(file2);
+		    			
+		    		}
+	    		}, {once:true});
+	    	})
+	    	
+	    });
+	    
+	    document.getElementById('submitButton').addEventListener('click', ()=>{
+	    	const form = document.getElementById('form');
+	    	form.submit();
+	    })
+	</script>
 </body>
 </html>

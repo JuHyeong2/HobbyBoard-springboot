@@ -86,7 +86,7 @@ body {
 .pagination {
     display: flex;
     position: fixed;
-    bottom: 20px; /* 화면 하단에서 20px */
+    bottom: 2rem; /* 화면 하단에서 20px */
     left:55%;   /* 화면 중앙 기준 */
     transform: translateX(-50%); /* 정확히 중앙에 맞춤 */
     list-style: none;

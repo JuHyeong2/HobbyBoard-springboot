@@ -67,7 +67,7 @@ public class BoardController {
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
 			if(board.getMemberNo() == img.getBuNo()) {
 				board.setProfileUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
-				System.out.println(board.getProfileUrl());
+				System.out.println("board.getProfileUrl() : " + board.getProfileUrl());
 			}
 		}
 		
@@ -83,6 +83,7 @@ public class BoardController {
 		// 게시글 이미지 url가져오기
 		for(Image img : imageArr) {
 			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			System.out.println("img : " + img);
 		}
 		
 		Member m = (Member)session.getAttribute("loginUser");
@@ -105,10 +106,14 @@ public class BoardController {
 		if(result > 0) {
 			model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
 		}
+		if(board.getBoardStatus().equals("N")) {
+			model.addAttribute("result", 0);
+			return "/";
+		} else {
+			model.addAttribute("result", 1);
+			return "board/boardDetails";
+		}
 		
-		
-		
-		return "board/boardDetails";
 	}
 
 	
@@ -208,9 +213,17 @@ public class BoardController {
 		return returnArr;
 	}
 
-	
-	@GetMapping("boardUpdate")
-	public String boardUpdate() {
+	// 게시글 수정 뷰로 이동하는 메소드
+	@PostMapping("boardUpdate")
+	public String boardUpdate(@ModelAttribute("Board") Board b, Model model) {
+		
+		ArrayList<Image> imgArr = bService.selectImageList(b.getBoardNo());
+		for(Image img : imgArr) {
+			img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+		}
+		
+		model.addAttribute("board", b).addAttribute("imgs", imgArr);
+		
 		return "board/boardUpdate";
 	}
 	
@@ -236,7 +249,7 @@ public class BoardController {
 	@GetMapping("noticeView")
 	public String noticeView(Model model, @RequestParam(value="page", defaultValue="1")int currentPage,HttpServletRequest request) {
 		int listCount =  aService.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 7);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		ArrayList<Admin> list = aService.selectNoticeList(pi);
 		model.addAttribute("aList", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
 		

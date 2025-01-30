@@ -32,27 +32,25 @@
 
         <nav aria-label="Standard pagination example">
             <ul class="pagination">
-                <!-- 이전 페이지 -->
-                <li>
-                    <th:block th:if='${pi.startPage} > 0'>
-                        <a th:href="@{${loc}(page=${pi.currentPage-1})}">
-                            <span><</span>
-                        </a>
-                    </th:block>
-                </li>
-
-                <!-- 페이지 번호 -->
-                <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
-                    <a th:href="@{${loc}(page=${p})}">[[${p}]]</a>
-                </li>
-
-                <!-- 다음 페이지 -->
-                <li>
-                    <a th:href="@{${loc}(page=${pi.currentPage+1})}">
-                        <span>></span>
-                    </a>
-                </li>
-            </ul>
+			<!-- 이전 페이지 -->
+				<li class="page-item" th:classappend="${pi.currentPage == 1} ? 'disabled'">
+	                  <a class="page-link" th:href="${pi.currentPage > 1} ? @{${loc}(page=${pi.currentPage-1})} : ''" aria-label="Previous">
+	                     <span aria-hidden="true">&laquo;</span>
+	                  </a>
+	               </li>
+	               
+	               <!-- 페이지 번호 -->
+	               <li class="page-item" th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}" 
+	                                th:classappend="${p == pi.currentPage} ? 'active'">
+	                  <a class="page-link" th:href="@{${loc}(page=${p})}">[[${p}]]</a>
+	               </li>
+	
+	               <!-- 다음 버튼 -->
+	               <li class="page-item" th:classappend="${pi.currentPage == pi.maxPage} ? 'disabled'">
+	                  <a class="page-link" th:href="${pi.currentPage < pi.maxPage} ? @{${loc}(page=${pi.currentPage+1})} : ''" aria-label="Next">
+	                      <span aria-hidden="true">&raquo;</span></a>
+	               </li>
+			</ul>
         </nav>
     </div>
     <script>
