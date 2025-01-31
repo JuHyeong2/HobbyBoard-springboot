@@ -24,7 +24,7 @@
 
 	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span id="updateBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">수정</span>
 	    </div>
-			
+		
 	    <div class="gathering-detail">
 	    	<div class="slide-container">
 	        	<div class="gathering-images">
@@ -157,21 +157,33 @@
             </div>
         </div>
         <!-- 모달창 HTML 추가 -->
-		<div id="report-modal" class="modal">
-		    <div class="modal-content">
-		        <span class="close-btn" id="close-modal">&times;</span>
-		        <h2>신고하기</h2>
-				<p>신고 사유를 작성해주세요.</p>
-		        <textarea id="report-reason" placeholder="신고 사유를 입력하세요..." style="resize: none; height: 200px; width:25rem;"></textarea>
-		        <button id="submit-report">신고하기</button>
-		    </div>
-		</div>
-        
+        <form id="report-form" method="post">
+        	<input type="hidden" th:value="${board.boardNo}" id="reportBoardNo" name="reportBoardNo">
+        	<input type="hidden" th:value="${board.memberNo}" id="reportWriter" name="reportWriter">
+			<div id="report-modal" class="modal">
+			    <div class="modal-content">
+			        <span class="close-btn" id="close-modal">&times;</span>
+			        <h2>REPORT</h2>
+	<!-- 				<p>신고 사유를 작성해주세요.</p> -->
+			        <textarea id="report-reason" placeholder="신고 사유를 입력하세요..." name="reportContent" style="resize: none; height: 200px; width:25rem;"></textarea>
+			        <button type="button" id="submit-report">신고하기</button>
+			    </div>
+			</div>
+        </form>
     </main>
 	
 	<div th:insert="common/footer.html"></div>
-	
 	<script th:inline="javascript">
+		document.addEventListener('DOMContentLoaded', () => {
+	        const result = /*[[${result}]]*/ 0; // 컨트롤러에서 전달된 result 값
+	
+	        if (result == 0) {
+	            alert('삭제된 게시물입니다.');
+	        	location.href = '/'; // 게시판 목록으로 리다이렉트
+	        }
+	        // result가 1인 경우에는 아무 동작도 하지 않음 (페이지가 정상적으로 로드됨)
+	    });
+		
 		let currentSlide = 0;
 	
 		// 게시글 이미지 슬라이드
@@ -298,11 +310,23 @@
 	            }
 	        });
 	    }
+
+		const form = document.getElementById('report-form');
+		const submitBtn = document.getElementById('submit-report');
+		submitBtn.addEventListener('click', () => {
+			if(confirm('신고하시겠습니까?')) {
+				form.action="/admin/reportSubmit";
+				form.submit();
+			} 
+		});
+	    
+
 	    
 	    document.getElementById('updateBtn').addEventListener('click', ()=>{
 	    	document.getElementById("detailForm").submit();
 	    })
 	
+
 	</script>
 </body>
 

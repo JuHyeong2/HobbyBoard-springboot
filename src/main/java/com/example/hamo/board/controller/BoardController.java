@@ -106,10 +106,14 @@ public class BoardController {
 		if(result > 0) {
 			model.addAttribute("board", board).addAttribute("list", imageArr).addAttribute("rlist", replyArr);
 		}
+		if(board.getBoardStatus().equals("N")) {
+			model.addAttribute("result", 0);
+			return "/";
+		} else {
+			model.addAttribute("result", 1);
+			return "board/boardDetails";
+		}
 		
-		
-		
-		return "board/boardDetails";
 	}
 
 	
@@ -251,7 +255,7 @@ public class BoardController {
 	@GetMapping("noticeView")
 	public String noticeView(Model model, @RequestParam(value="page", defaultValue="1")int currentPage,HttpServletRequest request) {
 		int listCount =  aService.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 7);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		ArrayList<Admin> list = aService.selectNoticeList(pi);
 		model.addAttribute("aList", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
 		

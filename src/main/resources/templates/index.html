@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 </head>
 
 <body>
@@ -52,24 +54,46 @@
 <!-- 		</form> -->
 		<br />
 	</main>
-
-
+	<!-- 맨 위로 가기 버튼 -->
+	<button class="scroll-to-top" id="scrollToTopBtn">
+    	<i class="fas fa-arrow-up"></i>
+	</button>
+	
+	<div th:insert="common/footer.html"></div>
+	
 	<script>
 		
 		//게시글 클릭하면 게시글 상세 페이지로 날아가는 스크립트
 		window.onload = () => {
-			const board = document.getElementsByClassName('board-item');
-			const form = document.getElementById('myform');
-	
-			for (const div of board) {
-				div.addEventListener('click', () => {
-					console.log(div.querySelectorAll('input'));
-					const bNo = div.querySelectorAll('input')[0].value;
-					console.log(bNo);
-					location.href = "/board/" + bNo;
-				});
-			}
+		    const board = document.getElementsByClassName('board-item');
+		    const form = document.getElementById('myform');
+		    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+		
+		    // 게시글 클릭 시 상세 페이지로 이동
+		    for (const div of board) {
+		        div.addEventListener('click', () => {
+		            console.log(div.querySelectorAll('input'));
+		            const bNo = div.querySelectorAll('input')[0].value;
+		            console.log(bNo);
+		            location.href = "/board/" + bNo;
+		        });
+		    }
+		
+		    // 스크롤 시 버튼 표시/숨김 처리
+		    window.onscroll = function () {
+		        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+		            scrollToTopBtn.style.display = "block"; // 스크롤 100px 이상이면 버튼 표시
+		        } else {
+		            scrollToTopBtn.style.display = "none"; // 스크롤 100px 이하이면 버튼 숨김
+		        }
+		    };
+		
+		    // 버튼 클릭 시 페이지 맨 위로 스크롤
+		    scrollToTopBtn.addEventListener('click', () => {
+		        window.scrollTo({ top: 0, behavior: 'smooth' }); // 부드럽게 스크롤
+		    });
 		};
+
 	
 	</script>
 </body>

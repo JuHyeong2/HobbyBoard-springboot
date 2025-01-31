@@ -17,10 +17,10 @@
     <style>
         .graph-bar {
             display: inline-block;
-            width: 120px;
+            width: 6rem;
             text-align: center;
             margin-right: 20px;
-            margin-top: 20px;
+            margin-top: 1rem;
         }
         .graph-container {
             text-align: center;
@@ -36,8 +36,8 @@
             margin-bottom: 10px;
         }
         .echart {
-            width: 100%;
-            height: 250px;
+            width: 64rem;  /* 그래프의 가로 크기 확대 */
+        	height: 19rem; /* 그래프의 세로 크기 확대 */	
         }
     </style>
 </head>
@@ -159,7 +159,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl1 = document.getElementById('calendar1');
             var calendarEl2 = document.getElementById('calendar2');
-
+			
+            const boardCounts = /*[[${boardCount}]]*/0;
+            let events = boardCounts.map(function(item) {
+            	return {
+            		title: item.count.toString() + '개',
+            		date: item.createDate
+            	};
+            });
+            
             var calendar1 = new FullCalendar.Calendar(calendarEl1, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -168,16 +176,12 @@
                     end: 'today next', 
                 },
                 locale: 'ko',
-                events: [{
-                    title: '20',
-                    date: '2024-12-25',
-                }, {
-                    title: '20',
-                    date: '2024-12-27',
-                }]
+                events: events
             });
-
+           
+            
             var calendar2 = new FullCalendar.Calendar(calendarEl2, {
+            	
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     start: 'prev', 
