@@ -246,6 +246,14 @@ public class BoardController {
 		if(result > 0){
 			int bNo = r.getBoardNo();
 			ArrayList<Reply> list = bService.selectReplyList(bNo);
+			ArrayList<Image> imageArr2 = bService.selectUserImageList();
+			for(Reply r : list) {
+				for(Image img : imageArr2) {
+					if(r.getMemberNo() == img.getBuNo()) {
+						r.setImageUrl(img.getUrl());
+					}
+				}
+			}
 			return list;
 		}else {
 			return null;

@@ -108,11 +108,11 @@ public class MemberController {
 	
 	// Home으로 가는 모든 버튼
 
-	@GetMapping("/home")
-	public String home(Model model, HttpSession session) {
-
-		return "index";
-	}
+//	@GetMapping("/home")
+//	public String home(Model model, HttpSession session) {
+//
+//		return "index";
+//	}
 
 //	@GetMapping("/home")
 //	public String home() {
