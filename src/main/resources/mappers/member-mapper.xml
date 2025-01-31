@@ -44,14 +44,22 @@
 	</select>
 
 	<select id="selectMyActivite" resultType="Board">
-		select b.board_no,
-		b.title, b.content, b.create_date, b.board_status, c.category_name
-		from board b
-		join participant p on b.board_no = p.board_no
-		join member m on p.member_no = m.member_no
-		join category c on b.category_no = c.category_no
-		where m.member_id = #{memberId}
-		order by b.create_date desc
+<!-- 		select b.board_no, -->
+<!-- 		b.title, b.content, b.create_date, b.board_status, c.category_name -->
+<!-- 		from board b -->
+<!-- 		join participant p on b.board_no = p.board_no -->
+<!-- 		join member m on p.member_no = m.member_no -->
+<!-- 		join category c on b.category_no = c.category_no -->
+<!-- 		where m.member_id = #{memberId} -->
+<!-- 		order by b.create_date desc -->
+	select b.board_no, b.title, b.content, b.create_date, b.board_status, c.category_name
+    from board b
+    	join category c on b.category_no = c.category_no
+    	left join participant p on b.board_no = p.board_no and p.member_no = (select member_no from member where member_id = #{memberId})
+    where b.member_no = (select member_no from member where member_id = #{memberId})
+       	or p.member_no is not null
+    order by b.create_date desc
+	
 	</select>
 
 	<select id="selectMyPost">
@@ -74,14 +82,14 @@
 	</select>
 
 
-	<update id="accept">
+	<update id="acceptParticipant">
 		update participant
 		set status = 'a'
 		where board_no =
 		#{boardNo} and member_no = #{participantId}
 	</update>
 
-	<update id="reject">
+	<update id="rejectParticipant">
 		update participant
 		set status = 'r'
 		where board_no =
@@ -127,5 +135,30 @@
 		where bu_no = ${memberNo} and delimiter = 'U'
 	</select>
 	
+
+	<select id="getParticipantStatus" resultType="string">
+	    select status
+	    from participant
+	    where board_no = #{boardNo} and member_no = #{participantId}
+	</select>
 	
+	
+	<update id="updateBoardStatus">
+    update board
+    set board_status = 'N'
+    where board_no = #{boardNo}
+	</update>
+	
+	<select id="getBoardInfo" resultType="Board">
+	    select *
+	    from board
+	    where board_no = #{boardNo}
+	</select>
+	
+	<select id="getAcceptedParticipantsCount" resultType="int">
+	    select count(*)
+	    from participant
+	    where board_no = #{boardNo} and status = 'a'
+	</select>
+
 </mapper>
