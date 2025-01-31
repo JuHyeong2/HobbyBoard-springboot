@@ -33,7 +33,10 @@
 		</div>
 	</section>
 	<main>
-		<h2>나를 기다리는 하모</h2>
+		<div class="title-flex">
+			<h2>나를 기다리는 하모</h2>
+			<label th:if="${session.loginUser != null}" class="insertBoard" onclick="location.href='/board/boardInsert'">글쓰기</label>
+		</div>
 			<section class="board-grid">
 				<div class="board-item" th:each="b : ${list}">
 					<div class="board-img" th:if="${b.thumbnailUrl != null}">

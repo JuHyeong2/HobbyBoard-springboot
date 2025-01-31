@@ -111,6 +111,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
+
 //	@GetMapping("/home")
 //	public String home() {
 //		ArrayList<Board> list = bService.selectBoardList();
@@ -256,7 +257,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/editMyPage")
-	public String updateMember(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
+	public String updateMember(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session, Model model) {
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    if (loginUser == null) {
 	        return "redirect:/member/login";
@@ -313,7 +314,13 @@ public class MemberController {
 	    boolean updated = mService.updateMember(member);
 	    if (updated) {
 	        Member updatedMember = mService.selectMember(loginUser.getMemberId());
-	        session.setAttribute("loginUser", updatedMember);
+	        Image userImage = mService.selectImage(updatedMember.getMemberNo());
+			if(userImage != null) {
+				updatedMember.setImageUrl(amazonS3.getUrl(bucket, userImage.getImgRename()).toString());
+			}
+			System.out.println("updatedMember : " + updatedMember);
+			model.addAttribute("loginUser", updatedMember);
+//	        session.setAttribute("loginUser", updatedMember);
 	        
 	        System.out.println("1111111111111" + updatedMember);
 	        System.out.println("22222222222222" + loginUser);

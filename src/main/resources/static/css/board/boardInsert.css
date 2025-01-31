@@ -195,7 +195,7 @@ span{
 }
 
 input[type="file"]{
-/* 	display: none; */
+	display: none;
 }
 
 /* 이미지 스타일링 */

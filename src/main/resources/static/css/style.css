@@ -197,3 +197,23 @@ img {
     margin: 0;
 }
 
+.title-flex {
+	display: flex;
+}
+
+.insertBoard {
+	display: inline-block;
+	margin-left: 75%;
+	border: 1px solid #007bff;
+	line-height: 25px;
+	vertical-align: middle;
+	border-radius: 10px;
+	background-color: #007bff;
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	cursor: pointer;
+}
+
