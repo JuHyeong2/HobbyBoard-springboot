@@ -54,6 +54,8 @@ public interface MemberMapper {
 
 	Image selectImage(int memberNo);
 
+	
+
 
 
 

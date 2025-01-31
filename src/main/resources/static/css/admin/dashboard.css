@@ -198,7 +198,7 @@ table tbody tr:hover {
     padding: 4px 8px;  /* 버튼 크기 줄이기 */
 }
 
-}
+
 /* 그래프 크기 변경 */
 .echart {
     margin-bottom: -36px !important;

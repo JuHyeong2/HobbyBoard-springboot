@@ -131,6 +131,8 @@ public Member findId(HashMap<String, String> map) {
 			return mMapper.selectImage(memberNo);
 		}
 
+		
+
 	   
 
 
