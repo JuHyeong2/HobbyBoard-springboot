@@ -1,3 +1,4 @@
+
 package com.example.hamo.member.model.service;
 
 import java.util.ArrayList;
@@ -74,14 +75,17 @@ public Member findId(HashMap<String, String> map) {
 		return mMapper.memberId(memberId);
 	}
 
-	public boolean handleParticipant(String action, int boardNo, int memberNo) {
-		if("a".equals(action)) {
-			return mMapper.accept(boardNo,memberNo) >0;
-		}else if("r".equals(action)){
-			return mMapper.reject(boardNo,memberNo) >0;
-			
-		}
-		return false;
+	@Transactional
+	public String handleParticipant(String action, int boardNo, int participantId) {
+	    int result;
+	    if ("a".equals(action)) {
+	        result = mMapper.acceptParticipant(boardNo, participantId);
+	    } else if ("r".equals(action)) {
+	        result = mMapper.rejectParticipant(boardNo, participantId);
+	    } else {
+	        return "error";
+	    }
+	    return result > 0 ? "success" : "error";
 	}
 
 	public ArrayList<Member> participants(int boardNo) {
@@ -132,20 +136,24 @@ public Member findId(HashMap<String, String> map) {
 		}
 
 
-		public Board maxParticipants(int i) {
-			return mMapper.maxParticipants(i);
+		public String getParticipantStatus(int boardNo, int participantId) {
+		    return mMapper.getParticipantStatus(boardNo, participantId);
 		}
 
-		public boolean change(int boardNo, String id, String status) {
-			if(status.equals("a")) {
-				return mMapper.changeAccept(boardNo,id, status) >0;
-			} else if(status.equals("r")) {
-				return mMapper.changeReject(boardNo,id,status) >0;
-			}
-			return false;
-		}
-
-	   
+	@Transactional
+	public boolean updateBoardStatus(int boardNo) {
+	    return mMapper.updateBoardStatus(boardNo) > 0;
+	}
+	public String checkRecruitmentStatus(int boardNo) {
+	    Board board = mMapper.getBoardInfo(boardNo);
+	    int acceptedParticipants = mMapper.getAcceptedParticipantsCount(boardNo);
+	    
+	    if (acceptedParticipants >= board.getMaxParticipants()) {
+	        return "FULL";
+	    } else {
+	        return "OPEN";
+	    }
+	}
 
 
 }

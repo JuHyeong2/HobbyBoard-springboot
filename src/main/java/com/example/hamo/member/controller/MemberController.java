@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -425,7 +426,6 @@ public class MemberController {
 			System.out.println("board11 : " + board);
 		}
 		
-		
 		model.addAttribute("list",list);
 		model.addAttribute("count", list.size());
 		return "user-inform/myactivite";
@@ -439,7 +439,6 @@ public class MemberController {
 			return "redirect:/member/login";
 		}
 		
-		
 		ArrayList<Board> list = mService.selectMyPost(loginUser.getMemberId());
 		HashMap<Integer,ArrayList<Member>> participantsMap = new HashMap<>();
 		
@@ -448,7 +447,6 @@ public class MemberController {
 			participantsMap.put(board.getBoardNo(), participants);
 		}
 		
-
 //		System.out.println("posts : " + list.size());
 //		for(Board board : list) {
 //			System.out.println("board22 : " + board);
@@ -462,23 +460,43 @@ public class MemberController {
 	@PostMapping("/member/handleParticipant")
 	@ResponseBody
 	public String handleParticipant(@RequestParam("action") String action,
-            @RequestParam("boardNo") int boardNo,
-            @RequestParam("memberNo") int memberNo) {
-		
-		
-		boolean result = mService.handleParticipant(action,boardNo,memberNo);
-		
-		return result ? "success" : "fail";
+	        @RequestParam("boardNo") int boardNo,
+	        @RequestParam("participantId") int participantId) {
+	    
+	    String result = mService.handleParticipant(action, boardNo, participantId);
+	    
+	    if ("success".equals(result)) {
+	        if ("a".equals(action)) {
+	            return "accepted";
+	        } else if ("r".equals(action)) {
+	            return "rejected";
+	        }
+	    }
+	    
+	    return "error";
 	}
-	
-	@PostMapping("/member/change")
+
+	@PostMapping("/member/getParticipantStatus")
 	@ResponseBody
-	public String change(@RequestParam("status") String status,@RequestParam("boardNo") int boardNo,@ModelAttribute Member m) {
-		
-		boolean result = mService.change(boardNo,m.getMemberId(),status);
-		return result ? "success" : "fail";
+	public String getParticipantStatus(@RequestParam("boardNo") int boardNo,
+	                                   @RequestParam("participantId") int participantId) {
+	    return mService.getParticipantStatus(boardNo, participantId);
 	}
 	
+
+	@PostMapping("/member/updateBoardStatus")
+	@ResponseBody
+	public String updateBoardStatus(@RequestParam("boardNo") int boardNo) {
+	    boolean result = mService.updateBoardStatus(boardNo);
+	    return result ? "success" : "error";
+	}
+
+	@PostMapping("/member/checkStatus")
+	@ResponseBody
+	public String checkRecruitmentStatus(@RequestParam("boardNo") int boardNo) {
+	    return mService.checkRecruitmentStatus(boardNo);
+	}
+
 	@GetMapping("/member/checknickName")
 	public void checknickName(@RequestParam("nickname") String nickname,PrintWriter out) {
 		int count = mService.checknickName(nickname);

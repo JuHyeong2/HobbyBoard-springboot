@@ -38,9 +38,9 @@ public interface MemberMapper {
 
 	Member memberId(String memberId);
 
-	int accept(@Param("boardNo")int boardNo, @Param("memberNo")int memberNo);
+	int acceptParticipant(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
 
-	int reject(@Param("boardNo")int boardNo, @Param("memberNo")int memberNo);
+	int rejectParticipant(@Param("boardNo")int boardNo, @Param("participantId")int participantId);
 
 	ArrayList<Member> participants(int boardNo);
 
@@ -54,13 +54,13 @@ public interface MemberMapper {
 
 	Image selectImage(int memberNo);
 
-	Board maxParticipants(int i);
+	String getParticipantStatus(@Param("boardNo") int boardNo, @Param("participantId") int participantId);
 
-	int changeAccept(int boardNo, String id, String status);
+	int updateBoardStatus(int boardNo);
 
-	int changeReject(int boardNo, String id, String status);
+	Board getBoardInfo(int boardNo);
 
-
+	int getAcceptedParticipantsCount(int boardNo);
 
 
 }

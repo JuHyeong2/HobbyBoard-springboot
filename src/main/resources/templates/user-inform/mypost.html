@@ -25,14 +25,13 @@
                         <span class="post-count" th:text="'총 ' + ${count} + ' 건'"></span>
                     </h1>
                     
-                    <div class="post" th:each="p : ${list}"th:id="'post' + ${p.boardNo}" th:onclick="toggleParticipants([[${p.boardNo}]])" >
+                    <div class="post" th:each="p : ${list}"th:id="'post-' + ${p.boardNo}" th:onclick="toggleParticipants([[${p.boardNo}]])" >
                         <div class="post-header">
                             <div>
                                 <div class="post-title" th:text="${p.title}"></div>
                                 <div class="post-description" th:utext="${p.content}"></div>
                             </div>
                             <span class="post-status" th:text="${p.boardStatus.trim() == 'Y' ? '모집중' : '모집완료'}"></span>
-								
                         </div>
                         <div class="post-meta">
                             <div class="post-info">
@@ -43,14 +42,14 @@
                         </div>
                        
                         
-                 <div class="participants" th:id="'participants' + ${p.boardNo}" style="display:none;">
-                            <div class="participant" th:id="'participant' + ${pa.memberNo}" th:each="pa : ${participantsMap.get(p.boardNo)}">
+                 <div class="participants" th:id="'participants-' + ${p.boardNo}" style="display:none;">
+                            <div class="participant" th:each="pa : ${participantsMap.get(p.boardNo)}">
                                 <div class="participant-info">
                                     <p><strong>이름:</strong> <span th:text="${pa.memberName}"></span></p>
                                     <p><strong>성별:</strong> <span th:text="${pa.memberGender.trim() == 'M' ? '남자' : '여자'}"></span></p>
                                     <p><strong>생년월일:</strong> <span th:text="${pa.memberBirth}"></span></p>
                                 </div>
-                                <div class="participant-actions" id="participant-actions">
+                                <div class="participant-actions">
                                 <button th:onclick="handleParticipant(event, 'a', [[${p.boardNo}]], [[${pa.memberNo}]])" class="accept-btn">수락</button>
                     			<button th:onclick="handleParticipant(event, 'r', [[${p.boardNo}]], [[${pa.memberNo}]])" class="reject-btn">거절</button>
                                 </div>
@@ -69,75 +68,98 @@
                 </div>
             </div>
         </div>
-    
 
+ <script th:inline="javascript"> 
+ const toggleParticipants = (boardNo) => {
+     const participants = document.getElementById('participants-' + boardNo);
+     if (participants.style.display == 'none' || participants.style.display == '') {
+         participants.style.display = 'block';
+     } else {
+         participants.style.display = 'none';
+     }
 
-<script th:inline="javascript">
-const toggleParticipants = (boardNo) => {
-    const participants = document.getElementById('participants' + boardNo);
-    console.log(participants);
-    if (participants.style.display == 'none' || participants.style.display == '') {
-        participants.style.display = 'block';
-    } else {
-        participants.style.display = 'none';
-    }
-
-}
-
-//     participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
+ }
+  //  participants.style.display = participants.style.display == 'none' ? 'block' : 'none';
 
 
 
-const postStatus = document.getElementById('post-status');
-const handleParticipant = (event,action, boardNo, memberNo) => {
-	event.preventDefault();
-	event.stopPropagation();
-	
+
+const handleParticipant = (event, action, boardNo, participantId) => {
+    event.preventDefault();
+    event.stopPropagation();
     $.ajax({
         url: '/member/handleParticipant',
-		type : 'post',
+        type: 'post',
         data: {
             action: action,
             boardNo: boardNo,
-            memberNo: memberNo
+            participantId: participantId
         },
         success: data => {
-            if (data == 'success') {
-                alert(action == 'a' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
-//                 location.reload();
-        
-                const participant = document.getElementById('participant'+memberNo);
-                console.log(participant);
-                if(participant) {
-                	participant.remove();
-                }
+            if (data === 'accepted' || data === 'rejected') {
+                alert(data === 'accepted' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
                 
-//         success: data => {
-//             if (data == 'success') {
-				
-            	
-// 					const participant = document.getElementById('participant');
-					
-// 					if(action == 'a') {
-// 						alert('참가자가 수락되었습니다.')
-// 						participant.remove();
-						
-						
-// 					}else if(action ='r') {
-// 						alert('참가자가 거절되었습니다.')
-// 						participant.remove();
-// 					}
-					
+                // 참가자 목록에서 해당 참가자 제거
+                const participantElement = event.target.closest('.participant');
+                participantElement.remove();
+                
+                // 참가자 목록이 비어있으면 숨김
+                const participantsList = document.getElementById("participants-" + boardNo);
+                if (participantsList.children.length === 0) {
+                    participantsList.style.display = "none";
+                }
+
+                // 수락된 경우, 모집 상태 확인
+                if (data === 'accepted') {
+                    checkRecruitmentStatus(boardNo);
+                }
             } else {
                 alert('처리 중 오류가 발생했습니다.');
             }
         },
         error: data => {
-            alert('서버 오류가 발생했습니다.');
+            console.log(data);
+        }
+    });
+}
+
+
+const checkRecruitmentStatus = (boardNo) => {
+    $.ajax({
+        url: '/member/checkStatus',
+        type: 'post',
+        data: { boardNo: boardNo },
+        success: status => {
+            if (status === 'FULL') {
+                updateBoardStatus(boardNo);
+            }
+        },
+        error: data => {
+            console.log(data);
+        }
+    });
+}
+
+const updateBoardStatus = (boardNo) => {
+    $.ajax({
+        url: '/member/updateBoardStatus',
+        type: 'post',
+        data: { boardNo: boardNo },
+        success: result => {
+            if (result === 'success') {
+                const statusElement = document.querySelector(`#post-${boardNo} .post-status`);
+                if (statusElement) {
+                    statusElement.textContent = '모집완료';
+                }
+            }
+        },
+        error: data => {
+            console.log(data);
         }
     });
 }
 </script>
+
 
 <!-- <!--     <script th:inline = "javascript"> --> -->
 <!-- //     		// 참가자 목록을 토글  -->
@@ -189,4 +211,3 @@ const handleParticipant = (event,action, boardNo, memberNo) => {
 <div th:insert = "common/footer.html"></div>
 </body>
 </html>
-
