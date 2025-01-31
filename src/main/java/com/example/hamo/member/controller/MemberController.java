@@ -4,19 +4,25 @@ package com.example.hamo.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -104,15 +110,7 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
-	
-	// Home으로 가는 모든 버튼
 
-//	@GetMapping("/home")
-//	public String home(Model model, HttpSession session) {
-//
-//		return "index";
-//	}
 
 //	@GetMapping("/home")
 //	public String home() {
@@ -259,7 +257,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/editMyPage")
-	public String updateMember(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session) {
+	public String updateMember(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Member member, @RequestParam(value = "newPassword", required = false) String newPassword, HttpSession session, Model model) {
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    if (loginUser == null) {
 	        return "redirect:/member/login";
@@ -316,7 +314,13 @@ public class MemberController {
 	    boolean updated = mService.updateMember(member);
 	    if (updated) {
 	        Member updatedMember = mService.selectMember(loginUser.getMemberId());
-	        session.setAttribute("loginUser", updatedMember);
+	        Image userImage = mService.selectImage(updatedMember.getMemberNo());
+			if(userImage != null) {
+				updatedMember.setImageUrl(amazonS3.getUrl(bucket, userImage.getImgRename()).toString());
+			}
+			System.out.println("updatedMember : " + updatedMember);
+			model.addAttribute("loginUser", updatedMember);
+//	        session.setAttribute("loginUser", updatedMember);
 	        
 	        System.out.println("1111111111111" + updatedMember);
 	        System.out.println("22222222222222" + loginUser);

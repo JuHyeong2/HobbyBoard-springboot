@@ -107,4 +107,9 @@
 		from participant
 		where member_no = #{memberNo} and board_no = #{boardNo}
 	</select>
+	
+	<insert id="insertLog">
+		insert into visit_logs
+		values(seq_log_id.nextval, #{ipAddress}, #{userAgent}, sysdate)
+	</insert>
 </mapper>

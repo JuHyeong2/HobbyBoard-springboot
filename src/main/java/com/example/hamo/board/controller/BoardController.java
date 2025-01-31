@@ -228,7 +228,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("boardUpdate")
-	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("file") ArrayList<MultipartFile> files) {
+	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("deleteImg") String[] deleteImg, @RequestParam("file") ArrayList<MultipartFile> files) {
 		
 		return "";
 	}
@@ -247,10 +247,15 @@ public class BoardController {
 			int bNo = r.getBoardNo();
 			ArrayList<Reply> list = bService.selectReplyList(bNo);
 			ArrayList<Image> imageArr2 = bService.selectUserImageList();
-			for(Reply r : list) {
+			
+			for(Image img : imageArr2) {
+				img.setUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+			}
+			
+			for(Reply reply : list) {
 				for(Image img : imageArr2) {
-					if(r.getMemberNo() == img.getBuNo()) {
-						r.setImageUrl(img.getUrl());
+					if(reply.getMemberNo() == img.getBuNo()) {
+						reply.setImageUrl(img.getUrl());
 					}
 				}
 			}

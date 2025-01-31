@@ -96,5 +96,9 @@ public class BoardService {
 		
 		return mapper.selectParticipant(map);
 	}
+	
+	public int insertLog(HashMap<String, String> map) {
+		return mapper.insertLog(map);
+	}
 }
 

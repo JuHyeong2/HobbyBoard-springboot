@@ -1,11 +1,15 @@
 package com.example.hamo;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -13,6 +17,7 @@ import com.example.hamo.board.model.service.BoardService;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.board.model.vo.Image;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,8 +31,17 @@ public class HomeController {
 	private String bucket;
 	
 	@GetMapping("/")
-	public String main(Model model) {
+	public String main(Model model, HttpServletRequest request) {
+		String ipAddress = getClientIp(request);
+		String userAgent = request.getHeader("User-Agent");
 		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("ipAddress", ipAddress);
+		map.put("userAgent", userAgent);
+		
+		int result = bService.insertLog(map);
+		
+		// 썸네일 이미지 가져오기
 		ArrayList<Board> list = bService.selectBoardList();
 		ArrayList<Image> imgList = bService.selectImageListBoard();
 		for(Board  board : list) {
@@ -39,6 +53,7 @@ public class HomeController {
 			}
 		}
 		
+		// 참여자 가져오기
 		ArrayList<Board> participants = bService.participantsByBoard();
 		System.out.println(participants);
 		for(Board b : list) {
@@ -52,5 +67,48 @@ public class HomeController {
 		model.addAttribute("list", list);
 		
 		return "index";
+	}
+	
+	// client 실ip 가져오는 메소드
+	public static String getClientIp(HttpServletRequest request) {
+	    String clientIp = null;
+	    boolean isIpInHeader = false;
+
+	    List<String> headerList = new ArrayList<>();
+	    headerList.add("X-Forwarded-For");
+	    headerList.add("HTTP_CLIENT_IP");
+	    headerList.add("HTTP_X_FORWARDED_FOR");
+	    headerList.add("HTTP_X_FORWARDED");
+	    headerList.add("HTTP_FORWARDED_FOR");
+	    headerList.add("HTTP_FORWARDED");
+	    headerList.add("Proxy-Client-IP");
+	    headerList.add("WL-Proxy-Client-IP");
+	    headerList.add("HTTP_VIA");
+	    headerList.add("IPV6_ADR");
+
+	    for (String header : headerList) {
+	        clientIp = request.getHeader(header);
+	        if (StringUtils.hasText(clientIp) && !"unknown".equalsIgnoreCase(clientIp)) {
+	            isIpInHeader = true;
+	            break;
+	        }
+	    }
+
+	    if (!isIpInHeader) {
+	        clientIp = request.getRemoteAddr();
+	    }
+	    
+	    if ("0:0:0:0:0:0:0:1".equals(clientIp) || "127.0.0.1".equals(clientIp)) {
+	        InetAddress address = null;
+			try {
+				address = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+	        clientIp = address.getHostAddress();
+	    }
+
+	    
+	    return clientIp;
 	}
 }

@@ -8,13 +8,12 @@
 <script src="/js/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/css/board/summernote-lite.css">
 <link rel="stylesheet" href="/css/board/boardInsert.css">
-<link rel="stylesheet" href="/css/board/boardInsert.css">
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
 	
     <div class="editor-header">
-        <h2>모임 만들기</h2>
+        <h2>모임 수정</h2>
         <div class="editor-actions">
         	<span class="attachment-add">
         		<label id="imgLabel" class="file-upload-label">
@@ -22,8 +21,8 @@
         			<th:block th:each="img:${imgs}">
         				<div id="fileInput">
         					<img th:src="${img.url}" width="50px" height="50px">
-        					<button class="deleteImageButton">
-        						<img src="/image/image-delete.png" width="20px" height="20px">
+        					<button class="deleteImageButton" th:id="${img.imgRename}" onclick="deleteImg(event);">
+        						<img src="/image/image-delete.png" width="20px" height="20px" th:id="${img.imgRename}">
         					</button>
         				</div>
         			</th:block>
@@ -34,9 +33,10 @@
     </div>
 
 	<form id="form" method="post" action="/board/boardUpdate" enctype="multipart/form-data">
-		<div id="inputDiv">
-			<input type="file" name="file">
+		<div id="inputDiv" th:each="img:${imgs}">
+			<input type="hidden" name="deleteImg">
 		</div>
+		<input type="file" name="file">
 		<div class="title-section">
 			<div class="horizon">
 				<select name="categoryNo" class="category-select">
@@ -167,21 +167,6 @@
 			    			
 			    			
 			    			deleteImg.addEventListener('click', (e)=>{
-			    				const base64Data = e.target.parentNode.previousSibling.src.split(',')[1];
-// 			    				console.log(e.target.parentNode.previousSibling.src);
-			    				const byteCharacters = atob(base64Data);
-			    				const byteArrays = [];
-			    				for (let offset = 0; offset < byteCharacters.length; offset++) {
-			    				    const byte = byteCharacters.charCodeAt(offset);
-			    				    byteArrays.push(byte);
-			    				}
-			    				
-			    				// Blob으로 이미지 파일을 생성
-			    				const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/png' });
-
-			    				// Blob을 URL로 변환
-			    				const imageURL = URL.createObjectURL(blob);
-			    				
 // 			    				console.log(blob);
 // 			    				console.log(imageURL);
 			    				fileInput.remove();
@@ -211,6 +196,48 @@
 	    	})
 	    	
 	    });
+		
+		// 기존 이미지 삭제 버튼
+// 		document.querySelectorAll('.deleteImageButton').addEventListener('click', (e)=>{
+// 			const btnId = e.target.id;
+// 			const hiddenInputs = document.querySelectorAll('input[type="file"]');
+// 			for(const hiddenInput of hiddenInputs){
+// 				if(btnId == hiddenInput.value){
+// 					hiddenInput.remove();
+// 				}
+// 			}
+// // 			const inputfiles = document.querySelectorAll('input[type="file"]');
+// // 			console.log(inputfiles);
+// // 			console.log(file2.name);
+// // 			for(const i in inputfiles){
+// // 				console.log(inputfiles[i].value);
+// // 				if(inputfiles[i].value.includes(file2.name)){
+// // 					inputfiles[i].remove();
+// // 				}			    					
+// // 			}
+			
+			
+// 		})
+		const deleteImg=(e)=>{
+			 e.stopPropagation();
+			const btnId = e.target.id;
+			const hiddenInputs = document.querySelectorAll('input[type="hidden"]');
+			
+			const div = e.target.parentElement.parentElement;
+			console.log(div.tagName);
+			if(div.tagName == "DIV"){
+				for(const hiddenInput of hiddenInputs){
+					if(hiddenInput.value == ''){
+						hiddenInput.value = btnId;
+						div.remove();
+						console.log(hiddenInput.value);
+						break;
+					}
+				}	
+			}
+			
+		}
+
 	    
 	    document.getElementById('submitButton').addEventListener('click', ()=>{
 	    	const form = document.getElementById('form');
