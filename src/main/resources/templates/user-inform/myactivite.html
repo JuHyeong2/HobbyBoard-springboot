@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 참여한 활동</title>
     <link rel="stylesheet" href="/css/user_inform/user.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <header id="top">
@@ -24,17 +25,17 @@
                         <span class="activity-count" th:text="' 총 ' + ${count} + ' 건'"></span>
                     </h1>
    
-                    <div class="activity" th:each="a: ${list}">
-                        <div class="activity-status completed" th:text="${a.boardStatus == 'Y' ? '활동 완료' : '진행 중'}"></div>
-                        <div class="activity-title" th:text="${a.title}"></div>
-                        <div class="activity-description"th:text="${a.content}"></div>
-                        <div class="activity-meta">
-                            <div class="activity-info">
-                                <span class="activity-category"th:text="${a.categoryName}"></span>
-                                <span class="activity-date" th:text="${a.createDate}"></span>
-                            </div>
-                        </div>
-                  	</div>
+					    <div class="activity" th:each="a: ${list}" th:data-board-no="${a.boardNo}" th:data-participant-id="${session.loginUser.memberNo}">
+					    <div class="activity-status completed" th:text="${a.boardStatus.trim() == 'Y' ? '진행 중' : '활동 완료'}"></div>
+					    <div class="activity-title" th:text="${a.title}"></div>
+					    <div class="activity-description" th:utext="${a.content}"></div>
+					    <div class="activity-meta">
+					        <div class="activity-info">
+					            <span class="activity-category" th:text="${a.categoryName}"></span>
+					            <span class="activity-date" th:text="${a.createDate}"></span>
+					        </div>
+					    </div>
+					</div>
                   	
                   	<div th:if="${#lists.isEmpty(list)}">
                   	                  		<p>참여한 활동이 없습니다.</p>
@@ -46,5 +47,52 @@
     </div>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
 	<div th:insert = "common/footer.html"></div>
+	
+	
+	
+<script th:inline="javascript">
+	document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.activity-status').forEach(statusElement => {
+        const activity = statusElement.closest('.activity');
+        const boardNo = activity.dataset.boardNo;
+        const participantId = activity.dataset.participantId;
+
+        $.ajax({
+            url: '/member/getParticipantStatus',
+            type: 'post',
+            data: {
+                boardNo: boardNo,
+                participantId: participantId
+            },
+            success: status => {
+                if (status === 'a') {
+                    statusElement.textContent = '수락';
+                    statusElement.classList.add('accepted');
+                } else if (status === 'r') {
+                    statusElement.textContent = '거절';
+                    statusElement.classList.add('rejected');
+                }
+            },
+            error: data => {
+                console.log(data);
+            }
+        });
+
+        statusElement.addEventListener('click', function() {
+            if (this.classList.contains('accepted')) {
+                alert('신청한 활동이 수락되었습니다.');
+                this.textContent = '진행 중';
+                this.classList.remove('accepted');
+            } else if (this.classList.contains('rejected')) {
+                alert('신청한 활동이 거절되었습니다.');
+                activity.remove();
+            }
+        });
+    });
+});
+</script>
+
+
 </body>
 </html>    
+

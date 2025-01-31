@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -455,15 +457,43 @@ public class MemberController {
 	@PostMapping("/member/handleParticipant")
 	@ResponseBody
 	public String handleParticipant(@RequestParam("action") String action,
-            @RequestParam("boardNo") int boardNo,
-            @RequestParam("participantId") int participantId) {
-		
-		boolean result = mService.handleParticipant(action,boardNo,participantId);
-		
-		return result ? "success" : "fail";
+	        @RequestParam("boardNo") int boardNo,
+	        @RequestParam("participantId") int participantId) {
+	    
+	    String result = mService.handleParticipant(action, boardNo, participantId);
+	    
+	    if ("success".equals(result)) {
+	        if ("a".equals(action)) {
+	            return "accepted";
+	        } else if ("r".equals(action)) {
+	            return "rejected";
+	        }
+	    }
+	    
+	    return "error";
+	}
+
+	@PostMapping("/member/getParticipantStatus")
+	@ResponseBody
+	public String getParticipantStatus(@RequestParam("boardNo") int boardNo,
+	                                   @RequestParam("participantId") int participantId) {
+	    return mService.getParticipantStatus(boardNo, participantId);
 	}
 	
-	
+
+	@PostMapping("/member/updateBoardStatus")
+	@ResponseBody
+	public String updateBoardStatus(@RequestParam("boardNo") int boardNo) {
+	    boolean result = mService.updateBoardStatus(boardNo);
+	    return result ? "success" : "error";
+	}
+
+	@PostMapping("/member/checkStatus")
+	@ResponseBody
+	public String checkRecruitmentStatus(@RequestParam("boardNo") int boardNo) {
+	    return mService.checkRecruitmentStatus(boardNo);
+	}
+
 	@GetMapping("/member/checknickName")
 	public void checknickName(@RequestParam("nickname") String nickname,PrintWriter out) {
 		int count = mService.checknickName(nickname);
