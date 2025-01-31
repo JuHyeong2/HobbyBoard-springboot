@@ -135,7 +135,6 @@ public Member findId(HashMap<String, String> map) {
 			return mMapper.selectImage(memberNo);
 		}
 
-
 		public String getParticipantStatus(int boardNo, int participantId) {
 		    return mMapper.getParticipantStatus(boardNo, participantId);
 		}
@@ -154,6 +153,4 @@ public Member findId(HashMap<String, String> map) {
 	        return "OPEN";
 	    }
 	}
-
-
 }

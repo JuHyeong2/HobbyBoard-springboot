@@ -15,5 +15,9 @@ import lombok.ToString;
 @ToString
 public class dashboard {
 	private Date createDate;
+	private Date visitDate;
+	private int id;
 	private int count;
+	private String ipAddress;
+	private String userAgent;
 }

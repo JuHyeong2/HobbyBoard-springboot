@@ -1,11 +1,15 @@
 package com.example.hamo.admin.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +39,17 @@ public class AdminController {
 
 	// dashboard mapping
 	@GetMapping("dashboard")
-	public String dashboard(Model model) {
+	public String dashboard(Model model, HttpServletRequest request) {
 		ArrayList<dashboard> boardCount = aService.boardCount();
 //		System.out.println(boardCount);
 		model.addAttribute("boardCount", boardCount);
 		return "admin/dashboard";
 	}
-
+	
+	
+	
+	
+	
 	@GetMapping("home")
 	public String home() {
 		return "redirect:/";
