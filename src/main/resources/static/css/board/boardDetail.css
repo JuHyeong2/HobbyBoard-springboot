@@ -95,8 +95,8 @@
 .report-btn{
 	display: inline-block;
 	padding: 0.3rem;
-	background-color: red;
-	color: white;
+	background: white;
+	color: black;
 	border: none;
 	border-radius: 4px;
 	font-size: 1.125rem;
@@ -108,9 +108,9 @@
     background-color: #0056b3;  /* 호버 시 색상 (조금 더 어두운 파란색) */
 }
 
-.report-btn:hover {
-    background-color: #c82333;  /* 호버 시 색상 (조금 더 어두운 빨간색) */
-}
+/* .report-btn:hover { */
+/*     background-color: #c82333;  호버 시 색상 (조금 더 어두운 빨간색) */
+/* } */
 
 .reply {
 	margin-bottom: 50px;	
@@ -288,6 +288,10 @@ button[disabled] {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4); /* 배경 어두운 색 */
+}
+
+.modal h2 {
+	margin-bottom: 1rem;
 }
 
 .modal-content {

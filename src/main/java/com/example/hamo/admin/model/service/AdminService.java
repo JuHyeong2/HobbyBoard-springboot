@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.hamo.admin.model.mapper.AdminMapper;
 import com.example.hamo.admin.model.vo.Admin;
+import com.example.hamo.admin.model.vo.Report;
+import com.example.hamo.admin.model.vo.dashboard;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.vo.PageInfo;
 import com.example.hamo.member.model.vo.Member;
@@ -71,6 +73,32 @@ public class AdminService {
 		return mapper.searchBoardList(map);
 	}
 
-	
+	public int insertReport(Report r) {
+		return mapper.insertReport(r);
+	}
+
+	public ArrayList<Report> selectReportList() {
+		return mapper.selectReportList();
+	}
+
+	public Report selectReportOne(int reportNo) {
+		return mapper.selectReportOne(reportNo);
+	}
+
+	public int reportAccepct(Report r) {
+		return mapper.reportAccecpt(r);
+	}
+
+	public int deleteUser(int violatorNo) {
+		return mapper.deleteUser(violatorNo);
+	}
+
+	public int reportReject(int reportNo) {
+		return mapper.reportReject(reportNo);
+	}
+
+	public ArrayList<dashboard> boardCount() {
+		return mapper.boardCount();
+	}
 
 }

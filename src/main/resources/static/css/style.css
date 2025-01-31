@@ -168,3 +168,32 @@ img {
 .prev:hover, .next:hover {
     color: #0066cc;
 }
+
+/* 맨 위로 가기 버튼 스타일 */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%; /* 원형 버튼 */
+    font-size: 20px; /* 아이콘 크기 */
+    cursor: pointer;
+    display: none; /* 처음엔 숨김 */
+    text-align: center;
+    width: 50px; /* 버튼 크기 */
+    height: 50px; /* 버튼 크기 */
+    line-height: 30px; /* 아이콘 세로 중앙 정렬 */
+}
+
+.scroll-to-top:hover {
+    background-color: #0056b3;
+}
+
+.scroll-to-top i {
+    font-size: 24px; /* 아이콘 크기 */
+    margin: 0;
+}
+
