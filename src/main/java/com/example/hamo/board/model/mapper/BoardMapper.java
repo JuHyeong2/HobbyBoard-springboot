@@ -46,7 +46,7 @@ public interface BoardMapper {
 
 	int selectParticipant(HashMap<String, Integer> map);
 	
-//	int insertLog(HashMap<String, String> map);
+	int insertLog(HashMap<String, String> map);
 	
 	ArrayList<Category> selectCategory();
 
