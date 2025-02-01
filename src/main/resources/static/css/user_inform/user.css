@@ -51,7 +51,7 @@ body {
 	position: relative;
 }
 
-ter {
+footer {
 	position: relative;
 	z-index: 20;
 	background-color: #f0f2ff;
@@ -68,7 +68,7 @@ ter {
 	left: 0;
 	top: 64px;
 	height: calc(100vh - 64px);
-	padding: 2rem 0;
+	padding: 2rem 0; 
 	overflow-y: auto;
 	z-index: 5;
 }
@@ -612,21 +612,36 @@ input:focus {
 }
 
 .activity-status {
-	position: absolute;
-	top: 1.5rem;
-	right: 1.5rem;
-	background-color: #e9ecef;
-	color: #495057;
-	padding: 0.25rem 0.75rem;
-	border-radius: 4px;
-	font-size: 13px;
-	font-weight: 500;
-}
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 5px;
+  			display: inline-block;
+        }
 
-.activity-status.completed {
-	background-color: #ebfbee;
-	color: #2b8a3e;
-}
+        .activity-status.completed {
+            background-color: #ebfbee;
+            color: #2b8a3e;
+        }
+        
+        
+		.activity-status.accepted {
+		  background-color: blue;
+		  color: white;
+		}
+		
+		.activity-status.rejected {
+		  background-color: red;
+		  color: white;
+		}
+
 
 /* Empty State */
 .empty-state {

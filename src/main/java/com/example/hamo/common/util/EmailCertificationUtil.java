@@ -3,6 +3,10 @@ package com.example.hamo.common.util;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+
+//import org.springframework.mail.SimpleMailMessage;
+//import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.stereotype.Component;
 
 
@@ -11,7 +15,6 @@ public class EmailCertificationUtil {
 	private JavaMailSender mailSender;
 	private String title = "HAMO 아이디/비밀번호 찾기 인증 메일입니다.";
 	private String from = "wngud102345@gmail.com";
-//	private String content;
 
 	public EmailCertificationUtil(JavaMailSender mailSender) {
 	    this.mailSender = mailSender;
@@ -36,4 +39,7 @@ public class EmailCertificationUtil {
 		message.setText(content);
 		mailSender.send(message);
 	}
+
 }
+
+

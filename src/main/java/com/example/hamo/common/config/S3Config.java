@@ -23,10 +23,11 @@ public class S3Config {
 	
 	@Bean
 	public AmazonS3Client amazonS3Client() {
+		// AWS 인증 정보 (Access Key, Secret Key) 설정
 		BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		
 		return (AmazonS3Client) AmazonS3ClientBuilder
-													.standard()
+													.standard() // 기본설정
 													.withRegion(region)
 													.withCredentials(new AWSStaticCredentialsProvider(credentials))
 													.build();

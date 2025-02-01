@@ -90,6 +90,7 @@ public class HomeController {
 		
 	
 		
+		// 썸네일 이미지 가져오기
 		ArrayList<Board> list = bService.selectBoardList();
 		ArrayList<Image> imgList = bService.selectImageListBoard();
 		for(Board  board : list) {
@@ -101,6 +102,7 @@ public class HomeController {
 			}
 		}
 		
+		// 참여자 가져오기
 		ArrayList<Board> participants = bService.participantsByBoard();
 		System.out.println(participants);
 		for(Board b : list) {

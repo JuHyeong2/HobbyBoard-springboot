@@ -205,6 +205,9 @@ header {
 			<nav class="main-nav" th:if="${session.loginUser != null}">
 				<ul>
 					<li id="myPage">
+
+					
+
 						<div th:if="${session.loginUser.imageUrl == null}">
 							<a class="top-button" href="/member/myPage" >
 								<img src="/image/myinfo.png"></img>
@@ -217,6 +220,7 @@ header {
 								<label id="aaa">[[${session.loginUser.memberNickname}]]님</label>
 							</a>
 						</div>
+
 						<div class="dropdown-content-2">
 						    <a href="/member/myPage">MY PAGE</a>
 						    <a href="/member/myactivite">MY ACTIVITY</a>
