@@ -14,9 +14,9 @@ main {
 .board-slider {
 /*     display: flex; */
     overflow-x: auto;
-    /* gap: 1rem; */
+    gap: 1rem;
     padding: 1rem 0;
-    /* height: 500px; */
+    height: 500px;
     width: 100%;
     padding: 1rem 0;
     justify-content: space-between;
@@ -52,10 +52,23 @@ main {
     gap: 1.5rem;
 }
 
+#boardGrid {
+  display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+/*   padding: 20px; */
+/*   width:100%; */
+  width: 1200px;
+}
+
+
+
 .board-item:hover {
     transform: translateY(-10px);
     transition-duration: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+
 .board-item {
     padding: 1rem;
     border: 1px solid #e5e5e5;
@@ -95,79 +108,66 @@ img {
 	
 }
 
-.hero-banner {
-    position: relative;
-    height: 450px;
-    background: linear-gradient(#f0f2ff, #feffed);
-    background-size: cover; /* 이미지가 배경 영역을 가득 채우게 함 */
-    background-position: center; /* 이미지가 중앙에 배치되도록 함 */
-    color: #1a1a1a;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
+
+ .posts-slider {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+.slider-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height : 400px;
+        }
+.slider-item {
+            flex: 0 0 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+.slider-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+.slider-item-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            background-color: rgba(0,0,0,0.4);
+            padding: 20px;
+           	margin-top : 200px;
+            border-radius: 10px;
+            width:800px;
+            
+        }
+.slider-nav {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+.slider-nav button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            border-radius : 10px;
+            box-shadow : 0px 0px 2px 2px rgb(0,0,0);
+            margin : 5px;
+            padding : 8px;
+        
 }
 
-.banner-content {
-    max-width: 1200px;
-    margin: 130px 250px;
-    width: 100%;
-}
 
-.banner-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.view-more {
-    background: #feffed;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    margin-top: 1rem;
-    cursor: pointer;
-    background : black;
-}
-
-.banner-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #bbb;
-    transition: background-color 0.3s ease;
-}
-
-.dot.active {
-    background-color: #0066cc;
-}
-
-.prev, .next {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    color: #333;
-    cursor: pointer;
-    padding: 10px;
-    transition: color 0.3s ease;
-}
-
-.prev:hover, .next:hover {
-    color: #0066cc;
-}
 
 /* 맨 위로 가기 버튼 스타일 */
 .scroll-to-top {
@@ -196,6 +196,10 @@ img {
     font-size: 24px; /* 아이콘 크기 */
     margin: 0;
 }
+.title-flex {
+	display: flex;
+}
+
 
 .title-flex {
 	display: flex;
