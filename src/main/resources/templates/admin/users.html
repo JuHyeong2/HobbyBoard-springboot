@@ -38,7 +38,7 @@
                           <th:block th:if="${m.status == 'Y'}">
                           <button type="button" class="button activate-btn" >활성</button>
                           </th:block>
-                          <th:block th:if="$ 	{m.status != 'Y'}">
+                          <th:block th:if="${m.status != 'Y'}">
                           <button type="button" class="button activate-btn" style="background: red" >비활성</button>
                           </th:block>
                       </div>
