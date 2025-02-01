@@ -112,6 +112,9 @@ public class BoardService {
 	public ArrayList<Board> getBanner() {
 		return mapper.getBanner();
 	}
-
+	
+	public int insertLog(HashMap<String, String> map) {
+		return mapper.insertLog(map);
+	}
 }
 

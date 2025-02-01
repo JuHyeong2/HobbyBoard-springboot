@@ -200,6 +200,11 @@ img {
 	display: flex;
 }
 
+
+.title-flex {
+	display: flex;
+}
+
 .insertBoard {
 	display: inline-block;
 	margin-left: 75%;
@@ -215,3 +220,4 @@ img {
 	padding-right: 10px;
 	cursor: pointer;
 }
+

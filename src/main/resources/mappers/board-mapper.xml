@@ -112,7 +112,7 @@
 		insert into visit_logs
 		values(seq_log_id.nextval, #{ipAddress}, #{userAgent}, sysdate)
 	</insert>
-	
+
 	<select id="selectCategory">
 		select * from category order by category_no
 	</select>
@@ -141,4 +141,5 @@
 		fetch first 5 rows only
 	
 	</select>
+
 </mapper>

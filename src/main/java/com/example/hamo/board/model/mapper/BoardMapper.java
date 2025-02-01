@@ -47,12 +47,11 @@ public interface BoardMapper {
 	int selectParticipant(HashMap<String, Integer> map);
 	
 	int insertLog(HashMap<String, String> map);
-	
+
 	ArrayList<Category> selectCategory();
 
 	ArrayList<Board> boardCategory(int categoryNo);
 
 	ArrayList<Board> getBanner();
-
 }
 
