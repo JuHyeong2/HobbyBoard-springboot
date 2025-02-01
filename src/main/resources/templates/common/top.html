@@ -245,7 +245,7 @@ header {
     			$.ajax({
     				url : '/category/' + categoryNo,
     				success : function(response) {
-						document.getElementById('boardGrid').innerHTML = response;
+    					document.getElementById('boardGrid').innerHTML = response;
     				},
     				error : data => console.log(data)
     			});
