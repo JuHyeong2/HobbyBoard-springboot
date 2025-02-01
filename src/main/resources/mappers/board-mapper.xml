@@ -113,6 +113,13 @@
 		values(seq_log_id.nextval, #{ipAddress}, #{userAgent}, sysdate)
 	</insert>
 
+	
+	<select id="selectAllLog" resultType="Dashboard">
+		select id, ip_address, user_agent, TO_CHAR(visit_date, 'YYYY-MM-DD') AS visit_date
+		from visit_logs
+	</select>
+
+
 	<select id="selectCategory">
 		select * from category order by category_no
 	</select>
@@ -141,5 +148,4 @@
 		fetch first 5 rows only
 	
 	</select>
-
 </mapper>

@@ -13,11 +13,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class dashboard {
+public class Dashboard {
 	private Date createDate;
 	private Date visitDate;
 	private int id;
 	private int count;
 	private String ipAddress;
 	private String userAgent;
+	private String weekDayName;
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Service;
 
 import com.example.hamo.admin.model.vo.Admin;
+import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.mapper.BoardMapper;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.board.model.vo.Category;
@@ -115,6 +116,10 @@ public class BoardService {
 	
 	public int insertLog(HashMap<String, String> map) {
 		return mapper.insertLog(map);
+	}
+
+	public ArrayList<Dashboard> selectAllLog() {
+		return mapper.selectAllLog();
 	}
 }
 

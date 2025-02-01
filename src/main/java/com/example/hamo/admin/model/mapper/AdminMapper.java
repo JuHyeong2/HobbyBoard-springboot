@@ -8,7 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.admin.model.vo.Report;
-import com.example.hamo.admin.model.vo.dashboard;
+import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.member.model.vo.Member;
 
@@ -53,5 +53,9 @@ public interface AdminMapper {
 
 	int reportReject(int reportNo);
 
-	ArrayList<dashboard> boardCount();
+	ArrayList<Dashboard> boardCount();
+
+	ArrayList<Dashboard> userCount();
+
+	ArrayList<Dashboard> dailyUserCount();
 }
