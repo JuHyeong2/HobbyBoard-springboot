@@ -99,7 +99,7 @@
 
 	<insert id="insertParticipant">
 		insert into participant
-		values(#{memberNo}, #{boardNo}, 'a')
+		values(#{memberNo}, #{boardNo}, 'w')
 	</insert>
 	
 	<select id="selectParticipant">
@@ -112,9 +112,40 @@
 		insert into visit_logs
 		values(seq_log_id.nextval, #{ipAddress}, #{userAgent}, sysdate)
 	</insert>
+
 	
 	<select id="selectAllLog" resultType="Dashboard">
 		select id, ip_address, user_agent, TO_CHAR(visit_date, 'YYYY-MM-DD') AS visit_date
 		from visit_logs
+	</select>
+
+
+	<select id="selectCategory">
+		select * from category order by category_no
+	</select>
+	
+	<select id="boardCategory">
+		select b.*, m.member_nickname, l.location_name, c.category_name
+		from board b
+			join member m on b.member_no = m.member_no
+			join location l on b.location_no = l.location_no
+			join category c on b.category_no = c.category_no
+			where b.category_no = #{categoryNo}
+			and b.board_status = 'Y'
+			order by b.board_no desc
+	</select>
+	
+	<select id="getBanner" resultType = "Board">
+		select b.*, m.member_nickname, l.location_name, c.category_name,
+			(select count(*) from participant p where p.board_no = b.board_no) as participants,
+			(select i.img_rename from image i where i.bu_no = b.board_no and i.delimiter = 'b' fetch first 1 row only) as thumbnailurl
+		from board b
+			join member m on b.member_no = m.member_no
+			join location l on b.location_no = l.location_no
+			join category c on b.category_no = c.category_no
+		where b.board_status = 'Y'
+		order by b.views desc, participants desc
+		fetch first 5 rows only
+	
 	</select>
 </mapper>

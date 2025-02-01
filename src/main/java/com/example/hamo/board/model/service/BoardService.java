@@ -10,6 +10,7 @@ import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.mapper.BoardMapper;
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Category;
 import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.board.model.vo.Reply;
 import com.example.hamo.member.model.vo.Member;
@@ -96,6 +97,21 @@ public class BoardService {
 	public int selectParticipant(HashMap<String, Integer> map) {
 		
 		return mapper.selectParticipant(map);
+	}
+	public int insertLog(HashMap<String, String> map) {
+		return mapper.insertLog(map);
+	}
+	
+	public ArrayList<Category> selectCategory() {
+		return mapper.selectCategory();
+	}
+
+	public ArrayList<Board> boardCategory(int categoryNo) {
+		return mapper.boardCategory(categoryNo);
+	}
+
+	public ArrayList<Board> getBanner() {
+		return mapper.getBanner();
 	}
 	
 	public int insertLog(HashMap<String, String> map) {
