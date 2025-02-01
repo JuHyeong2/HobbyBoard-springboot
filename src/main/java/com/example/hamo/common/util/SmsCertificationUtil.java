@@ -15,13 +15,13 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 public class SmsCertificationUtil {
 
     @Value("${coolsms.apikey}")
-    private String apiKey = "NCSAWBN2EKTN2MUA";
+    private String apiKey;
     
     @Value("${coolsms.apisecret}")
-    private String apiSecret = "AXIGLYCWYZCR0BEC5TPGQQ2WOMGGQU1P";
+    private String apiSecret;
     
     @Value("${coolsms.fromnumber}")
-    private String fromNumber = "01093688846";
+    private String fromNumber;
     
     private DefaultMessageService messageService; // 메시지 서비스를 위한 객체
 
