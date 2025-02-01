@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
 import com.example.hamo.admin.model.vo.Report;
-import com.example.hamo.admin.model.vo.dashboard;
+import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.Pagination;
 import com.example.hamo.common.vo.PageInfo;
@@ -40,9 +40,13 @@ public class AdminController {
 	// dashboard mapping
 	@GetMapping("dashboard")
 	public String dashboard(Model model, HttpServletRequest request) {
-		ArrayList<dashboard> boardCount = aService.boardCount();
+		ArrayList<Dashboard> boardCount = aService.boardCount();
+		ArrayList<Dashboard> userCount = aService.userCount();
+		ArrayList<Dashboard> dailyUserCount = aService.dailyUserCount();
+		System.out.println(dailyUserCount);
+//		System.out.println(userCount);
 //		System.out.println(boardCount);
-		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("boardCount", boardCount).addAttribute("userCount", userCount).addAttribute("dailyUserCount",dailyUserCount);
 		return "admin/dashboard";
 	}
 	
