@@ -93,49 +93,6 @@
 	    </if>
 	</select>
 	
-	<select id="selectReportList" resultType="Report">
-	    SELECT 
-	        r.*, 
-	        v.member_nickname AS violator_nick, 
-	        rp.member_nickname AS reporter_nick
-	    FROM 
-	        report r
-	        JOIN member v 
-	             ON r.violator = v.member_no
-	        JOIN member rp 
-	             ON r.reporter = rp.member_no
-	</select>
-
-	
-	<insert id="insertReport">
-		insert into report
-		values(seq_report.nextval, #{reportText}, default, default, #{reporter}, #{violator}, #{boardNo})
-	</insert>
-	
-	<select id="selectReportOne" resultType="Report">
-		select *
-		from report
-		where report_no=#{reportNo}
-	</select>
-	
-	<update id="reportAccecpt">
-		update report
-		set report_status='A'
-		where report_no = #{reportNo}
-	</update>
-	
-	<update id="deleteUser">
-		update member
-		set status='N'
-		where member_no = #{violatorNo}
-	</update>
-	
-	<update id="reportReject">
-		update report
-		set report_status='R'
-		where report_no = #{reportNo}
-	</update>
-	
 	<select id="boardCount" resultType="dashboard">
 		SELECT TRUNC(create_date) as create_date, COUNT(*) as count
 		FROM board

@@ -92,17 +92,6 @@
     margin-left: 30rem;
 }
 
-.report-btn{
-	display: inline-block;
-	padding: 0.3rem;
-	background: white;
-	color: black;
-	border: none;
-	border-radius: 4px;
-	font-size: 1.125rem;
-	cursor: pointer;
-	margin-left: 30rem;
-}
 
 .purchase-btn:hover {
     background-color: #0056b3;  /* 호버 시 색상 (조금 더 어두운 파란색) */
@@ -276,33 +265,7 @@ button[disabled] {
     border-radius: 4px;	
 }     
 
-/* 모달창 스타일 */
-.modal {
-	text-align: center;
-    display: none; /* 기본적으로 숨김 */
-    position: fixed; /* 화면에 고정 */
-    z-index: 1; /* 다른 요소 위에 위치 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* 배경 어두운 색 */
-}
 
-.modal h2 {
-	margin-bottom: 1rem;
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 8px;
-}
 
 .close-btn {
     color: #aaa;
@@ -318,27 +281,7 @@ button[disabled] {
     cursor: pointer;
 }
    
-#submit-report {
-    background-color: red; /* 빨간색 배경 */
-    color: white;
-    padding: 10px 20px; /* 적당한 여백 */
-    border: none;
-    border-radius: 4px; /* 모서리 둥글게 */
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100%; /* 버튼을 텍스트 영역에 맞춰 넓히기 */
-}
 
-#submit-report:hover {
-    background-color: #c9302c; /* 호버 시 다크 레드 */
-    transform: scale(1.05); /* 약간 커지는 효과 */
-}
-
-#submit-report:focus {
-    outline: none; /* 포커스 시 테두리 없애기 */
-    box-shadow: 0 0 5px rgba(217, 83, 79, 0.5); /* 빨간빛 외곽선 */
-}
   
 #updateBtn {
 	float:right;
