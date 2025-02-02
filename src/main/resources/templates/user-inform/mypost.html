@@ -96,22 +96,19 @@ const handleParticipant = (event, action, boardNo, participantId) => {
             participantId: participantId
         },
         success: data => {
-            if (data === 'accepted' || data === 'rejected') {
-                alert(data === 'accepted' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');
-                
+            if (data == 'accepted' || data == 'rejected') {
+                alert(data == 'accepted' ? '참가자가 수락되었습니다.' : '참가자가 거절되었습니다.');               
                 // 참가자 목록에서 해당 참가자 제거
                 const participantElement = event.target.closest('.participant');
-                participantElement.remove();
-                
+                participantElement.remove();              
                 // 참가자 목록이 비어있으면 숨김
                 const participantsList = document.getElementById("participants-" + boardNo);
-                if (participantsList.children.length === 0) {
+                if (participantsList.children.length == 0) {
                     participantsList.style.display = "none";
                 }
-
                 // 수락된 경우, 모집 상태 확인
-                if (data === 'accepted') {
-                    checkRecruitmentStatus(boardNo);
+                if (data == 'accepted') {
+                	checkStatus(boardNo);
                 }
             } else {
                 alert('처리 중 오류가 발생했습니다.');
@@ -122,15 +119,13 @@ const handleParticipant = (event, action, boardNo, participantId) => {
         }
     });
 }
-
-
-const checkRecruitmentStatus = (boardNo) => {
+const checkStatus = (boardNo) => {
     $.ajax({
         url: '/member/checkStatus',
         type: 'post',
         data: { boardNo: boardNo },
         success: status => {
-            if (status === 'FULL') {
+            if (status == 'FULL') {
                 updateBoardStatus(boardNo);
             }
         },
@@ -139,17 +134,17 @@ const checkRecruitmentStatus = (boardNo) => {
         }
     });
 }
-
 const updateBoardStatus = (boardNo) => {
     $.ajax({
         url: '/member/updateBoardStatus',
         type: 'post',
         data: { boardNo: boardNo },
         success: result => {
-            if (result === 'success') {
-                const statusElement = document.querySelector(`#post-${boardNo} .post-status`);
+            if (result == 'success') {
+                const statusElement = document.querySelector('#post-${boardNo} .post-status');
                 if (statusElement) {
                     statusElement.textContent = '모집완료';
+                    document.getElementById('participants-' + boardNo).remove();
                 }
             }
         },
@@ -159,55 +154,6 @@ const updateBoardStatus = (boardNo) => {
     });
 }
 </script>
-
-
-<!-- <!--     <script th:inline = "javascript"> --> -->
-<!-- //     		// 참가자 목록을 토글  -->
-<!-- //         function toggleParticipants(post) { -->
-<!-- //             const participants = post.querySelector('.participants');	// 클릭된 포스트의 참가자 목록 요소를 찾음 -->
-<!-- //             const currentDisplay = participants.style.display;			// 현재 참가자 목록의 표시 상태 확인 -->
-<!-- //             const allParticipants = document.querySelectorAll('.participants');	// 페이지 내의 모든 참가자 목록 선택 -->
-           
-<!-- //             allParticipants.forEach(p => {		// 모든 참가자 목록 숨김 -->
-<!-- //                 p.style.display = 'none'; -->
-<!-- //             }); -->
-<!-- //             // 클릭된 포스트의 참가자 목록 표시 상태를 토글로  -->
-<!-- //             participants.style.display = currentDisplay === 'none' ? 'block' : 'none'; -->
-<!-- //         } -->
-<!-- // 			// 참가자 수락, 거절 처리  -->
-<!-- //         function handleParticipant(event, button, action,boarNo,participantId) { -->
-<!-- //             event.stopPropagation();	// 이벤트가 상위 요소로 가는것 방지(버블링 방지) -->
-<!-- //             $.ajax({ -->
-<!-- //             	url:"/" -->
-<!-- //             }); -->
-            
-            
-            
-            
-<!-- //             const participant = button.closest('.participant');  // 클릭된 버튼의 가장 가까운 상위 .participant 요소를 찾음 -->
-<!-- //             const name = participant.querySelector('p:first-child').textContent.split(' ')[1];  // 참가자 이름 추출 -->
-            
-<!-- //             if (action === 'accept') {			// accpet 이면 수락 -->
-<!-- //                 alert(`${name}님의 참가 신청을 수락했습니다.`); -->
-<!-- //             } else {							// 아니면 거절 -->
-<!-- //                 alert(`${name}님의 참가 신청을 거절했습니다.`); -->
-<!-- //             } -->
-	            
-<!-- // 	        //participant.style.opacity = '0';		// 투명도 0  -->
-<!-- //             //participant.style.transform = 'translateY(-10px)';	// y축으로 -10px이동  -->
-<!-- //             //participant.style.transition = 'all 0.3s ease';		// 변화  -->
-            
-<!-- //             //setTimeout(() => {		// 애니메이션 끝난 후 참가자 요소 제거  -->
-<!-- //                 participant.remove(); -->
-                
-<!-- //                 const participants = participant.closest('.participants');	// 가장 가까운 상위 .participants 요소 찾음 -->
-<!-- //                 if (!participants.querySelector('.participant')) { -->
-<!-- //                     participants.style.display = 'none'; -->
-<!-- //                 } -->
-<!-- //             //}, 300); -->
-<!-- //         } -->
-<!--     </script> -->
-
 <div th:insert = "common/footer.html"></div>
 </body>
 </html>

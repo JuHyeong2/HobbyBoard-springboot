@@ -99,7 +99,7 @@
 
 	<insert id="insertParticipant">
 		insert into participant
-		values(#{memberNo}, #{boardNo}, 'a')
+		values(#{memberNo}, #{boardNo}, 'w')
 	</insert>
 	
 	<select id="selectParticipant">

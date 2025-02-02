@@ -65,10 +65,10 @@
                 participantId: participantId
             },
             success: status => {
-                if (status === 'a') {
+                if (status == 'a') {
                     statusElement.textContent = '수락';
                     statusElement.classList.add('accepted');
-                } else if (status === 'r') {
+                } else if (status == 'r') {
                     statusElement.textContent = '거절';
                     statusElement.classList.add('rejected');
                 }
@@ -81,8 +81,9 @@
         statusElement.addEventListener('click', function() {
             if (this.classList.contains('accepted')) {
                 alert('신청한 활동이 수락되었습니다.');
-                this.textContent = '진행 중';
+                this.textContent = '참여가능';
                 this.classList.remove('accepted');
+             
             } else if (this.classList.contains('rejected')) {
                 alert('신청한 활동이 거절되었습니다.');
                 activity.remove();

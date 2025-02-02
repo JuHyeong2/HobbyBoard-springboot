@@ -299,5 +299,9 @@ public class BoardController {
 		}
 		
 	}
+	@GetMapping("category")
+	public String category() {
+		return null;
+	}
 
 }
