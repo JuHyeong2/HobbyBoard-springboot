@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.example.hamo.admin.model.vo.Admin;
-import com.example.hamo.admin.model.vo.Report;
 import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.member.model.vo.Member;
@@ -41,17 +40,17 @@ public interface AdminMapper {
 
 	ArrayList<Board> searchBoardList(HashMap<String, String> map);
 
-	int insertReport(Report r);
+	
 
-	ArrayList<Report> selectReportList();
+	
 
-	Report selectReportOne(int reportNo);
+	
 
-	int reportAccecpt(Report r);
+	
 
 	int deleteUser(int violatorNo);
 
-	int reportReject(int reportNo);
+	
 
 	ArrayList<Dashboard> boardCount();
 

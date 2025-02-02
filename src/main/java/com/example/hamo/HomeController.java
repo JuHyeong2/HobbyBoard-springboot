@@ -84,14 +84,6 @@ public class HomeController {
 		    bService.insertLog(map);
 		}
 
-
-
-		
-		
-		
-		
-	
-		
 		ArrayList<Board> banner = bService.getBanner();
 //		for (Board board : banner) {
 //            if (board.getThumbnailUrl() != null) {
@@ -156,49 +148,6 @@ public class HomeController {
 		
 	}
 
-	// client 실ip 가져오는 메소드
-	public static String getClientIp(HttpServletRequest request) {
-	    String clientIp = null;
-	    boolean isIpInHeader = false;
-
-	    List<String> headerList = new ArrayList<>();
-	    headerList.add("X-Forwarded-For");
-	    headerList.add("HTTP_CLIENT_IP");
-	    headerList.add("HTTP_X_FORWARDED_FOR");
-	    headerList.add("HTTP_X_FORWARDED");
-	    headerList.add("HTTP_FORWARDED_FOR");
-	    headerList.add("HTTP_FORWARDED");
-	    headerList.add("Proxy-Client-IP");
-	    headerList.add("WL-Proxy-Client-IP");
-	    headerList.add("HTTP_VIA");
-	    headerList.add("IPV6_ADR");
-
-	    for (String header : headerList) {
-	        clientIp = request.getHeader(header);
-	        if (StringUtils.hasText(clientIp) && !"unknown".equalsIgnoreCase(clientIp)) {
-	            isIpInHeader = true;
-	            break;
-	        }
-	    }
-
-	    if (!isIpInHeader) {
-	        clientIp = request.getRemoteAddr();
-	    }
-	    
-	    if ("0:0:0:0:0:0:0:1".equals(clientIp) || "127.0.0.1".equals(clientIp)) {
-	        InetAddress address = null;
-			try {
-				address = InetAddress.getLocalHost();
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			}
-	        clientIp = address.getHostAddress();
-	    }
-
-	    
-	    return clientIp;
-	}
-	
 	// client 실ip 가져오는 메소드
 	public static String getClientIp(HttpServletRequest request) {
 	    String clientIp = null;

@@ -114,9 +114,6 @@ public class BoardService {
 		return mapper.getBanner();
 	}
 	
-	public int insertLog(HashMap<String, String> map) {
-		return mapper.insertLog(map);
-	}
 
 	public ArrayList<Dashboard> selectAllLog() {
 		return mapper.selectAllLog();

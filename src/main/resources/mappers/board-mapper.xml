@@ -31,14 +31,13 @@
 	
 	
 	<insert id="imageInsert">
-		insert all
-		<foreach collection="list" item="image" separator=" " index="i"> 
-			into image
-			values(new_iid, #{image.imgName}, #{image.imgPath}, #{image.imgRename}, #{image.delimiter}, #{image.buNo})
-		</foreach>
-		select * from dual
-	</insert>
-	
+      insert all
+      <foreach collection="list" item="image" separator=" " index="i"> 
+         into image
+         values(new_iid, #{image.imgName}, #{image.imgPath}, #{image.imgRename}, #{image.delimiter}, #{image.buNo})
+      </foreach>
+      select * from dual
+   </insert>
 
 	<select id="selectNotice" resultType="Admin">
 		select *
