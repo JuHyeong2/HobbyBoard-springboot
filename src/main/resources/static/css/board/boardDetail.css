@@ -292,3 +292,7 @@ button[disabled] {
 	color: black;
 }
  
+.delUpdReply {
+	display: flex;
+	margin-top: auto;
+}

@@ -123,7 +123,16 @@
 				                <h3>[[${reply.memberNickname}]]</h3>
 				                <p>[[${reply.replyContent}]]</p>
 				            </div>
-			                <div class="rp-ud">[[${reply.updateDate}]]</div>
+			                <div class="rp-ud">
+			                	<div>
+			                		<div class="delUpdReply" th:if="${session.loginUser != null && session.loginUser.memberNo eq reply.memberNo}">
+			                			<span th>수정</span>
+			                			<span>&nbsp|&nbsp</span>
+			                			<span>삭제</span>
+			                		</div>
+			                		<p>[[${reply.updateDate}]]</p>
+			                	</div>
+			                </div>
 			            </div>
 			        </section>
 		        </th:block>
