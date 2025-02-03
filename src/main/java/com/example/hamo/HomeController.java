@@ -85,20 +85,20 @@ public class HomeController {
 		}
 
 		ArrayList<Board> banner = bService.getBanner();
-//		for (Board board : banner) {
-//            if (board.getThumbnailUrl() != null) {
-//                board.setThumbnailUrl(amazonS3.getUrl(bucket, board.getThumbnailUrl()).toString());
-//            }
-//        }
-//		ArrayList<Image> imgList = bService.selectImageListBoard();
-//		for (Board board : banner) {
-//			for(Image img : imgList) {
-//				if(board.getBoardNo() == img.getBuNo()) {
-//					board.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
-//					break;
-//				}
-//			}
-//		}		
+		for (Board board : banner) {
+            if (board.getThumbnailUrl() != null) {
+                board.setThumbnailUrl(amazonS3.getUrl(bucket, board.getThumbnailUrl()).toString());
+            }
+        }
+		ArrayList<Image> imgList = bService.selectImageListBoard();
+		for (Board board : banner) {
+			for(Image img : imgList) {
+				if(board.getBoardNo() == img.getBuNo()) {
+					board.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+					break;
+				}
+			}
+		}		
     
 		// 썸네일 이미지 가져오기
 		ArrayList<Board> list = bService.selectBoardList();

@@ -340,7 +340,34 @@ public class BoardController {
 		}else {
 			return result;
 		}
+	}
+	
+	@GetMapping("searchBoard")
+	public String searchBoard(@RequestParam("searchValue") String searchValue, Model model) {
+		ArrayList<Board> searchResult = bService.searchResult(searchValue);
+		ArrayList<Image> imgList = bService.selectImageListBoard();
+		ArrayList<Board> banner = bService.getBanner();
+//		System.out.println("searchValue : " + searchValue);
+//		System.out.println("searchResult : " + searchResult);
+		for(Board b : searchResult) {
+			for(Image img : imgList) {
+				if(b.getBoardNo() == img.getBuNo()) {
+					b.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+					break;
+				}
+			}
+		}
+		for (Board board : banner) {
+			for(Image img : imgList) {
+				if(board.getBoardNo() == img.getBuNo()) {
+					board.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+					break;
+				}
+			}
+		}	
 		
+		model.addAttribute("list", searchResult).addAttribute("banner", banner);
+		return "board/boardSearch";
 	}
 
 }
