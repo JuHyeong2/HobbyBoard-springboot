@@ -42,9 +42,7 @@ public class HomeController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		String ipAddress = getClientIp(request);
 		String userAgent = request.getHeader("User-Agent");
-//		System.out.println(ipAddress + userAgent);
-//		System.out.println(logList);
-//		System.out.println(LocalDate.now());
+
 		if (!logList.isEmpty()) {
 		    boolean isTodayExists = false; // 오늘 날짜의 로그가 이미 있는지 확인
 		    boolean isIpAgentDuplicated = false; // IP + User-Agent 중복 여부 확인
@@ -71,14 +69,9 @@ public class HomeController {
 		        map.put("ipAddress", ipAddress);
 		        map.put("userAgent", userAgent);
 		        bService.insertLog(map);
-		    } else {
-		        // 오늘 날짜의 로그가 이미 존재하므로 삽입하지 않음
-		        System.out.println("오늘 날짜의 동일한 로그가 존재하여 삽입하지 않음");
 		    }
-
 		} else {
 		    // 로그가 비어 있으면 무조건 삽입
-		    System.out.println("로그가 비어있음 → 로그 삽입");
 		    map.put("ipAddress", ipAddress);
 		    map.put("userAgent", userAgent);
 		    bService.insertLog(map);
@@ -152,8 +145,9 @@ public class HomeController {
 	public static String getClientIp(HttpServletRequest request) {
 	    String clientIp = null;
 	    boolean isIpInHeader = false;
-
+	    
 	    List<String> headerList = new ArrayList<>();
+	    
 	    headerList.add("X-Forwarded-For");
 	    headerList.add("HTTP_CLIENT_IP");
 	    headerList.add("HTTP_X_FORWARDED_FOR");
@@ -164,7 +158,7 @@ public class HomeController {
 	    headerList.add("WL-Proxy-Client-IP");
 	    headerList.add("HTTP_VIA");
 	    headerList.add("IPV6_ADR");
-
+	    
 	    for (String header : headerList) {
 	        clientIp = request.getHeader(header);
 	        if (StringUtils.hasText(clientIp) && !"unknown".equalsIgnoreCase(clientIp)) {
@@ -172,7 +166,6 @@ public class HomeController {
 	            break;
 	        }
 	    }
-
 	    if (!isIpInHeader) {
 	        clientIp = request.getRemoteAddr();
 	    }

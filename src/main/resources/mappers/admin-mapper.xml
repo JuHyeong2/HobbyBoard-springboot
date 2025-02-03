@@ -100,19 +100,22 @@
 		GROUP BY TRUNC(create_date)
 		ORDER BY TRUNC(create_date) DESC
 	</select>
+	
 	<select id="userCount" resultType="dashboard">
 		SELECT TRUNC(visit_date) as visit_date, COUNT(*) as count
 		FROM visit_logs		
 		GROUP BY TRUNC(visit_date)
 		ORDER BY TRUNC(visit_date) DESC
 	</select>
+	
 	<select id="dailyUserCount" resultType="dashboard">
 		SELECT TO_CHAR(visit_date, 'DY', 'NLS_DATE_LANGUAGE=KOREAN') AS week_day_name,
 						COUNT(*) AS count
 		FROM visit_logs
-		WHERE visit_date BETWEEN TRUNC(SYSDATE, 'IW') - 7 AND TRUNC(SYSDATE, 'IW') - 1  -- 전주 범위
-		GROUP BY TO_CHAR(visit_date, 'DY', 'NLS_DATE_LANGUAGE=KOREAN'), TO_CHAR(visit_date, 'D')  -- 'D' 추가
+		WHERE visit_date BETWEEN TRUNC(SYSDATE, 'IW') - 7 AND TRUNC(SYSDATE, 'IW') - 1  
+		GROUP BY TO_CHAR(visit_date, 'DY', 'NLS_DATE_LANGUAGE=KOREAN'), TO_CHAR(visit_date, 'D')  
 		ORDER BY DECODE(TO_CHAR(visit_date, 'D'), 
 							'2', 1, '3', 2, '4', 3, '5', 4, '6', 5, '7', 6, '1', 7)
 	</select>
+	
 </mapper>
