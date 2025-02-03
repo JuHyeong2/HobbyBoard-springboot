@@ -90,17 +90,17 @@ public class HomeController {
 //                board.setThumbnailUrl(amazonS3.getUrl(bucket, board.getThumbnailUrl()).toString());
 //            }
 //        }
-//		ArrayList<Image> imgList = bService.selectImageListBoard();
-//		for (Board board : banner) {
-//			for(Image img : imgList) {
-//				if(board.getBoardNo() == img.getBuNo()) {
-//					board.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
-//					break;
-//				}
-//			}
-//		}		
+		ArrayList<Image> imgList = bService.selectImageListBoard();
+		for (Board board : banner) {
+			for(Image img : imgList) {
+				if(board.getBoardNo() == img.getBuNo()) {
+					board.setThumbnailUrl(amazonS3.getUrl(bucket, img.getImgRename()).toString());
+					break;
+				}
+			}
+		}		
     
-		// 썸네일 이미지 가져오기
+		
 		ArrayList<Board> list = bService.selectBoardList();
 		BoardList(list);
 		ArrayList<Category> category = bService.selectCategory();

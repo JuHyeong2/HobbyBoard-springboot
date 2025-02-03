@@ -153,7 +153,7 @@ img {
 /*             transform : translateY(-50%); */
             top : 50%;
 /*             bottom: 10px; */
-/*             left: 50%; */
+            left: 50%;
 /*             transform: translateX(-50%); */
 
 /* 			line-height : 50px; */
@@ -167,6 +167,7 @@ img {
 			
         }
 .slider-nav button {
+/* 	position: absolute; */
             border: none;
             font-size: 24px;
             cursor: pointer;
@@ -179,10 +180,12 @@ img {
 
 
 button.prev-btn {
-	transform : translateY(-50%);
+	
+	transform : translate(0%,-50%);
 }
 button.next-btn {
-	transform : translate(2700%,-50%);
+	transform : translate(0%,-50%);
+	
 	
 }
 
