@@ -1,27 +1,21 @@
 package com.example.hamo.admin.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
-import com.example.hamo.admin.model.vo.Report;
-import com.example.hamo.admin.model.vo.dashboard;
+import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.vo.Board;
 import com.example.hamo.common.Pagination;
 import com.example.hamo.common.vo.PageInfo;
@@ -40,9 +34,13 @@ public class AdminController {
 	// dashboard mapping
 	@GetMapping("dashboard")
 	public String dashboard(Model model, HttpServletRequest request) {
-		ArrayList<dashboard> boardCount = aService.boardCount();
+		ArrayList<Dashboard> boardCount = aService.boardCount();
+		ArrayList<Dashboard> userCount = aService.userCount();
+		ArrayList<Dashboard> dailyUserCount = aService.dailyUserCount();
+		System.out.println(dailyUserCount);
+//		System.out.println(userCount);
 //		System.out.println(boardCount);
-		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("boardCount", boardCount).addAttribute("userCount", userCount).addAttribute("dailyUserCount",dailyUserCount);
 		return "admin/dashboard";
 	}
 	
@@ -71,16 +69,7 @@ public class AdminController {
 		return "admin/boards";
 	}
 
-	// reports mapping
-	@GetMapping("reports")
-	public String reports(Model model) {
-		ArrayList<Report> rList = aService.selectReportList();
-//		System.out.println(rList);
 
-		model.addAttribute("rList", rList);
-
-		return "admin/reports";
-	}
 
 	// notice mapping
 	@GetMapping("notice")
@@ -214,42 +203,4 @@ public class AdminController {
 		return searchList;
 	}
 
-	@PostMapping("reportSubmit")
-	public String reportSubmit(@RequestParam("reportBoardNo") int boardNo, @RequestParam("reportWriter") int writer,
-			@RequestParam("reportContent") String content, Model model, HttpSession session) {
-		Member m = (Member) session.getAttribute("loginUser");
-		Report r = new Report();
-		r.setBoardNo(boardNo);
-		r.setReporter(m.getMemberNo());
-		r.setViolator(writer);
-		r.setReportText(content);
-		int result = aService.insertReport(r);
-
-		model.addAttribute("result", result);
-		return "redirect:/board/" + boardNo;
-	}
-
-	@PostMapping("reportAccepct")
-	public String accecptReport(@RequestParam("reportNo") int reportNo, RedirectAttributes redirectAttributes) {
-		Report r = aService.selectReportOne(reportNo);
-		int boardNo = r.getBoardNo();
-		int violatorNo = r.getViolator();
-//		System.out.println(r);
-		int result = aService.reportAccepct(r);
-		if (result > 0) {
-			int boardResult = aService.deleteBoard(boardNo);
-			int userResult = aService.deleteUser(violatorNo);
-			if (boardResult > 0 && userResult > 0) {
-				redirectAttributes.addFlashAttribute("result", result);
-				return "redirect:/admin/reports";
-			}
-		}
-		return null;
-	}
-	
-	@PostMapping("reportReject")
-	public String rejectReport(@RequestParam("reportNo") int reportNo) {
-		int result = aService.reportReject(reportNo);
-		return "redirect:/admin/reports";
-	}
 }

@@ -11,20 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
     
-    <!-- ECharts 라이브러리 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+
 
     <style>
-        .graph-bar {
-            display: inline-block;
-            width: 6rem;
-            text-align: center;
-            margin-right: 20px;
-            margin-top: 1rem;
-        }
-        .graph-container {
-            text-align: center;
-        }
         .calendar-container {
             margin: 20px;
         }
@@ -35,10 +26,7 @@
         .calendar-title {
             margin-bottom: 10px;
         }
-        .echart {
-            width: 64rem;  /* 그래프의 가로 크기 확대 */
-        	height: 19rem; /* 그래프의 세로 크기 확대 */	
-        }
+
     </style>
 </head>
 <body>
@@ -49,39 +37,9 @@
             <h1>DASHBOARD</h1>
 
             <div class="graph-container">
-                <h2>1주 사용자 이용량</h2>
-                <div class="graph">
-                    <!-- ECharts로 그래프 변경 -->
-                    <div class="graph-bar">
-                        <div id="monChart" class="echart"></div>
-                        <span>월 (80명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="tueChart" class="echart"></div>
-                        <span>화 (70명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="wedChart" class="echart"></div>
-                        <span>수 (60명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="thuChart" class="echart"></div>
-                        <span>목 (90명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="friChart" class="echart"></div>
-                        <span>금 (50명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="satChart" class="echart"></div>
-                        <span>토 (30명)</span>
-                    </div>
-                    <div class="graph-bar">
-                        <div id="sunChart" class="echart"></div>
-                        <span>일 (40명)</span>
-                    </div>
-                </div>
-            </div>
+			    
+			    <div id="myLineChart" style="width: 65rem; height: 25rem;"></div>
+			</div>
 
             <div class="table-container">
                 <div class="calendar-wrapper">
@@ -99,60 +57,33 @@
     </div>
 
     <script th:inline="javascript">
-        // ECharts 차트 설정
-        // ECharts 차트 설정
-		function drawChart(chartId, labels, values) {
-		    var chart = echarts.init(document.getElementById(chartId));
-		
-		    var option = {
-		    	    tooltip: {
-		    	        trigger: 'item',
-		    	        formatter: '{b}: {c}명'
-		    	    },
-		    	    xAxis: {
-		    	        type: 'category',
-		    	        data: labels,  // 여러 요일 데이터를 x축에 넣음
-		    	        axisLabel: {
-		    	            fontSize: 14,
-		    	            margin: 10,  // x축 레이블과 그래프 사이의 간격을 늘려줌
-		    	            padding: [0, 0, 10, 0],  // 위, 오른쪽, 아래, 왼쪽 padding 순서로 설정
-		    	        }
-		    	    },
-		    	    yAxis: {
-		    	        type: 'value',
-		    	        min: 0,
-		    	        max: 100,
-		    	        axisLabel: {
-		    	            fontSize: 14,
-		    	            formatter: '',
-		    	        }
-		    	    },
-		    	    series: [{
-		    	        data: values,
-		    	        type: 'line',
-		    	        itemStyle: {
-		    	            color: '#2c3e50'
-		    	        },
-		    	        lineStyle: {
-		    	            width: 3,
-		    	            type: 'solid'
-		    	        },
-// 		    	        smooth: true,
-		    	        symbol: 'circle',
-		    	        symbolSize: 6,
-		    	    }]
-		    	};
-		
-		    chart.setOption(option);
-		}
-		
-		// 여러 데이터 포인트로 차트 그리기
-		window.onload = function() {
-		    var days = ['월', '화', '수', '목', '금', '토', '일'];  // 요일
-		    var usage = [80, 70, 60, 90, 50, 30, 40];  // 각 요일별 이용자 수
-		
-		    drawChart('monChart', days, usage);  // 하나의 차트에 전체 데이터를 사용
-		};
+	    var labels = /*[[${dailyUserCount.![weekDayName]}]]*/0; 
+	    var data = /*[[${dailyUserCount.![count]}]]*/0; 
+    
+    
+	    var myChart = echarts.init(document.getElementById('myLineChart'));
+	    var option = {
+	        title: {
+	            text: '1주 사용자 이용량'
+	        },
+	        tooltip: {
+	            trigger: 'axis'
+	        },
+	        xAxis: {
+	            type: 'category',
+	            data: labels // 요일
+	        },
+	        yAxis: {
+	            type: 'value',
+	            min: 0,  // 최소값
+	            max: 20 // 최대값
+	        },
+	        series: [{
+	            data: data, // 데이터
+	            type: 'line'
+	        }]
+	    };
+	    myChart.setOption(option);
 
 
         // FullCalendar 설정
@@ -161,12 +92,20 @@
             var calendarEl2 = document.getElementById('calendar2');
 			
             const boardCounts = /*[[${boardCount}]]*/0;
-            let events = boardCounts.map(function(item) {
+            let events1 = boardCounts.map(function(item) {
             	return {
             		title: item.count.toString() + '개',
             		date: item.createDate
             	};
             });
+            const userCounts = /*[[${userCount}]]*/0;
+            let events2 = userCounts.map(function(item) {
+            	return {
+            		title: item.count.toString() + '명',
+            		date: item.visitDate
+            	}
+            });
+            
             
             var calendar1 = new FullCalendar.Calendar(calendarEl1, {
                 initialView: 'dayGridMonth',
@@ -176,7 +115,7 @@
                     end: 'today next', 
                 },
                 locale: 'ko',
-                events: events
+                events: events1
             });
            
             
@@ -189,13 +128,7 @@
                     end: 'today next', 
                 },
                 locale: 'ko',
-                events: [{
-                    title: '20',
-                    date: '2024-12-25',
-                }, {
-                    title: '20',
-                    date: '2024-12-27',
-                }]
+                events: events2
             });
 
             calendar1.render();

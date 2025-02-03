@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>   <!-- 제이쿼리 -->
 <style>
 * {
     margin: 0;
@@ -97,7 +98,7 @@ header {
 	top: 11rem;
 	min-width: 160px;
 	box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
-	z-index: 1;
+	z-index: 2;
 }
 
 .dropdown-content a, .dropdown-content-2 a {
@@ -178,19 +179,10 @@ header {
         <div class="navigation" th:if="${loc != '/member/findId' && loc != '/member/findPwd'}">       	
         	<nav class="main-nav">
             	<ul>
-               	 	<li id="category"><a href="#">카테고리</a>
-	               	 	<div class="dropdown-content">
-			                <a href="#">스포츠/운동</a>
-			                <a href="#">공예/DIY</a>
-			                <a href="#">미술/그림</a>
-			                <a href="#">음악</a>
-			                <a href="#">요리/베이킹</a>
-			                <a href="#">게임</a>
-			                <a href="#">영화/드라마</a>
-			                <a href="#">여행</a>
-			                <a href="#">자연/식물</a>
-			                <a href="#">책/문학</a>
-			                <a href="#">심리/자기계발</a>
+               	 	<li id="category"><a href="/">카테고리</a>
+	    		 <div class="dropdown-content" id = "dropdown-content">
+	               	 	<a href = "#" th:each="category : ${category}" th:data-category = "${category.categoryNo}" th:text = "${category.categoryName}">
+	               	 	</a>
 		                </div>
 		            </li>
                	 	<li><a href="/board/noticeView">공지</a></li>
@@ -244,5 +236,24 @@ header {
         	</nav>
 		</div>
     </header>
+
+	<script th:inline="javascript">
+    	document.addEventListener("DOMContentLoaded", () => {
+    		document.querySelector(".dropdown-content").addEventListener('click', e => {
+    			if(e.target.tagName == "A") {
+    			e.preventDefault();
+    			const categoryNo = e.target.getAttribute('data-category');
+    			$.ajax({
+    				url : '/category/' + categoryNo,
+    				success : function(response) {
+    					document.getElementById('boardGrid').innerHTML = response;
+    				},
+    				error : data => console.log(data)
+    			});
+    			}
+    		});
+    	});
+
+    </script>
 </body>
 </html>

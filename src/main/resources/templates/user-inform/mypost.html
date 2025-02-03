@@ -150,6 +150,7 @@ const updateBoardStatus = (boardNo) => {
                 const statusElement = document.querySelector(`#post-${boardNo} .post-status`);
                 if (statusElement) {
                     statusElement.textContent = '모집완료';
+                    document.getElementById('participants-' + boardNo).remove();
                 }
             }
         },

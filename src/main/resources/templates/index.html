@@ -7,38 +7,37 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-</head>
 
 <body>
-	<!-- 왠지는 모르겠는데 개ㅈ같은 replace는 안먹음 -->
 	<div th:replace="common/top.html"></div>
 	<!-- 	<div th:insert="common/top.html"></div> -->
-	<section class="hero-banner">
-		<div class="banner-content">
-			<h1>하모에서 하비모임!!~</h1>
-			<p>내가 원하는 그 모임으로~</p>
-			<button class="view-more"></button>
-		</div>
-		<div class="banner-navigation">
-			<button class="prev">&lt;</button>
-			<div class="dots">
-				<span class="dot active"></span>
-				<span class="dot"></span>
-				<span class="dot"></span>
-				<span class="dot"></span>
-				<span class="dot"></span>
-				<span class="dot"></span>
-			</div>
-			<button class="next">&gt;</button>
-		</div>
-	</section>
+	
+	<section class="posts-slider">
+        <div class="slider-container">
+            <div th:each="board : ${banner}" class="slider-item" th:data-board-no="${board.boardNo}">
+            	<img th:if="${board.thumbnailUrl != null}" th:src="${board.thumbnailUrl}">
+                <img th:if="${board.thumbnailUrl == null}"  src="/image/HAMO_Thumbnail.png">
+            <div class="slider-item-content">
+                <h2 th:text="${board.title}"></h2>
+                <p th:utext="${board.content}"></p>
+                <p>조회수: <span th:text="${board.views}"></span></p>
+                <p>참여자: <span th:text="${board.participants}"></span>/<span th:text="${board.maxParticipants}"></span></p>
+            </div>
+        </div>
+        </div>
+        <div class="slider-nav">
+            <button class="prev-btn">&lt;</button>
+            <button class="next-btn">&gt;</button>
+        </div>
+    </section>
+
 	<main>
 		<div class="title-flex">
 			<h2>나를 기다리는 하모</h2>
 			<label th:if="${session.loginUser != null}" class="insertBoard" onclick="location.href='/board/boardInsert'">글쓰기</label>
 		</div>
-			<section class="board-grid">
-				<div class="board-item" th:each="b : ${list}">
+			<section class="board-grid" id = "boardGrid">
+				<div class="board-item" th:each="b : ${list}">	
 					<div class="board-img" th:if="${b.thumbnailUrl != null}">
 						<img alt="board-img" th:src="${b.thumbnailUrl}">
 					</div>
@@ -64,7 +63,7 @@
 	
 	<div th:insert="common/footer.html"></div>
 	
-	<script>
+	<script th:inline = "javascript">
 		
 		//게시글 클릭하면 게시글 상세 페이지로 날아가는 스크립트
 		window.onload = () => {
@@ -95,8 +94,57 @@
 		    scrollToTopBtn.addEventListener('click', () => {
 		        window.scrollTo({ top: 0, behavior: 'smooth' }); // 부드럽게 스크롤
 		    });
+  
 		};
 
+		 document.addEventListener('DOMContentLoaded', function() {
+	            const sliderContainer = document.querySelector('.slider-container');
+	            const slides = document.querySelectorAll('.slider-item');
+	            const prevBtn = document.querySelector('.prev-btn');
+	            const nextBtn = document.querySelector('.next-btn');
+	            let currentIndex = 0;	// 현재 표시중인 슬라이드 인덱스 
+
+	            function showSlide(index) {
+	            	sliderContainer.style.transform = `translateX(-${index * 100}%)`;	// 컨테이너 이동시켜서 해당 슬라이드 보여줌
+	            }
+
+	            function nextSlide() {
+	                currentIndex = (currentIndex + 1) % slides.length;			// 순환 구조로 인덱스 계산 
+	                showSlide(currentIndex);
+	            }
+
+	            function prevSlide() {
+	                currentIndex = (currentIndex - 1 + slides.length) % slides.length;	// 순환 구조로 인덱스 계산 
+	                showSlide(currentIndex);
+	            }
+
+	            nextBtn.addEventListener('click', nextSlide);
+	            prevBtn.addEventListener('click', prevSlide);
+
+	            
+	            let slideInterval = setInterval(nextSlide, 3000);	// 3초마다 다음 슬라이드 이동
+
+	            
+	            slides.forEach(slide => {
+	                slide.addEventListener('click', function() {
+	                    const boardNo = this.getAttribute('data-board-no');	// 해당 게시글 페이지 이동 
+	                   	location.href = `/board/${boardNo}`;
+	                });
+
+	               
+	                slide.addEventListener('mouseenter', () => clearInterval(slideInterval));		// 마우스 슬라이드 위에 있으면 슬라이드 정지 
+	                slide.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000));	// 마우스 슬라이드 벗어나면 다시 슬라이드 작동 
+	            });
+	             
+	        });
+		 
+		 document.addEventListener("click", (e) => {		// 특정 카테고리 게시글 목록 중에서 게시글 클릭시 해당 게시글 페이지로 
+	            if (e.target.closest(".board-item")) {
+	                const boardNo = e.target.closest(".board-item").querySelector("input[name='boardNo']").value;
+	                location.href = "/board/" + boardNo;
+	            }
+	        });
+		
 	
 	</script>
 </body>

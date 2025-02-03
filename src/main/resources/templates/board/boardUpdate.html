@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script src="/js/summernote-lite.js"></script>
-<script src="/js/summernote-ko-KR.js"></script>
+
+<script src="/js/summernote-lite.js" defer></script>
+<script src="/js/summernote-ko-KR.js" defer></script>
 <link rel="stylesheet" href="/css/board/summernote-lite.css">
 <link rel="stylesheet" href="/css/board/boardInsert.css">
 </head>
@@ -118,6 +118,7 @@
 	  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	  	    });
 	    	
+	    	
 // 	    	const fileInput = document.getElementById('fileInput');
 	    	const inputDiv = document.getElementById('inputDiv');
 	    	const imgLabel = document.getElementById('imgLabel');
@@ -196,7 +197,9 @@
 	    	})
 	    	
 	    });
-		
+	
+	
+	
 		// 기존 이미지 삭제 버튼
 // 		document.querySelectorAll('.deleteImageButton').addEventListener('click', (e)=>{
 // 			const btnId = e.target.id;

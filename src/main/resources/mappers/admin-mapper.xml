@@ -93,54 +93,26 @@
 	    </if>
 	</select>
 	
-	<select id="selectReportList" resultType="Report">
-	    SELECT 
-	        r.*, 
-	        v.member_nickname AS violator_nick, 
-	        rp.member_nickname AS reporter_nick
-	    FROM 
-	        report r
-	        JOIN member v 
-	             ON r.violator = v.member_no
-	        JOIN member rp 
-	             ON r.reporter = rp.member_no
-	</select>
-
-	
-	<insert id="insertReport">
-		insert into report
-		values(seq_report.nextval, #{reportText}, default, default, #{reporter}, #{violator}, #{boardNo})
-	</insert>
-	
-	<select id="selectReportOne" resultType="Report">
-		select *
-		from report
-		where report_no=#{reportNo}
-	</select>
-	
-	<update id="reportAccecpt">
-		update report
-		set report_status='A'
-		where report_no = #{reportNo}
-	</update>
-	
-	<update id="deleteUser">
-		update member
-		set status='N'
-		where member_no = #{violatorNo}
-	</update>
-	
-	<update id="reportReject">
-		update report
-		set report_status='R'
-		where report_no = #{reportNo}
-	</update>
-	
 	<select id="boardCount" resultType="dashboard">
 		SELECT TRUNC(create_date) as create_date, COUNT(*) as count
 		FROM board
 		WHERE board_status = 'Y'
 		GROUP BY TRUNC(create_date)
 		ORDER BY TRUNC(create_date) DESC
+	</select>
+	<select id="userCount" resultType="dashboard">
+		SELECT TRUNC(visit_date) as visit_date, COUNT(*) as count
+		FROM visit_logs		
+		GROUP BY TRUNC(visit_date)
+		ORDER BY TRUNC(visit_date) DESC
+	</select>
+	<select id="dailyUserCount" resultType="dashboard">
+		SELECT TO_CHAR(visit_date, 'DY', 'NLS_DATE_LANGUAGE=KOREAN') AS week_day_name,
+						COUNT(*) AS count
+		FROM visit_logs
+		WHERE visit_date BETWEEN TRUNC(SYSDATE, 'IW') - 7 AND TRUNC(SYSDATE, 'IW') - 1  -- 전주 범위
+		GROUP BY TO_CHAR(visit_date, 'DY', 'NLS_DATE_LANGUAGE=KOREAN'), TO_CHAR(visit_date, 'D')  -- 'D' 추가
+		ORDER BY DECODE(TO_CHAR(visit_date, 'D'), 
+							'2', 1, '3', 2, '4', 3, '5', 4, '6', 5, '7', 6, '1', 7)
 	</select>
 </mapper>
