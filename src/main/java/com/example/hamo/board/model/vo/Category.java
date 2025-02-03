@@ -1,6 +1,4 @@
-package com.example.hamo.admin.model.vo;
-
-import java.sql.Date;
+package com.example.hamo.board.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,12 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString
-public class dashboard {
-	private Date createDate;
-	private int count;
+
+public class Category {
+private int categoryNo;
+private String categoryName;
 }

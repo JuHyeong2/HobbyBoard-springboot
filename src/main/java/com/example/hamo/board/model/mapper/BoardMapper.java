@@ -7,7 +7,9 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.hamo.admin.model.vo.Admin;
+import com.example.hamo.admin.model.vo.Dashboard;
 import com.example.hamo.board.model.vo.Board;
+import com.example.hamo.board.model.vo.Category;
 import com.example.hamo.board.model.vo.Image;
 import com.example.hamo.board.model.vo.Reply;
 
@@ -44,6 +46,16 @@ public interface BoardMapper {
 	int insertParticipant(HashMap<String, Integer> map);
 
 	int selectParticipant(HashMap<String, Integer> map);
+	
+	int insertLog(HashMap<String, String> map);
+
+	ArrayList<Dashboard> selectAllLog();
+
+	ArrayList<Category> selectCategory();
+
+	ArrayList<Board> boardCategory(int categoryNo);
+
+	ArrayList<Board> getBanner();
 
 }
 
