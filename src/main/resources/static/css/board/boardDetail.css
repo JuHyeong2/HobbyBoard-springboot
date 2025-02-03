@@ -280,12 +280,15 @@ button[disabled] {
     text-decoration: none;
     cursor: pointer;
 }
-   
 
-  
-#updateBtn {
+.delUpdBtn {
 	float:right;
 	color: black;
 	cursor:pointer;
+}
+
+#separate {
+	float:right;
+	color: black;
 }
  

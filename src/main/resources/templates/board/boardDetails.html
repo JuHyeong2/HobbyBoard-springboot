@@ -19,10 +19,19 @@
 	    	<input type="hidden" name="title" th:value="${board.title}" id="title">
 	    	<input type="hidden" name="content" th:value="${board.content}" id="content">
 	    	<input type="hidden" name="maxParticipants" th:value="${board.maxParticipants}" id="maxParticipants">
+	    	<input type="hidden" name="deleteImg" th:value="${list}">
+	    </form>
+	    <form id="delBoardForm" action="/board/boardDelete" method="POST">
+	    	<input type="hidden" name="boardNo" th:value="${board.boardNo}" id="boardNo">
+	    	<th:block th:each="a : ${list}">
+	    		<input type="hidden" name="imgRename" th:value="${a.imgRename}" id="boardNo">
+	    	</th:block>
 	    </form>
 	    <div class="breadcrumb">
-
-	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span> &gt; <span id="updateBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">수정</span>
+	        <span>홈</span> &gt; <span>[[${board.categoryName}]]</span>
+	        <span id="deleteBtn" class="delUpdBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}" onclick="document.getElementById('delBoardForm').submit();">삭제</span>
+	        <span id="separate" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">&nbsp|&nbsp</span>
+	        <span id="updateBtn" class="delUpdBtn" th:if="${session.loginUser != null && session.loginUser.memberNickname eq board.memberNickName}">수정</span>
 	    </div>
 		
 	    <div class="gathering-detail">
