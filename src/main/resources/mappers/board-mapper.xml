@@ -67,7 +67,7 @@
 		select *
 		from reply r
 			join member m on (r.member_no = m.member_no)
-		where board_no = #{bNo} 
+		where board_no = #{bNo} and reply_status = 'Y'
 		order by reply_no 
 	</select>
 	
@@ -144,7 +144,7 @@
 			join category c on b.category_no = c.category_no
 		where b.board_status = 'Y'
 		order by b.views desc, participants desc
-		fetch first 5 rows only
+		fetch first 15 rows only
 
 	</select>
 	
@@ -179,5 +179,11 @@
 		update board
 		set board_status = 'N'
 		where board_no = #{bNo}
+	</update>
+	
+	<update id="deleteReply">
+		update reply
+		set reply_status = 'N'
+		where reply_no = #{rId}
 	</update>
 </mapper>

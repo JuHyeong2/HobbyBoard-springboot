@@ -295,6 +295,13 @@ public class BoardController {
 		}
 	}
 	
+	@GetMapping("rdelete")
+	@ResponseBody
+	public int deleteReply(@RequestParam("rId") int rId, @RequestParam("bId") int bId) {
+		int result = bService.deleteReply(rId);
+		return result;
+	}
+	
 	@GetMapping("noticeView")
 	public String noticeView(Model model, @RequestParam(value="page", defaultValue="1")int currentPage,HttpServletRequest request) {
 		int listCount =  aService.getListCount();
@@ -368,6 +375,10 @@ public class BoardController {
 		
 		model.addAttribute("list", searchResult).addAttribute("banner", banner);
 		return "board/boardSearch";
+	}
+	@GetMapping("category")
+	public String category() {
+		return null;
 	}
 
 }

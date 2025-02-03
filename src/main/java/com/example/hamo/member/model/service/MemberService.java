@@ -75,7 +75,7 @@ public Member findId(HashMap<String, String> map) {
 		return mMapper.memberId(memberId);
 	}
 
-	@Transactional
+
 	public String handleParticipant(String action, int boardNo, int participantId) {
 	    int result;
 	    if ("a".equals(action)) {
@@ -97,26 +97,26 @@ public Member findId(HashMap<String, String> map) {
 	}
 
 	
-	 @Transactional
-	    public boolean updateProfileImage(int memberNo, Image image) {
-	        Member member = mMapper.selectMember(String.valueOf(memberNo));
-	        if (member == null) {
-	            return false;
-	        }
 
-	        image.setBuNo(member.getMemberNo());
-	        image.setDelimiter("U");
+//	public boolean updateProfileImage(int memberNo, Image image) {
+//	   Member member = mMapper.selectMember(String.valueOf(memberNo));
+//	      if (member == null) {
+//	            return false;
+//	        }
+//
+//	        image.setBuNo(member.getMemberNo());
+//	        image.setDelimiter("U");
+//
+//	        Image existingImage = mMapper.getProfileImage(memberNo);
+//	        if (existingImage == null) {
+//	            return mMapper.insertProfileImage(image) > 0;
+//	        } else {
+//	            image.setImgNo(existingImage.getImgNo());
+//	            return mMapper.updateProfileImage(image) > 0;
+//	        }
+//	    }
 
-	        Image existingImage = mMapper.getProfileImage(memberNo);
-	        if (existingImage == null) {
-	            return mMapper.insertProfileImage(image) > 0;
-	        } else {
-	            image.setImgNo(existingImage.getImgNo());
-	            return mMapper.updateProfileImage(image) > 0;
-	        }
-	    }
-	 @Transactional
-	    public boolean saveOrUpdateProfileImage(Image image) {
+	public boolean saveOrUpdateProfileImage(Image image) {
 	        Image existingImage = mMapper.getProfileImage(image.getBuNo());
 	        if (existingImage == null) {
 	            return mMapper.insertProfileImage(image) > 0;
@@ -126,24 +126,30 @@ public Member findId(HashMap<String, String> map) {
 	        }
 	    }
 
-	    public Image getProfileImage(int memberNo) {
-	        return mMapper.getProfileImage(memberNo);
+	public Image getProfileImage(int memberNo) {
+	       return mMapper.getProfileImage(memberNo);
 	    }
 
-		public Image selectImage(int memberNo) {
-
-			return mMapper.selectImage(memberNo);
+	
+	public Image selectImage(int memberNo) {
+		return mMapper.selectImage(memberNo);
 		}
 
+
+
+
+
 		public String getParticipantStatus(int boardNo, int participantId) {
+
 		    return mMapper.getParticipantStatus(boardNo, participantId);
 		}
 
-	@Transactional
+
 	public boolean updateBoardStatus(int boardNo) {
 	    return mMapper.updateBoardStatus(boardNo) > 0;
 	}
-	public String checkRecruitmentStatus(int boardNo) {
+	
+	public String checkStatus(int boardNo) {
 	    Board board = mMapper.getBoardInfo(boardNo);
 	    int acceptedParticipants = mMapper.getAcceptedParticipantsCount(boardNo);
 	    

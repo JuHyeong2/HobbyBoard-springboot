@@ -211,7 +211,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-
+	// 내 정보 페이지로 이동
 	@GetMapping("/member/myPage")
     public String myPage(HttpSession session, Model model) {
         Member loginUser = (Member) session.getAttribute("loginUser");
@@ -243,7 +243,7 @@ public class MemberController {
     }
 
 
-
+	// 내 정보 수정 페이지
 	@GetMapping("/member/editMyPage")
 	public String editMyPage(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -282,26 +282,26 @@ public class MemberController {
     
 	
 	    
-	  if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
-	  	member.setMemberName(loginUser.getMemberName());
-	  }
-	  if (member.getMemberBirth() == null) {
-	  	member.setMemberBirth(loginUser.getMemberBirth());
-	  }
-	  if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
-	  	member.setMemberGender(loginUser.getMemberGender());
-	  }
-	  if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
-	  	member.setMemberNickname(loginUser.getMemberNickname());
-	  }
-	  if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
-	  	member.setMemberEmail(loginUser.getMemberEmail());
-	  }
-	  if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
-	  	member.setMemberPhone(loginUser.getMemberPhone());
-	  }
+//	  if (member.getMemberName() == null || member.getMemberName().isEmpty()) {
+//	  	member.setMemberName(loginUser.getMemberName());
+//	  }
+//	  if (member.getMemberBirth() == null) {
+//	  	member.setMemberBirth(loginUser.getMemberBirth());
+//	  }
+//	  if (member.getMemberGender() == null || member.getMemberGender().isEmpty()) {
+//	  	member.setMemberGender(loginUser.getMemberGender());
+//	  }
+//	  if (member.getMemberNickname() == null || member.getMemberNickname().isEmpty()) {
+//	  	member.setMemberNickname(loginUser.getMemberNickname());
+//	  }
+//	  if (member.getMemberEmail() == null || member.getMemberEmail().isEmpty()) {
+//	  	member.setMemberEmail(loginUser.getMemberEmail());
+//	  }
+//	  if (member.getMemberPhone() == null || member.getMemberPhone().isEmpty()) {
+//	  	member.setMemberPhone(loginUser.getMemberPhone());
+//	  }
 	
-	  member.setMemberId(loginUser.getMemberId());
+//	  member.setMemberId(loginUser.getMemberId());
 	    
 	  
 	
@@ -331,25 +331,6 @@ public class MemberController {
 	        return "redirect:/member/editMyPage";
 	    }
 	}
-
-	private String saveFile(MultipartFile file) {
-		String savePath = "C:\\uploadFiles";
-		File folder = new File(savePath);
-		if (!folder.exists()) {
-		    folder.mkdirs();
-		}
-		
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = generateRenamedFileName(originalFileName);
-		
-		try {
-		    file.transferTo(new File(savePath + "\\" + renameFileName));
-		    return "/uploadFiles/" + renameFileName; 
-		} catch (IOException e) {
-		    e.printStackTrace();
-		    return null;
-		}
-	}
 	
 	public String[] saveFiles(MultipartFile upload) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -375,16 +356,14 @@ public class MemberController {
 		return returnArr;
 	}
 	
-	private String generateRenamedFileName(String originalFileName) {
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-	    int ranNum = (int) (Math.random() * 100000);
-	    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-	    return sdf.format(new Date()) + ranNum + extension;
+	// 닉네임 중복 확인
+	@GetMapping("/member/checknickName")
+	public void checknickName(@RequestParam("nickname") String nickname,PrintWriter out) {
+		int count = mService.checknickName(nickname);
+		out.print(count);
 	}
-
-
 	
-	
+
 	//비밀번호 확인 페이지로 이동
 	
 	@GetMapping("/member/checkPwd")
@@ -413,9 +392,7 @@ public class MemberController {
 		
 	}
 	
-	
-	
-	
+
 	//내가 참여한 활동 페이지로 이동
 	@GetMapping("/member/myactivite")
 	public String myActivite(HttpSession session,Model model) {
@@ -434,6 +411,15 @@ public class MemberController {
 		model.addAttribute("count", list.size());
 		return "user-inform/myactivite";
 	}
+	
+	@PostMapping("/member/getParticipantStatus")
+	@ResponseBody
+	public String getParticipantStatus(@RequestParam("boardNo") int boardNo,
+	                                   @RequestParam("participantId") int participantId) {
+	    return mService.getParticipantStatus(boardNo, participantId);
+	}
+	
+	
 	
 	// 내가 쓴 게시글 페이지로 이동
 	@GetMapping("/member/mypost")
@@ -460,6 +446,7 @@ public class MemberController {
 		model.addAttribute("count", list.size());
 		return "user-inform/mypost";
 	}
+	
 	// 참가자 목록 수락, 거절 
 	@PostMapping("/member/handleParticipant")
 	@ResponseBody
@@ -480,14 +467,9 @@ public class MemberController {
 	    return "error";
 	}
 
-	@PostMapping("/member/getParticipantStatus")
-	@ResponseBody
-	public String getParticipantStatus(@RequestParam("boardNo") int boardNo,
-	                                   @RequestParam("participantId") int participantId) {
-	    return mService.getParticipantStatus(boardNo, participantId);
-	}
 	
-
+	
+	// 참가자 max일시 모집완료 
 	@PostMapping("/member/updateBoardStatus")
 	@ResponseBody
 	public String updateBoardStatus(@RequestParam("boardNo") int boardNo) {
@@ -495,16 +477,13 @@ public class MemberController {
 	    return result ? "success" : "error";
 	}
 
+	// 수락 참가자 명 수 확인 
 	@PostMapping("/member/checkStatus")
 	@ResponseBody
-	public String checkRecruitmentStatus(@RequestParam("boardNo") int boardNo) {
-	    return mService.checkRecruitmentStatus(boardNo);
+	public String checkStatus(@RequestParam("boardNo") int boardNo) {
+	    return mService.checkStatus(boardNo);
 	}
 
-	@GetMapping("/member/checknickName")
-	public void checknickName(@RequestParam("nickname") String nickname,PrintWriter out) {
-		int count = mService.checknickName(nickname);
-		out.print(count);
-	}
+
 	
 }
