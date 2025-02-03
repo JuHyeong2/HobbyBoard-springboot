@@ -5,8 +5,6 @@
 <title>Board Details</title>
 <!-- <link rel="stylesheet" href="/css/board/boardDetails.css"> -->
 <link rel="stylesheet" href="/css/board/boardDetail.css">
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <body>
 	<div th:insert="common/top.html"></div>
@@ -115,6 +113,7 @@
 			<div id="replyList">
 				<th:block th:each="reply:${rlist}">
 			        <section class="user-info">
+			        	<input type="hidden" th:value="${reply.replyNo}" name="replyNo" id="replyNo">
 			            <div class="user-profile">
 			                <div class="profile-image">
 			                	<img alt="board-img" th:src="${reply.imageUrl != null ? reply.imageUrl : '/image/myinfo.png'}">
@@ -123,7 +122,16 @@
 				                <h3>[[${reply.memberNickname}]]</h3>
 				                <p>[[${reply.replyContent}]]</p>
 				            </div>
-			                <div class="rp-ud">[[${reply.updateDate}]]</div>
+			                <div class="rp-ud">
+				                <div class="delUpdReply">
+				                	<th:block th:if="${session.loginUser != null && session.loginUser.memberNo eq reply.memberNo}">
+					                	<span id="deleteReply" onclick="deleteReply(event);">
+					                		삭제
+					                	</span>
+				                	</th:block>
+				                </div>
+				                <p>[[${reply.updateDate}]]</p>
+			                </div>
 			            </div>
 			        </section>
 		        </th:block>
@@ -131,39 +139,7 @@
         </div>
         
         
-        <div class="notice-list">
-            <div class="notice-item">
-                <span class="notice-badge badge-red">참가불가</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">압구정 로데오에서 진짜 로데오 모임</p>
-                </div>
-                <div class="notice-date">2024.01.03</div>
-            </div>
-
-            <div class="notice-item">
-                <span class="notice-badge badge-blue">참가가능</span>
-                <div class="notice-content">
-                    <a href="#" class="notice-title">우리는야 코딩고수 신우 밑으로 다 모여</a>
-                </div>
-                <div class="notice-date">2024.01.01</div>
-            </div>
-
-            <div class="notice-item">
-                <span class="notice-badge badge-blue">참가가능</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">조용한 차분 ISTJ을 위한 개발모임</p>
-                </div>
-                <div class="notice-date">2023.12.31</div>
-            </div>
-            
-             <div class="notice-item">
-                <span class="notice-badge badge-blue">참가가능</span>
-                <div class="notice-content">
-                    <p href="#" class="notice-title">개발하는 개발들 ^모^</p>
-                </div>
-                <div class="notice-date">2023.12.31</div>
-            </div>
-        </div>
+        
         <!-- 모달창 HTML 추가 -->
     </main>
 	
@@ -218,11 +194,17 @@
 		    			const img = document.createElement('img');
 		    			const h3 = document.createElement('h3');
 		    			const p = document.createElement('p');
-		    			const divUpdate = document.createElement('div')
+		    			const divUpdate = document.createElement('div');
+		    			const divReply = document.createElement('div');
+		    			const spanUpdateReply = document.createElement('span');
+		    			const spanDeleteReply = document.createElement('span');
+		    			const updateP = document.createElement('p');
+		    			const rNoInput = document.createElement('input');
 		    			
 		    			const nickName = document.createTextNode(r.memberNickname);
 		    			const content = document.createTextNode(r.replyContent);
 		    			const update = document.createTextNode(r.updateDate);
+		    			const rNo = document.createTextNode(r.replyNo);
 		    			
 		    			section.setAttribute('class', 'user-info');
 		    			divUser.setAttribute('class', 'user-profile');
@@ -232,10 +214,31 @@
 		    			img.setAttribute('src', r.imageUrl)
 // 		    			img.setAttribute('src', '/image/img1.jpg'); // 프로필사진 나중에 동적으로 바꿔야함
 		    			img.setAttribute('alt', 'board-img');
+		    			divReply.setAttribute('class', 'delUpdReply');
+// 		    			spanUpdateReply.setAttribute('id', 'updateReply');
+// 		    			spanUpdateReply.setAttribute('onclick', 'updateReply(event)');
+// 		    			spanUpdateReply.onclick = updateReply;
+// 		    			spanUpdateReply.innerText = '수정';
+		    			spanDeleteReply.setAttribute('id', 'deleteReply');
+// 		    			spanDeleteReply.setAttribute('onclick', 'deleteReply(event)');
+		    			spanDeleteReply.onclick = deleteReply;
+		    			spanDeleteReply.innerHTML = '삭제';
+		    			rNoInput.setAttribute('type', 'hidden');
+		    			rNoInput.setAttribute('value', r.replyNo);
+		    			rNoInput.setAttribute('name', 'replyNo');
+		    			rNoInput.setAttribute('id', 'replyNo');
+		    			
+// 		    			divReply.appendChild(spanUpdateReply);
+// 		    			divReply.innerHTML = '&nbsp&nbsp&nbsp&nbsp';
+		    			divReply.appendChild(spanDeleteReply);
 		    			
 		    			h3.appendChild(nickName);
 		    			p.appendChild(content);
-		    			divUpdate.appendChild(update);
+		    			if(r.memberNo == /*[[${session.loginUser != null ? session.loginUser.memberNo : ''}]]*/''){
+		    				divUpdate.appendChild(divReply);
+		    			}
+		    			updateP.appendChild(update);
+		    			divUpdate.appendChild(updateP);
 		    			
 		    			divUserDetail.append(h3);
 		    			divUserDetail.append(p);
@@ -243,6 +246,7 @@
 		    			divUser.append(divImage);
 		    			divUser.append(divUserDetail);
 		    			divUser.append(divUpdate);
+		    			section.append(rNoInput);
 		    			section.append(divUser);
 		    			replyList.append(section);
 	    			}
@@ -286,6 +290,38 @@
 	    document.getElementById('updateBtn').addEventListener('click', ()=>{
 	    	document.getElementById("detailForm").submit();
 	    })
+	    
+
+		const updateReply=(e)=>{
+			console.log(e.target);
+			const replyContentP = e.target.parentElement.parentElement.previousSibling.children[1];
+			
+		}
+		
+		const deleteReply=(e)=>{
+			const replySection = e.target.parentElement.parentElement.parentElement.parentElement;
+			const replyNo = replySection.children[0].value;
+			console.log(replyNo);
+			if(confirm('정말 삭제하시겠습니까?')){
+				$.ajax({
+					url: '/board/rdelete',
+					data: {rId:replyNo,
+							bId:document.getElementById('boardNo').value},
+					success: data=>{
+						if(data > 0){
+							console.log('댓글삭제 성공');
+							replySection.remove();	
+						}else{
+							console.log('데이터는 받아왔으나 삭제 실패.')
+						}
+											
+					},
+					error: data=>{
+						console.log(data);
+					}
+				})	
+			}
+		}
 	
 
 	</script>

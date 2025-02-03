@@ -136,5 +136,9 @@ public class BoardService {
 		return mapper.boardDelete(bNo);
 
 	}
+
+	public int deleteReply(int rId) {
+		return mapper.deleteReply(rId);
+	}
 }
 
