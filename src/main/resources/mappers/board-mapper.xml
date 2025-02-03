@@ -145,6 +145,7 @@
 		where b.board_status = 'Y'
 		order by b.views desc, participants desc
 		fetch first 5 rows only
+
 	</select>
 	
 	<select id="searchResult" resultType="Board">
@@ -156,5 +157,27 @@
 		where board_status = 'Y' and	
 			  (title like '%' || #{searchValue} || '%' 
 	       		 or content like '%' || #{searchValue} || '%')
+
 	</select>
+	
+	<update id="updateBoard">
+		update board
+		set title = #{title}, content = #{content}, update_date = sysdate, max_participants = #{maxParticipants}, location_no = #{locationNo}, category_no = #{categoryNo}
+		where board_no = #{boardNo} and board_status = 'Y'
+	</update>
+	
+	<delete id="deleteImg">
+		delete
+		from Image
+		where img_rename in
+		<foreach collection="list" item="rename" index="index" open="(" separator="," close=")">
+			#{rename}
+		</foreach>
+	</delete>
+	
+	<update id="boardDelete">
+		update board
+		set board_status = 'N'
+		where board_no = #{bNo}
+	</update>
 </mapper>

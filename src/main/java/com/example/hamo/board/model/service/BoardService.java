@@ -119,8 +119,22 @@ public class BoardService {
 		return mapper.selectAllLog();
 	}
 
+
 	public ArrayList<Board> searchResult(String searchValue) {
 		return mapper.searchResult(searchValue);
+	}
+
+	public int updateBoard(Board b) {
+		return mapper.updateBoard(b);
+	}
+
+	public int deleteImg(ArrayList<String> deleteImg) {
+		return mapper.deleteImg(deleteImg);
+	}
+
+	public int boardDelete(int bNo) {
+		return mapper.boardDelete(bNo);
+
 	}
 }
 
