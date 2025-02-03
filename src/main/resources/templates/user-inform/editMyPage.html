@@ -93,11 +93,11 @@
                             
                                 <div class="info-item">
                                     <label for="password">새 비밀번호</label>
-                                    <input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호 입력">
+                                    <input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호 입력" required>
                                 </div>
                                 <div class="info-item">
                                     <label for="password-confirm">새 비밀번호 확인</label>
-                                    <input type="password" id="password-confirm" name="password-confirm" placeholder="새 비밀번호 재입력" >
+                                    <input type="password" id="password-confirm" name="password-confirm" placeholder="새 비밀번호 재입력"  required>
                                 </div>
                             </div>
                         </div>
@@ -110,12 +110,9 @@
     </div>
 
     <script th:lnline="javascript">
-
-        
-
         	 document.getElementById('editForm').addEventListener('submit', e => {
-            	var newPassword = document.getElementById('newPassword').value;
-                var passwordConfirm = document.getElementById('password-confirm').value;
+            	const newPassword = document.getElementById('newPassword').value;
+            	const passwordConfirm = document.getElementById('password-confirm').value;
                 
                 if (newPassword != passwordConfirm) {
                     e.preventDefault();
@@ -151,15 +148,14 @@
         	 });
         
         	 document.getElementById('profilePicture').addEventListener('change', function(e) {
-                 let file = e.target.files[0];
-                 let reader = new FileReader();
+        		 const file = e.target.files[0];
+        		 const reader = new FileReader();
                  reader.onload = function(e) {
                      document.getElementById('profilePreview').src = e.target.result;
                  }
                  reader.readAsDataURL(file);
              });
-        	 
-        
+   
     </script>
 <!--     <jsp:include page="../common/footer.jsp"/> -->
 <div th:insert = "common/footer.html"></div>

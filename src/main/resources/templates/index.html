@@ -12,22 +12,23 @@
 	<div th:replace="common/top.html"></div>
 	<!-- 	<div th:insert="common/top.html"></div> -->
 	
-	<section class="posts-slider">
+	<section class="posts-slider" id = "boardGrid1">
         <div class="slider-container">
             <div th:each="board : ${banner}" class="slider-item" th:data-board-no="${board.boardNo}">
             	<img th:if="${board.thumbnailUrl != null}" th:src="${board.thumbnailUrl}">
-                <img th:if="${board.thumbnailUrl == null}"  src="/image/HAMO_Thumbnail.png">
+                <img th:if="${board.thumbnailUrl == null}"  src="/image/HAMO_Thumbnail.png"> 
             <div class="slider-item-content">
-                <h2 th:text="${board.title}"></h2>
-                <p th:utext="${board.content}"></p>
+                <h2 th:text="${#strings.abbreviate(board.title,9)}"></h2>
+                <p th:text="${#strings.abbreviate(board.content,12)}"></p>
                 <p>조회수: <span th:text="${board.views}"></span></p>
                 <p>참여자: <span th:text="${board.participants}"></span>/<span th:text="${board.maxParticipants}"></span></p>
             </div>
         </div>
         </div>
         <div class="slider-nav">
-            <button class="prev-btn">&lt;</button>
-            <button class="next-btn">&gt;</button>
+<!--             <button class="prev-btn">&lt;</button> -->
+<!--             <button class="next-btn">&gt;</button> -->
+
         </div>
     </section>
 
@@ -95,16 +96,51 @@
 		    });
   
 		};
+		
+// 		 var sliderContainer = document.querySelector('.slider-container');
+		
+// 		var clone = sliderContainer.firstElementChild.cloneNode(true);
+//         sliderContainer.appendChild(clone);
+
+//         function showSlide() {
+    	
+//         	 var currentIndex = 0;
+//     	setInterval(() => {
+//     		sliderContainer.style.transition = '0.2s';
+//     		sliderContainer.style.transform = "translate3d(-"+200*(currentIndex+1)+"px,0px,0px)";
+    		
+//     		currentIndex++;
+//     		if(currentIndex == 10) {
+//     			setTimeout(()=> {
+//     				sliderContainer.style.transition = '0s';
+//         			sliderContainer.style.transform = "translate3d(0px,0px,0px)";		
+//     			},201)
+//     			currentIndex = 0;
+//     		}
+    		
+//     	},2000);
+//     }
+		
+		
+		
 
 		 document.addEventListener('DOMContentLoaded', function() {
-	            const sliderContainer = document.querySelector('.slider-container');
+	            var sliderContainer = document.querySelector('.slider-container');
 	            const slides = document.querySelectorAll('.slider-item');
-	            const prevBtn = document.querySelector('.prev-btn');
-	            const nextBtn = document.querySelector('.next-btn');
+// 	            const prevBtn = document.querySelector('.prev-btn');
+// 	            const nextBtn = document.querySelector('.next-btn');
 	            let currentIndex = 0;	// 현재 표시중인 슬라이드 인덱스 
-
+				
+	            var clone = sliderContainer.firstElementChild.cloneNode(true);
+	          	sliderContainer.appendChild(clone);
+	            
+// 	            showSlide();
+	        
+	            
 	            function showSlide(index) {
 	            	sliderContainer.style.transform = `translateX(-${index * 100}%)`;	// 컨테이너 이동시켜서 해당 슬라이드 보여줌
+					
+	            	
 	            }
 
 	            function nextSlide() {
@@ -117,22 +153,27 @@
 	                showSlide(currentIndex);
 	            }
 
-	            nextBtn.addEventListener('click', nextSlide);
-	            prevBtn.addEventListener('click', prevSlide);
 
 	            
-	            let slideInterval = setInterval(nextSlide, 3000);	// 3초마다 다음 슬라이드 이동
+// 	            nextBtn.addEventListener('click', nextSlide);	
+// 	            prevBtn.addEventListener('click', prevSlide);
 
+			
+	            
+	            let slideInterval = setInterval(nextSlide, 5000);	
+	            // 5초마다 다음 슬라이드 이동
 	            
 	            slides.forEach(slide => {
 	                slide.addEventListener('click', function() {
 	                    const boardNo = this.getAttribute('data-board-no');	// 해당 게시글 페이지 이동 
 	                   	location.href = `/board/${boardNo}`;
 	                });
-
+	
 	               
+	                
 	                slide.addEventListener('mouseenter', () => clearInterval(slideInterval));		// 마우스 슬라이드 위에 있으면 슬라이드 정지 
 	                slide.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000));	// 마우스 슬라이드 벗어나면 다시 슬라이드 작동 
+	            
 	            });
 	        });
 		 

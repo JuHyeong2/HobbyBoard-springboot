@@ -57,7 +57,7 @@
     	join category c on b.category_no = c.category_no
     	left join participant p on b.board_no = p.board_no and p.member_no = (select member_no from member where member_id = #{memberId})
     where b.member_no = (select member_no from member where member_id = #{memberId})
-       	or p.member_no is not null
+       	or p.member_no is not null 
     order by b.create_date desc
 	
 	</select>

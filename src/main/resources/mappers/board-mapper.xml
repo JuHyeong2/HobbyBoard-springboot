@@ -144,7 +144,7 @@
 			join category c on b.category_no = c.category_no
 		where b.board_status = 'Y'
 		order by b.views desc, participants desc
-		fetch first 5 rows only
+		fetch first 15 rows only
 
 	</select>
 	

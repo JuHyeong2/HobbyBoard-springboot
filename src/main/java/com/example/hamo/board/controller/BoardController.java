@@ -376,5 +376,9 @@ public class BoardController {
 		model.addAttribute("list", searchResult).addAttribute("banner", banner);
 		return "board/boardSearch";
 	}
+	@GetMapping("category")
+	public String category() {
+		return null;
+	}
 
 }
