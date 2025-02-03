@@ -96,18 +96,18 @@
     <script>
 	    $(document).ready(function() {
 	    	$('#summernote').summernote({
-	    		height: 500,
+	    		height: 500, // 에디터 높이 설정
 	  			toolbar: [
 	  			    // [groupName, [list of button]]
-	  			    ['fontname', ['fontname']],
-	  			    ['fontsize', ['fontsize']],
-	  			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-	  			    ['color', ['forecolor','color']],
-	  			    ['table', ['table']],
-	  			    ['para', ['paragraph']],
-	  			    ['height', ['height']],
-	  			    ['insert',['link','video']],
-	  			    ['view', ['fullscreen', 'help']]
+	  			    ['fontname', ['fontname']], // 글꼴 선택
+	  			    ['fontsize', ['fontsize']], // 글꼴 크기 선택
+	  			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']], // 글자 스타일
+	  			    ['color', ['forecolor','color']], // 글자 색상 변경
+	  			    ['table', ['table']], // 표 삽입
+	  			    ['para', ['paragraph']], // 문단 스타일 설정
+	  			    ['height', ['height']], // 줄 간격 조정
+	  			    ['insert',['link','video']], // 링크 및 비디오 삽입
+	  			    ['view', ['fullscreen', 'help']] // 전체 화면 및 도움말 버튼
 	  			  ],
 	  			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	  			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
