@@ -79,6 +79,8 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		ArrayList<Admin> list = aService.selectNoticeList(pi);
 		model.addAttribute("list", list).addAttribute("pi", pi).addAttribute("loc", request.getRequestURI());
+		System.out.println("list : " + list);
+		System.out.println("pi : " + pi);
 //		System.out.println(list);
 
 		return "admin/notice";

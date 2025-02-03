@@ -32,8 +32,8 @@
 
 					<!-- 수정 & 삭제 버튼을 위한 form -->
 					
-					<input type="hidden" name="id" th:value="${a.boardNo}" /> 
-					<input type="hidden" name="page" th:value="${pi.currentPage}" />
+					<input type="hidden" id ="boardNo" name="id" th:value="${a.boardNo}" /> 
+					<input type="hidden" id="page" name="page" th:value="${pi.currentPage}" />
 
 						<!-- 옵션 메뉴 -->
 <!-- 						<div class="options" style="display: none"> -->
@@ -85,18 +85,20 @@
 
 
 
+	const noticeItems = document.querySelectorAll(".notice-item");
 
-		// 상세보기
-    			const boardNo = document.querySelector('.notice-item').children[1].value;
-// 				console.log(boardNo);
-    			const page = document.querySelector('.notice-item').children[2].value;
-    			const mainView = document.getElementsByClassName('notice-list');
-    			console.log(mainView);
-    			for(const list of mainView) {
-	    			list.addEventListener('click', () => {
-	    				location.href ='/board/' + boardNo + '/' + page;
-	    			});
-    			}
+    // 각 .notice-item에 클릭 이벤트 추가
+    for (const item of noticeItems) {
+        item.addEventListener("click", function() {
+            // dataset을 이용해 boardNo와 page 값을 가져옴
+            const boardNo = this.querySelector("input[name='id']").value;
+            const page = this.querySelector("input[name='page']").value;
+            
+            // 상세 페이지로 이동
+            location.href = `/board/${boardNo}/${page}`;
+        });
+    }
+
 	</script>
 
 
