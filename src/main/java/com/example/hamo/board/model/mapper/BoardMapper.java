@@ -57,5 +57,11 @@ public interface BoardMapper {
 
 	ArrayList<Board> getBanner();
 
+	int updateBoard(Board b);
+
+	int deleteImg(ArrayList<String> deleteImg);
+
+	int boardDelete(int bNo);
+
 }
 

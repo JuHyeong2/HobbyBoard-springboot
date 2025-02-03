@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hamo.admin.model.service.AdminService;
 import com.example.hamo.admin.model.vo.Admin;
@@ -139,7 +140,7 @@ public class BoardController {
 			ArrayList<Image> list = new ArrayList<Image>();
 			for(MultipartFile file : files) {
 				if(!file.getOriginalFilename().equals("")) {
-					String[] returnArr = saveFiles(file); // 첨부파일 폴더에 파일저장
+					String[] returnArr = saveFiles(file); // s3 bucket에 파일저장
 					if(returnArr[1] != null) {
 						Image img = new Image(); // vo에 있는 Image객체임!!!
 						img.setImgName(file.getOriginalFilename());
@@ -159,35 +160,6 @@ public class BoardController {
 		
 		return "redirect:/";
 	}
-	
-//	public String[] saveFile(MultipartFile upload) {
-//		String savePath = "c:\\uploadFiles";
-//		File folder = new File(savePath);
-//		if(!folder.exists()) {
-//			folder.mkdirs();
-//		}
-//		
-//		// 같은 폴더에 같은 이름의 파일이 저장되지 않도록 rename -> 년월일시분초밀리랜덤수.확장자
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//		int ranNum = (int)(Math.random()*100000);
-//		String originFileName = upload.getOriginalFilename();
-////		System.out.println(originFileName);
-////		System.out.println(originFileName.lastIndexOf("."));
-//		String renameFileName = sdf.format(new Date()) + ranNum + originFileName.substring(originFileName.lastIndexOf("."));
-////		System.out.println("renameFileName : " + renameFileName);
-//		
-//		String renamePath = folder + "\\" + renameFileName;
-//		try {
-//			upload.transferTo(new File(renamePath));
-//		} catch (IllegalStateException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		String[] returnArr = new String[2];
-//		returnArr[0] = savePath;
-//		returnArr[1] = renameFileName;
-//		return returnArr;
-//	}
 	
 	public String[] saveFiles(MultipartFile upload) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -228,11 +200,69 @@ public class BoardController {
 	}
 	
 	@PostMapping("boardUpdate")
-	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("deleteImg") String[] deleteImg, @RequestParam("file") ArrayList<MultipartFile> files) {
+	public String boadUpdate(@ModelAttribute("Board") Board b, HttpSession session, @RequestParam("deleteImg") ArrayList<String> deleteImg, @RequestParam("file") ArrayList<MultipartFile> files) {
+		// board테이블 업데이트
+		System.out.println(b.toString());
+		int result = bService.updateBoard(b);
 		
-		return "";
+		// image테이블 업데이트
+		ArrayList<Image> list = new ArrayList<Image>();
+		for(MultipartFile file : files) {
+			if(!file.getOriginalFilename().equals("")) {
+				String[] returnArr = saveFiles(file); // s3 bucket에 파일저장
+				if(returnArr[1] != null) {
+					Image img = new Image(); // vo에 있는 Image객체임!!!
+					img.setImgName(file.getOriginalFilename());
+					img.setImgRename(returnArr[1]);
+					img.setImgPath(returnArr[0]);
+					img.setDelimiter("B");
+					System.out.println("b.getBoardNo() : " + b.getBoardNo());
+					img.setBuNo(b.getBoardNo());
+					list.add(img);
+				}
+			}
+		}
+		if(!list.isEmpty()) {
+			int imageResult = bService.imageInsert(list);
+		}
+		
+		int deleteImgResult = 0;
+		if(!deleteImg.isEmpty()) {
+			deleteImgResult = bService.deleteImg(deleteImg);
+			if(deleteImgResult > 0) {
+				for(String rename : deleteImg) {
+					if(!rename.equals("")) {
+						deleteFile(rename);
+					}
+					
+				}
+			}
+		}
+		
+		return "redirect:/board/" + b.getBoardNo();
 	}
 	
+	// s3버켓에서 해당 이미지파일 삭제
+	private void deleteFile(String rename) {
+		DeleteObjectRequest request = new DeleteObjectRequest(bucket, rename); 
+		amazonS3.deleteObject(request);
+	}
+	
+	@PostMapping("boardDelete")
+	public String boardDelete(@RequestParam("boardNo") int bNo, @RequestParam("imgRename") ArrayList<String> deleteImg) {
+		int delBoardResult = bService.boardDelete(bNo);
+		int delImgResult = bService.deleteImg(deleteImg);
+		
+		if(delBoardResult > 0 && delImgResult > 0) {
+			for(String rename : deleteImg) {
+				deleteFile(rename);
+			}
+		}
+		return "redirect:/";
+	}
+
+
+
 	/*
 	 *  댓글 부분
 	 * 
