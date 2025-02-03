@@ -57,12 +57,12 @@
     </div>
 
     <script th:inline="javascript">
-	    var labels = /*[[${dailyUserCount.![weekDayName]}]]*/0; 
-	    var data = /*[[${dailyUserCount.![count]}]]*/0; 
+	    let labels = /*[[${dailyUserCount.![weekDayName]}]]*/0; 
+	    let data = /*[[${dailyUserCount.![count]}]]*/0; 
     
     
-	    var myChart = echarts.init(document.getElementById('myLineChart'));
-	    var option = {
+	    let myChart = echarts.init(document.getElementById('myLineChart'));
+	    let option = {
 	        title: {
 	            text: '1주 사용자 이용량'
 	        },
@@ -88,8 +88,8 @@
 
         // FullCalendar 설정
         document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl1 = document.getElementById('calendar1');
-            var calendarEl2 = document.getElementById('calendar2');
+            let calendarEl1 = document.getElementById('calendar1');
+            let calendarEl2 = document.getElementById('calendar2');
 			
             const boardCounts = /*[[${boardCount}]]*/0;
             let events1 = boardCounts.map(function(item) {
@@ -105,9 +105,7 @@
             		date: item.visitDate
             	}
             });
-            
-            
-            var calendar1 = new FullCalendar.Calendar(calendarEl1, {
+            let calendar1 = new FullCalendar.Calendar(calendarEl1, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     start: 'prev', 
@@ -117,10 +115,7 @@
                 locale: 'ko',
                 events: events1
             });
-           
-            
-            var calendar2 = new FullCalendar.Calendar(calendarEl2, {
-            	
+            let calendar2 = new FullCalendar.Calendar(calendarEl2, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     start: 'prev', 

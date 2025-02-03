@@ -12,17 +12,28 @@
 	<!-- 	<div th:insert="common/top.html"></div> -->
 	
 	<section class="posts-slider" id = "boardGrid1">
+
         <div class="slider-container">
             <div th:each="board : ${banner}" class="slider-item" th:data-board-no="${board.boardNo}">
             	<img th:if="${board.thumbnailUrl != null}" th:src="${board.thumbnailUrl}">
                 <img th:if="${board.thumbnailUrl == null}"  src="/image/HAMO_Thumbnail.png"> 
 	            <div class="slider-item-content">
 	                <h2 th:text="${#strings.abbreviate(board.title,9)}"></h2>
+
 	                <p th:text="${#strings.abbreviate(board.content,12)}"></p>
 	                <p>조회수: <span th:text="${board.views}"></span></p>
 	                <p>참여자: <span th:text="${board.participants}"></span>/<span th:text="${board.maxParticipants}"></span></p>
 	            </div>
+
+	        	</div>
+	        </div>
+        <div class="slider-nav">
+<!--             <button class="prev-btn">&lt;</button> -->
+<!--             <button class="next-btn">&gt;</button> -->
+
+
         	</div>
+
         </div>
     </section>
 
@@ -135,16 +146,21 @@
 	        
 	            
 	            function showSlide(index) {
+
+
+	            	sliderContainer.style.transform = `translateX(-${index * 100}%)`;	// 컨테이너 이동시켜서 해당 슬라이드 보여줌
+
 	            	sliderContainer.style.transform = `translateX(-${index * slides[0].offsetWidth}px)`;	// 컨테이너 이동시켜서 해당 슬라이드 보여줌
+
 					
 	            	
 	            }
 
 	            function nextSlide() {
-// 	                currentIndex = (currentIndex + 1) % slides.length;			// 순환 구조로 인덱스 계산
-					currentIndex = (currentIndex + 1) % 6;
+	                currentIndex = (currentIndex + 1) % 7;  // 0부터 6까지 순환하게 설정
 	                showSlide(currentIndex);
 	            }
+
 
 	            function prevSlide() {
 	                currentIndex = (currentIndex - 1 + slides.length) % slides.length;	// 순환 구조로 인덱스 계산 
@@ -157,8 +173,10 @@
 // 	            prevBtn.addEventListener('click', prevSlide);
 
 			
-	            
-	            let slideInterval = setInterval(nextSlide, 2000);	
+	          
+
+	            let slideInterval = setInterval(nextSlide, 3000);	
+
 	            // 5초마다 다음 슬라이드 이동
 	            
 	            slides.forEach(slide => {
