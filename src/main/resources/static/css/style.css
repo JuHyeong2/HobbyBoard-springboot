@@ -115,11 +115,11 @@ img {
             overflow: hidden;
             height: 400px;
         }
+        
 .slider-container {
             display: flex;
             transition: transform 3.0s ease;
             height : 400px;
-          
         }
 .slider-item {
             flex: 0 0 100%;
@@ -158,7 +158,8 @@ float : left;
  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 /*   padding: 20px; */
-  width:100%;
+  width:200rem;
+  margin-left: 0rem;
 /*   width: 1200px; */
 }
    
