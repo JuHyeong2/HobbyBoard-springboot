@@ -137,14 +137,27 @@
 	<select id="getBanner" resultType = "Board">
 		select b.*, m.member_nickname, l.location_name, c.category_name,
 			(select count(*) from participant p where p.board_no = b.board_no) as participants,
-			(select i.img_rename from image i where i.bu_no = b.board_no and i.delimiter = 'b' fetch first 1 row only) as thumbnailurl
+			(select i.img_rename from image i where i.bu_no = b.board_no and i.delimiter = 'b' fetch first 1 row only) as thumbnailUrl
 		from board b
 			join member m on b.member_no = m.member_no
 			join location l on b.location_no = l.location_no
 			join category c on b.category_no = c.category_no
 		where b.board_status = 'Y'
 		order by b.views desc, participants desc
-		fetch first 5 rows only
+		fetch first 15 rows only
+
+	</select>
+	
+	<select id="searchResult" resultType="Board">
+		select b.*, l.location_name, c.category_name,
+			(select count(*) from participant p where p.board_no = b.board_no) as participants
+		from board b
+			left join location l on b.location_no = l.location_no
+			left join category c on b.category_no = c.category_no
+		where board_status = 'Y' and	
+			  (title like '%' || #{searchValue} || '%' 
+	       		 or content like '%' || #{searchValue} || '%')
+
 	</select>
 	
 	<update id="updateBoard">

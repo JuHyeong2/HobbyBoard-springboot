@@ -57,11 +57,15 @@ public interface BoardMapper {
 
 	ArrayList<Board> getBanner();
 
+
+	ArrayList<Board> searchResult(String searchValue);
+
 	int updateBoard(Board b);
 
 	int deleteImg(ArrayList<String> deleteImg);
 
 	int boardDelete(int bNo);
+
 
 }
 

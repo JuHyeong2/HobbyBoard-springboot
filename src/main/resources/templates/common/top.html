@@ -172,8 +172,10 @@ header {
 		<div class="header-top">
             <h1 onclick="location.href='/'">HAMO</h1>
             <div class="search-bar">
-                <input type="text" placeholder="검색어를 입력하세요">
-                <button type="submit">검색</button>
+            	<form id="search-from" action="/board/searchBoard">
+	                <input type="text" id="searchValue" name="searchValue" placeholder="검색어를 입력하세요">
+	                <button type="submit" id="search-btn">검색</button>
+                </form>
             </div>
         </div>
         <div class="navigation" th:if="${loc != '/member/findId' && loc != '/member/findPwd'}">       	
@@ -254,7 +256,7 @@ header {
     			}
     		});
     	});
-
+    	
     </script>
 </body>
 </html>

@@ -85,11 +85,19 @@ public class HomeController {
 		}
 
 		ArrayList<Board> banner = bService.getBanner();
+
 //		for (Board board : banner) {
 //            if (board.getThumbnailUrl() != null) {
 //                board.setThumbnailUrl(amazonS3.getUrl(bucket, board.getThumbnailUrl()).toString());
 //            }
 //        }
+
+		for (Board board : banner) {
+            if (board.getThumbnailUrl() != null) {
+                board.setThumbnailUrl(amazonS3.getUrl(bucket, board.getThumbnailUrl()).toString());
+            }
+        }
+
 		ArrayList<Image> imgList = bService.selectImageListBoard();
 		for (Board board : banner) {
 			for(Image img : imgList) {
