@@ -57,5 +57,7 @@ public interface BoardMapper {
 
 	ArrayList<Board> getBanner();
 
+	ArrayList<Board> searchResult(String searchValue);
+
 }
 

@@ -118,5 +118,9 @@ public class BoardService {
 	public ArrayList<Dashboard> selectAllLog() {
 		return mapper.selectAllLog();
 	}
+
+	public ArrayList<Board> searchResult(String searchValue) {
+		return mapper.searchResult(searchValue);
+	}
 }
 
