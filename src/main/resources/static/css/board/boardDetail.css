@@ -163,9 +163,23 @@
 }
 
 .rp-ud {
+	position: relative;
+	height: 80px;
+}
+
+.rp-ud p{
+	position: absolute;
+	bottom: 0;
+	width: 7rem;
+/* 	margin-top: 10px; */
+}
+
+.delUpdReply {
 	display: flex;
-	margin-top: 2.1rem;
-	gap: 0.1rem;
+/* 	margin-left: 1rem; */
+	gap: 1.5rem;
+	
+/* 	padding-bottom: 0.5rem; */
 }
 
 .rp-ud svg{
@@ -287,8 +301,8 @@ button[disabled] {
 	cursor:pointer;
 }
 
-#separate {
-	float:right;
+#deleteReply {
+	margin-left: 3rem;
 	color: black;
+	cursor: pointer;
 }
- 
