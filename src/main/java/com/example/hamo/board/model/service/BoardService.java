@@ -118,5 +118,17 @@ public class BoardService {
 	public ArrayList<Dashboard> selectAllLog() {
 		return mapper.selectAllLog();
 	}
+
+	public int updateBoard(Board b) {
+		return mapper.updateBoard(b);
+	}
+
+	public int deleteImg(ArrayList<String> deleteImg) {
+		return mapper.deleteImg(deleteImg);
+	}
+
+	public int boardDelete(int bNo) {
+		return mapper.boardDelete(bNo);
+	}
 }
 

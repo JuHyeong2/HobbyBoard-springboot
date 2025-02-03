@@ -33,8 +33,9 @@
     </div>
 
 	<form id="form" method="post" action="/board/boardUpdate" enctype="multipart/form-data">
+		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
 		<div id="inputDiv" th:each="img:${imgs}">
-			<input type="hidden" name="deleteImg">
+			<input type="text" id="deleteImg" name="deleteImg">
 		</div>
 		<input type="file" name="file">
 		<div class="title-section">
@@ -222,9 +223,9 @@
 			
 // 		})
 		const deleteImg=(e)=>{
-			 e.stopPropagation();
+			console.log(e.target);
 			const btnId = e.target.id;
-			const hiddenInputs = document.querySelectorAll('input[type="hidden"]');
+			const hiddenInputs = document.querySelectorAll('input[name="deleteImg"]');
 			
 			const div = e.target.parentElement.parentElement;
 			console.log(div.tagName);
@@ -240,6 +241,8 @@
 			}
 			
 		}
+		
+		
 
 	    
 	    document.getElementById('submitButton').addEventListener('click', ()=>{
