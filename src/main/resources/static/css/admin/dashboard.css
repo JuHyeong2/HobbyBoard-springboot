@@ -201,16 +201,16 @@ table tbody tr:hover {
 
 /* 그래프 크기 변경 */
 .echart {
-    margin-bottom: -36px !important;
-    margin-left: -94px !important;
-    width: 1200px !important;  /* 그래프의 가로 크기 */
-    height: 350px !important;  /* 그래프의 세로 크기 */
+    margin-bottom: -3.6rem !important;
+    margin-left: -9.4rem !important;
+    width: 120rem !important;  /* 그래프의 가로 크기 */
+    height: 35rem !important;  /* 그래프의 세로 크기 */
 }
 
 /* xAxis 레이블 간격 조정 */
 .echart .echarts-xaxis text {
-    font-size: 14px !important;  /* x축 레이블의 크기 */
-    margin-top: 10px !important;  /* 레이블과 그래프 간의 간격 */
-    margin-left: 10px !important;
+    font-size: 1.4rem !important;  /* x축 레이블의 크기 */
+    margin-top: 1rem !important;  /* 레이블과 그래프 간의 간격 */
+    margin-left: 1rem !important;
 }
 
