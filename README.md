@@ -47,20 +47,3 @@
 
 ![하모](https://github.com/user-attachments/assets/4132a8ee-12d6-4ca9-8098-ae7feba9d0b2)
 
-
-
----
-
-### 하모's Create SQL
-1. User 테이블 생성
-```
-
-```
-2. 게시물 테이블 생성
-```
-
-```
-3. 댓글 테이블 생성
-```
-
-```
