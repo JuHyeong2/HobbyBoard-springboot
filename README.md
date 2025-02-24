@@ -48,4 +48,4 @@
 ![하모](https://github.com/user-attachments/assets/4132a8ee-12d6-4ca9-8098-ae7feba9d0b2)
 
 ## Introduce
-<a href="/template/excel_mine_sample.xlsx" download>PPT Download</a>
+<a href="/src/main/resources/static/ppt/HAMO(수정8차).odp" download>PPT Download</a>
