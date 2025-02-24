@@ -48,4 +48,4 @@
 ![하모](https://github.com/user-attachments/assets/4132a8ee-12d6-4ca9-8098-ae7feba9d0b2)
 
 ## Introduce
-<a href="/src/main/resources/static/ppt/HAMO(수정8차).odp" download>PPT Download</a>
+[📂 PPT 파일 다운로드](https://github.com/JuHyeong2/HobbyBoard-springboot/raw/main/src/main/resources/static/ppt/HAMO(수정8차).odp)
