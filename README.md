@@ -20,7 +20,7 @@
 
 ## Project description 🧑‍💻
 <b>✔ 프로젝트 명 :</b> HAMO </br>
-<b>✔ 목적 :</b> KH정보 교육원 세미프로젝트에서 취미 게시판을 A-Z까지 만들어보자. </br>
+<b>✔ 목적 :</b> KH정보 교육원 세미프로젝트에서 취미 공유 게시판을 A-Z까지 만들어보자. </br>
 
 ## Stacks 📝
 ### Enviroment 
@@ -47,20 +47,5 @@
 
 ![하모](https://github.com/user-attachments/assets/4132a8ee-12d6-4ca9-8098-ae7feba9d0b2)
 
-
-
----
-
-### 하모's Create SQL
-1. User 테이블 생성
-```
-
-```
-2. 게시물 테이블 생성
-```
-
-```
-3. 댓글 테이블 생성
-```
-
-```
+## Introduce
+[📂 PPT 파일 다운로드](https://github.com/JuHyeong2/HobbyBoard-springboot/raw/main/src/main/resources/static/ppt/HAMO(수정8차).odp)
